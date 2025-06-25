@@ -160,7 +160,7 @@ a.logo{
 
 /* Hero Section */
 .hero {
-  min-height: 591px;
+  min-height: 670px;
   background:
     linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%),
     url("../images/hero-sec.jpg")
@@ -178,6 +178,7 @@ a.logo{
 
 .hero-content {
   max-width: 730px;
+  margin-top: 150px;
 }
 
 .hero-title {
@@ -253,7 +254,7 @@ a.logo{
 .content-description {
   font-size: 20px;
   font-weight: 300;
-  line-height: 45px;
+  line-height: 60px;
   letter-spacing: -1px;
   color: black;
   margin-bottom: 2rem;
