@@ -18,5 +18,7 @@ class StaticPages extends Controller
     public function blog() {
     return view('blog');
 }
-
+    public function reset_password() {
+    return view('reset_password');
+}
 }
