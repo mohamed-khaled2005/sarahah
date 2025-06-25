@@ -162,7 +162,7 @@ a.logo{
 .hero {
   min-height: 670px;
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 3%),
     url("../images/hero-sec.jpg")
       center/cover;
   display: flex;
@@ -178,7 +178,7 @@ a.logo{
 
 .hero-content {
   max-width: 730px;
-  margin-top: 150px;
+
 }
 
 .hero-title {
