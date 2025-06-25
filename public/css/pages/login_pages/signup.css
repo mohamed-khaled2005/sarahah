@@ -1,17 +1,15 @@
+
 @import url("../../globalstyle.css");
+
 html {
   direction: rtl;
-  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   background-color: #f7fafc;
-  font-family: 'Plus Jakarta Sans', 'Cairo', sans-serif;
   color: #121417;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
 }
 
 * {
@@ -23,101 +21,100 @@ a {
   color: inherit;
 }
 
-.page-wrapper {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #ffffff;
+h1, h2, p {
+  margin: 0;
 }
 
-#section-main {
-  flex-grow: 1;
+input, button {
+  font-family: inherit;
+  border: none;
 }
 
-
-/* CSS from section:main */
-.reset-password-section {
+/* CSS from section:signup-form */
+.signup-section {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 80px 20px;
-    background-color: #f7fafc;
+    flex-grow: 1;
+  
   }
 
-  .reset-password-container {
+  .signup-container {
+    width: 100%;
+    max-width: 480px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    max-width: 480px;
-    width: 100%;
   }
 
-  .reset-password-container h1 {
+  .signup-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700;
     font-size: 28px;
     line-height: 35px;
     color: #121417;
-    margin: 0 0 12px;
+    margin-bottom: 32px;
   }
 
-  .reset-password-container .subtitle {
+  .signup-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .form-input {
+    width: 100%;
+    background-color: #f2f2f5;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    text-align: right;
+  }
+
+  .form-input::placeholder {
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    color: #121417;
-    margin: 0 0 32px;
-  }
-
-  .reset-form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .email-input {
-    width: 100%;
-    padding: 16px;
-    background-color: #f2f2f5;
-    border-radius: 12px;
-    border: none;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 16px;
-    line-height: 24px;
     text-align: right;
-    color: black;
+    opacity: 1;
   }
 
-  .email-input::placeholder {
-    color: black;
-  }
+  #username::placeholder { color: #46759d; }
+  #email::placeholder { color: #2f5c82; }
+  #password::placeholder { color: #4d7291; }
+  #confirm-password::placeholder { color: #3f6e96; }
 
-  .submit-button {
-    width: 100%;
-    padding: 10px 16px;
+  .submit-btn {
     background-color: #3d99f5;
     color: #ffffff;
-    border: none;
-    border-radius: 8px;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700;
     font-size: 14px;
     line-height: 21px;
+    padding: 10px 16px;
+    border-radius: 8px;
     cursor: pointer;
-    height: 40px;
+    transition: background-color 0.3s ease;
+    margin-top: 12px;
   }
 
-  .back-link {
+  .submit-btn:hover {
+    background-color: #2f88e5;
+  }
+
+  .login-prompt {
     font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 400;
     font-size: 14px;
     line-height: 21px;
     color: #667582;
-    margin-top: 24px;
   }
 
+  .login-prompt a {
+    color: #3d99f5;
+    font-weight: 700;
+  }

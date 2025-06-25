@@ -1,3 +1,4 @@
+@import url("../../globalstyle.css");
 :root {
   --color-primary: #3d99f5;
   --color-text-dark: #0d121c;
@@ -16,28 +17,7 @@
   --font-plus-jakarta: 'Plus Jakarta Sans', sans-serif;
 }
 
-html {
-  direction: rtl;
-}
 
-body {
-  margin: 0;
-  font-family: var(--font-plus-jakarta);
-  background-color: var(--color-background-body);
-  color: var(--color-text-dark);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
 
 .page-wrapper {
   display: flex;
@@ -45,91 +25,6 @@ a {
   flex-grow: 1;
 }
 
-/* CSS from section:header */
-.site-header {
-    background-color: var(--color-background-header);
-    border-bottom: 1px solid var(--color-border);
-  }
-  .header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 12px 20px;
-    min-height: 67px;
-  }
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .logo-img {
-    width: 41px;
-    height: 41px;
-  }
-  .logo-text {
-    font-family: var(--font-cairo);
-    font-weight: 700;
-    font-size: 23px;
-    color: var(--color-text-dark);
-  }
-  .nav-auth-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 32px;
-  }
-  .main-nav, .auth-links {
-    display: flex;
-    align-items: center;
-    gap: 36px;
-  }
-  .nav-link, .auth-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-cairo);
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--color-text-dark);
-  }
-  .nav-icon {
-    width: 24px;
-    height: 24px;
-  }
-  .icon-stack {
-    position: relative;
-    width: 24px;
-    height: 24px;
-  }
-  .icon-stack img {
-    object-fit: contain;
-  }
-  @media (max-width: 992px) {
-    .main-nav {
-      display: none;
-    }
-    .nav-auth-wrapper {
-      gap: 24px;
-    }
-    .auth-links {
-      gap: 24px;
-    }
-  }
-  @media (max-width: 480px) {
-    .logo-text {
-      display: none;
-    }
-    .auth-link span {
-      display: none;
-    }
-    .auth-link {
-      padding: 5px;
-    }
-    .main-nav, .auth-links {
-      gap: 16px;
-    }
-  }
 
 /* CSS from section:main */
 .login-main {
@@ -177,12 +72,12 @@ a {
     text-align: right;
   }
   .form-input::placeholder {
-    color: var(--color-text-link);
+    color: black;
     opacity: 1;
   }
   .form-options {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     padding: 12px 0;
   }
   .remember-me {
@@ -239,46 +134,4 @@ a {
     font-size: 14px;
     line-height: 21px;
     color: var(--color-text-light);
-  }
-
-/* CSS from section:footer */
-.site-footer {
-    background-color: var(--color-background-dark);
-    color: var(--color-text-footer);
-  }
-  .footer-container {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
-  .footer-nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 24px;
-    flex-wrap: wrap;
-  }
-  .footer-link {
-    font-family: var(--font-noto-serif);
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--color-text-footer);
-  }
-  .copyright-text {
-    font-family: var(--font-noto-serif);
-    font-size: 16px;
-    line-height: 24px;
-    color: #d7e4ff;
-    margin: 0;
-    text-align: center;
-  }
-  @media (max-width: 768px) {
-    .footer-nav {
-      flex-direction: column;
-      gap: 16px;
-    }
   }

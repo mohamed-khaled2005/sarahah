@@ -1,163 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap');
-:root {
-  --black-800: #333;
-  --black-100: #e5e5e5;
-  --black-50: #f2f2f2;
-  --black-500: #808080;
-  --black-700: #4d4d4d;
-  --white: #fff;
-  --black-900: #1a1a1a;
-  --system-blue: #007aff;
-  --saraha-bg: #f7fafa;
-  --saraha-primary: #2e69e0;
-  --saraha-dark-primary: #0d121c;
-  --saraha-dark-secondary: #4f6694;
-  --saraha-border-light: #d1d9e5;
-  --saraha-text-secondary: #4f7396;
-  --saraha-footer-bg: #0c0909;
-  --saraha-footer-text: #d5e3ff;
-  --saraha-footer-text-light: #d7e4ff;
-  --faq-text: #121417;
-  --faq-text-secondary: #61758a;
-  --faq-border: #e5e8eb;
-  --article-title: #0d141c;
-    --faq-border: #e0e0e0;
-  --faq-bg: #ffffff;
-  --faq-bg-hover: #f9f9f9;
-  --faq-text: #111827;
-  --faq-text-secondary: #4b5563;
-  --faq-radius: 12px;
-  --faq-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-
-/* Reset and Base Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Changa", sans-serif !important;
-}
-
-
-html {
-  direction: rtl;
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: "Changa", sans-serif;
-
-  color: var(--saraha-dark-primary);
-  line-height: 1.6;
-}
-
-.container {
-  width: 90%;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-/* Header */
-.header {
-  background: white;
-  border-bottom: 1px solid var(--black-100);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 68px;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-a.logo{
-  text-decoration: none;
-}
-
-.logo-img {
-  width: 41px;
-  height: 41px;
-}
-
-.logo-text {
-  font-size: 23px;
-  font-weight: 700;
-  line-height: 23px;
-  color: var(--saraha-dark-primary);
-}
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 2.25rem;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.nav-item:hover {
-  opacity: 0.8;
-}
-
-.nav-item span {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--saraha-dark-primary);
-}
-
-.nav-item svg {
-  width: 20px;
-  height: 20px;
-}
-
-.nav-item img {
-  width: 24px;
-  height: 24px;
-}
-
-.auth-buttons {
-  display: flex;
-  align-items: center;
-  gap: 2.25rem;
-}
-
-.auth-item {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.auth-item:hover {
-  opacity: 0.8;
-}
-
-.auth-item span {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--saraha-dark-primary);
-}
-
-.auth-item svg,
-.auth-item img {
-  width: 24px;
-  height: 24px;
-}
-
+@import "globalstyle.css";
 /* Hero Section */
 .hero {
   min-height: 670px;
@@ -762,46 +603,6 @@ details p {
   text-align: right;
 }
 
-/* Footer */
-.footer {
-  background: black;
-}
-
-.footer-content {
-  background: var(--saraha-footer-bg);
-  padding: 2.5rem 1.25rem;
-  text-align: center;
-}
-
-.footer-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-
-.footer-links span {
-  font-family: "Noto Serif", serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--saraha-footer-text);
-  min-width: 160px;
-  cursor: pointer;
-  transition: opacity 0.2s;
-}
-
-.footer-links span:hover {
-  opacity: 0.8;
-}
-
-.footer-copyright {
-  font-family: "Noto Serif", serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--saraha-footer-text-light);
-}
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -841,14 +642,7 @@ details p {
     line-height: 24px;
   }
 
-  .nav {
-    gap: 1rem;
-  }
 
-  .nav-item span,
-  .auth-item span {
-    display: none;
-  }
 
   .section-title {
     font-size: 28px;
@@ -868,22 +662,11 @@ details p {
     grid-template-columns: 1fr;
   }
 
-  .footer-links {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
+  
 }
 
 @media (max-width: 480px) {
-  .container {
-    padding: 0 0.5rem;
-  }
-
-  .header-content {
-    padding: 0 0.5rem;
-  }
-
-  .hero-title {
+   .hero-title {
     font-size: 28px;
     line-height: 35px;
   }
@@ -911,7 +694,4 @@ details p {
     gap: 1rem;
   }
 
-  .nav {
-    gap: 0.5rem;
-  }
 }
