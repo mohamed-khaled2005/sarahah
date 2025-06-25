@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 
 class StaticPages extends Controller
@@ -22,8 +21,8 @@ class StaticPages extends Controller
     return view('global_pages.login_pages.reset_password');
 }
 
-    // static_pages
+    // dynamic_pages
     public function blog() {
-    return view('static_pages.blog');
+    return view('global_pages.dynamic_pages.blog');
 }
 }
