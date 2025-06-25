@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@200..800&display=swap');
 :root {
   --black-800: #333;
   --black-100: #e5e5e5;
@@ -20,6 +21,13 @@
   --faq-text-secondary: #61758a;
   --faq-border: #e5e8eb;
   --article-title: #0d141c;
+    --faq-border: #e0e0e0;
+  --faq-bg: #ffffff;
+  --faq-bg-hover: #f9f9f9;
+  --faq-text: #111827;
+  --faq-text-secondary: #4b5563;
+  --faq-radius: 12px;
+  --faq-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* Reset and Base Styles */
@@ -27,7 +35,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Changa", sans-serif !important;
 }
+
 
 html {
   direction: rtl;
@@ -35,14 +45,14 @@ html {
 }
 
 body {
-  font-family: "Cairo", system-ui, sans-serif;
-  background-color: var(--saraha-bg);
+  font-family: "Changa", sans-serif;
+
   color: var(--saraha-dark-primary);
   line-height: 1.6;
 }
 
 .container {
-  max-width: 1280px;
+  width: 90%;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -67,6 +77,9 @@ body {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+a.logo{
+  text-decoration: none;
 }
 
 .logo-img {
@@ -150,13 +163,17 @@ body {
   min-height: 591px;
   background:
     linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 100%),
-    url("https://cdn.builder.io/api/v1/image/assets/TEMP/efb5766cab3e571c6313cd0ed41402e43aceb5b2")
+    url("../images/hero-sec.jpg")
       center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   padding: 2rem 1rem;
+  background-size: cover;
+  background-position: center;
+
+
 }
 
 .hero-content {
@@ -194,6 +211,7 @@ body {
   cursor: pointer;
   transition: background 0.2s;
   min-width: 167px;
+  box-shadow: 0px 0px  23px #000000;
 }
 
 .hero-btn:hover {
@@ -214,7 +232,7 @@ body {
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
-  max-width: 960px;
+  
   margin: 0 auto;
 }
 
@@ -233,14 +251,14 @@ body {
 }
 
 .content-description {
-  font-family: "Cairo", sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 300;
   line-height: 45px;
   letter-spacing: -1px;
   color: black;
   margin-bottom: 2rem;
-  max-width: 425px;
+ max-width:490px;
+ text-align: justify;
 }
 
 .content-btn {
@@ -257,8 +275,12 @@ body {
   transition: background 0.2s;
   width: 316px;
   height: 55px;
+  box-shadow: 0px 0px  5px #000000;
 }
-
+.login-btn{
+   background: var(--saraha-primary) !important;
+   box-shadow: 0px 0px  5px #000000;
+}
 .content-btn:hover {
   background: #1e4db8;
 }
@@ -477,7 +499,7 @@ body {
   color: var(--saraha-dark-primary);
   text-align: right;
   margin-bottom: 0.75rem;
-  max-width: 960px;
+
   margin-left: auto;
   margin-right: auto;
 }
@@ -486,7 +508,6 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 0.75rem;
-  max-width: 960px;
   margin: 0 auto;
 }
 
@@ -538,14 +559,13 @@ body {
   color: var(--saraha-dark-primary);
   text-align: right;
   margin-bottom: 0.5rem;
-  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 1rem;
 }
 
 .steps {
-  max-width: 960px;
+
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -617,70 +637,85 @@ body {
   color: var(--faq-text);
   text-align: right;
   margin-bottom: 1rem;
-  max-width: 960px;
   margin-left: auto;
   margin-right: auto;
   padding: 0 1rem;
 }
 
 .faq-container {
-  max-width: 960px;
   margin: 0 auto;
   padding: 0 1rem;
 }
 
-.faq-item {
-  border-top: 1px solid var(--faq-border);
-  padding: 0.5rem 0;
+
+details {
+  border: 1px solid var(--faq-border);
+  border-radius: var(--faq-radius);
+  background-color: var(--faq-bg);
+  box-shadow: var(--faq-shadow);
+  margin: 1rem 0;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
 }
 
-.faq-question {
+details:hover {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  background-color: var(--faq-bg-hover);
+}
+
+summary {
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 0;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--faq-text);
+  text-align: right;
+  list-style: none;
+  position: relative;
   background: none;
   border: none;
-  cursor: pointer;
-  text-align: right;
+  padding-inline-end: 2.5rem;
 }
 
-.faq-question span {
-  font-family: "Public Sans", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 21px;
-  color: var(--faq-text);
+summary::-webkit-details-marker {
+  display: none;
 }
 
-.faq-question svg {
+summary::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  inset-inline-end: 1.5rem;
+  transform: translateY(-50%);
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z' fill='%23121417'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 14px 9px;
   width: 14px;
   height: 9px;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease;
 }
 
-.faq-item.active .faq-question svg {
-  transform: rotate(180deg);
+details[open] summary::after {
+  transform: translateY(-50%) rotate(180deg);
 }
 
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-}
-
-.faq-item.active .faq-answer {
-  max-height: 200px;
-  padding-bottom: 0.5rem;
-}
-
-.faq-answer p {
+details p {
+  padding: 0 1.5rem 1rem;
   font-family: "Public Sans", sans-serif;
-  font-size: 14px;
-  line-height: 21px;
+  font-size: 15px;
+  line-height: 1.8;
   color: var(--faq-text-secondary);
   text-align: right;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Articles Section */
@@ -692,7 +727,6 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 0.75rem;
-  max-width: 960px;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -704,9 +738,8 @@ body {
 
 .article-card img {
   width: 100%;
-  height: 125px;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 1px;
   margin-bottom: 0.75rem;
 }
 

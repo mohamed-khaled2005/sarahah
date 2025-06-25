@@ -3,29 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>صراحة | تلقي رسائل صادقة من أصدقائك</title>
+    <title>صراحة - تلقي رسائل صادقة من أصدقائك</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Noto+Serif:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href='{{url("css/style.css")}}'>
+    <link rel="stylesheet" href="{{url('css/style.css')}}">
   </head>
   <body>
     <!-- Header -->
     <header class="header">
       <div class="container">
         <div class="header-content">
-          <!-- Logo -->
-          <div class="logo">
+          <a href="/" class="logo"><div class="logo">
             <img
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0"
               alt="Logo"
               class="logo-img"
             />
             <h1 class="logo-text">صراحة</h1>
-          </div>
+          </div></a>
+         
 
           <!-- Navigation -->
           <nav class="nav">
@@ -139,11 +139,10 @@
                   <div class="input-container">
                     <input
                       type="email"
-                      placeholder="Email or phone number"
+                      placeholder="الأيميل أو اسم المستخدم"
                       class="form-input"
                     />
-                    <div class="input-icon"></div>
-                  </div>
+                 
                 </div>
 
                 <!-- Password Field -->
@@ -152,7 +151,7 @@
                   <div class="input-container">
                     <input
                       type="password"
-                      placeholder="Enter password"
+                      placeholder="أدخل كلمة المرور"
                       class="form-input"
                     />
                     <button type="button" class="password-toggle">
@@ -177,17 +176,15 @@
                     <div class="toggle-switch">
                       <div class="toggle-knob"></div>
                     </div>
-                    <span>Remember me</span>
+                    <span>تذكرني</span>
                   </div>
-                  <a href="#" class="forgot-password">Forgot password?</a>
+                  <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
                 </div>
 
                 <!-- Login Button -->
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/5bf4ca5facb09ba3ef785cf3a1a2ee272da06a61"
-                  alt="Login Button"
-                  class="login-btn-img"
-                />
+                  <button type="button" class="google-btn login-btn">
+                  تسجيل الدخول
+                </button>
 
                 <!-- Divider -->
                 <div class="divider"></div>
@@ -212,7 +209,7 @@
                       fill="#EA4335"
                     />
                   </svg>
-                  Or sign in with Google
+                  تسجيل الدخول باستخدام حساب Google
                 </button>
 
                 <!-- Sign Up Link -->
@@ -266,14 +263,7 @@
             <!-- Feature 3 -->
             <div class="feature-card">
               <div class="feature-icon">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M9.99997 0.25C4.61519 0.25 0.249969 4.61522 0.249969 10C0.249969 15.3848 4.61519 19.75 9.99997 19.75C15.3847 19.75 19.75 15.3848 19.75 10C19.7443 4.61758 15.3824 0.255684 9.99997 0.25Z"
-                    fill="#0D121C"
-                  />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M14 7H16C18.7614 7 21 9.23858 21 12C21 14.7614 18.7614 17 16 17H14M10 7H8C5.23858 7 3 9.23858 3 12C3 14.7614 5.23858 17 8 17H10M8 12H16" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
               </div>
               <h3 class="feature-title">رابطك الخاص</h3>
               <p class="feature-description">
@@ -284,14 +274,7 @@
             <!-- Feature 4 -->
             <div class="feature-card">
               <div class="feature-icon">
-                <svg width="15" height="22" viewBox="0 0 15 22" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M11.9 0.5H2.89996C1.65732 0.5 0.649963 1.50736 0.649963 2.75V19.25C0.649963 20.4926 1.65732 21.5 2.89996 21.5H11.9C13.1426 21.5 14.15 20.4926 14.15 19.25V2.75C14.15 1.50736 13.1426 0.5 11.9 0.5Z"
-                    fill="#0D121C"
-                  />
-                </svg>
+                <svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 251.659 251.659" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g id="Layer_57_31_"> <g> <path d="M23.869,19.622h96.471v17.341h19.609V0H4.245v203.576h92.988v-33.759H23.869V19.622z M74.961,180.278 c3.615,0,6.543,2.93,6.543,6.541c0,3.605-2.928,6.54-6.543,6.54c-3.613,0-6.541-2.93-6.541-6.54 C68.42,183.203,71.343,180.278,74.961,180.278z"></path> <path d="M111.71,48.083v203.576h135.704V48.083H111.71z M182.426,241.438c-3.61,0-6.54-2.93-6.54-6.54 c0-3.615,2.93-6.541,6.54-6.541c3.615,0,6.546,2.931,6.546,6.541C188.972,238.503,186.041,241.438,182.426,241.438z M227.787,217.901h-96.453V67.705h96.474L227.787,217.901z"></path> </g> </g> </g> </g></svg>
               </div>
               <h3 class="feature-title">متوافق مع جميع الأجهزة</h3>
               <p class="feature-description">تصميم متجاوب كليًا.</p>
@@ -300,14 +283,7 @@
             <!-- Feature 5 -->
             <div class="feature-card">
               <div class="feature-icon">
-                <svg width="24" height="19" viewBox="0 0 24 19" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M23.05 9.625C23.048 7.59744 21.8808 5.75154 20.05 4.88031V4.75C20.0482 2.76581 18.7471 1.01696 16.8471 0.445025C14.9471 -0.126909 12.8968 0.613073 11.8 2.26656C10.7032 0.613073 8.65285 -0.126909 6.75288 0.445025C4.85291 1.01696 3.55176 2.76581 3.54999 4.75V4.88031C1.71745 5.74923 0.549285 7.59595 0.549285 9.62406C0.549285 11.6522 1.71745 13.4989 3.54999 14.3678V14.5C3.55176 16.4842 4.85291 18.233 6.75288 18.805C8.65285 19.3769 10.7032 18.6369 11.8 16.9834C12.8968 18.6369 14.9471 19.3769 16.8471 18.805C18.7471 18.233 20.0482 16.4842 20.05 14.5V14.3678C21.8805 13.4972 23.0477 11.652 23.05 9.625Z"
-                    fill="#0D121C"
-                  />
-                </svg>
+               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 15L21 21M21 15L15 21M10 21V14.6627C10 14.4182 10 14.2959 9.97237 14.1808C9.94787 14.0787 9.90747 13.9812 9.85264 13.8917C9.7908 13.7908 9.70432 13.7043 9.53137 13.5314L3.46863 7.46863C3.29568 7.29568 3.2092 7.2092 3.14736 7.10828C3.09253 7.01881 3.05213 6.92127 3.02763 6.81923C3 6.70414 3 6.58185 3 6.33726V4.6C3 4.03995 3 3.75992 3.10899 3.54601C3.20487 3.35785 3.35785 3.20487 3.54601 3.10899C3.75992 3 4.03995 3 4.6 3H19.4C19.9601 3 20.2401 3 20.454 3.10899C20.6422 3.20487 20.7951 3.35785 20.891 3.54601C21 3.75992 21 4.03995 21 4.6V6.33726C21 6.58185 21 6.70414 20.9724 6.81923C20.9479 6.92127 20.9075 7.01881 20.8526 7.10828C20.7908 7.2092 20.7043 7.29568 20.5314 7.46863L17 11" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
               </div>
               <h3 class="feature-title">فلترة ذكية</h3>
               <p class="feature-description">
@@ -340,14 +316,7 @@
             <!-- Step 1 -->
             <div class="step">
               <div class="step-icon">
-                <svg width="23" height="17" viewBox="0 0 23 17" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M23 9.75C23 10.1642 22.6642 10.5 22.25 10.5H20.75V12C20.75 12.4142 20.4142 12.75 20 12.75C19.5858 12.75 19.25 12.4142 19.25 12V10.5H17.75C17.3358 10.5 17 10.1642 17 9.75C17 9.33579 17.3358 9 17.75 9H19.25V7.5C19.25 7.08579 19.5858 6.75 20 6.75C20.4142 6.75 20.75 7.08579 20.75 7.5V9H22.25C22.6642 9 23 9.33579 23 9.75Z"
-                    fill="#0D121C"
-                  />
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M20 18L14 18M17 15V21M4 21C4 17.134 7.13401 14 11 14C11.695 14 12.3663 14.1013 13 14.2899M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                 <div class="step-line"></div>
               </div>
               <div class="step-content">
@@ -384,14 +353,7 @@
             <div class="step">
               <div class="step-icon">
                 <div class="step-line-top"></div>
-                <svg width="20" height="19" viewBox="0 0 20 19" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M19.4163 7.04225L10.4163 1.04225C10.1642 0.874101 9.83578 0.874101 9.58375 1.04225L0.58375 7.04225C0.375087 7.18147 0.249837 7.41578 0.25 7.66663V17.4166C0.25 18.2451 0.921573 18.9166 1.75 18.9166H18.25C19.0784 18.9166 19.75 18.2451 19.75 17.4166V7.66663C19.7502 7.41578 19.6249 7.18147 19.4163 7.04225Z"
-                    fill="#0D121C"
-                  />
-                </svg>
+               <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M12 2L12 10M12 10L15 7M12 10L9 7" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M2 13H5.16026C6.06543 13 6.51802 13 6.91584 13.183C7.31367 13.3659 7.60821 13.7096 8.19729 14.3968L8.80271 15.1032C9.39179 15.7904 9.68633 16.1341 10.0842 16.317C10.482 16.5 10.9346 16.5 11.8397 16.5H12.1603C13.0654 16.5 13.518 16.5 13.9158 16.317C14.3137 16.1341 14.6082 15.7904 15.1973 15.1032L15.8027 14.3968C16.3918 13.7096 16.6863 13.3659 17.0842 13.183C17.482 13 17.9346 13 18.8397 13H22" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> <path d="M22 12.0001C22 16.7141 22 19.0712 20.5355 20.5356C19.0711 22.0001 16.714 22.0001 12 22.0001C7.28595 22.0001 4.92893 22.0001 3.46447 20.5356C2 19.0712 2 16.7141 2 12.0001C2 7.28604 2 4.92902 3.46447 3.46455C4.28094 2.64808 5.37486 2.28681 7 2.12695M17 2.12695C18.6251 2.28681 19.7191 2.64808 20.5355 3.46455C21.5093 4.43829 21.8356 5.80655 21.9449 8" stroke="#1C274C" stroke-width="1.5" stroke-linecap="round"></path> </g></svg>
               </div>
               <div class="step-content">
                 <h3 class="step-title">استقبل الرسائل بسريع</h3>
@@ -407,96 +369,42 @@
         <section class="faq-section">
           <h2 class="section-title-large">الأسئلة الشائعة</h2>
           <div class="faq-container">
-            <div class="faq-item active">
-              <button class="faq-question">
-                <span>كيف يعمل موقع "صراحة"؟</span>
-                <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z"
-                    fill="#121417"
-                  />
-                </svg>
-              </button>
-              <div class="faq-answer">
-                <p>
-                  ببساطة، تقوم بإنشاء حساب والحصول على رابط خاص بك. بعد ذلك
-                  تشارك الرابط مع أصدقائك أو متابعينك ليستطيعوا إرسال رسائل
-                  مجهولة لك دون معرفة هويتهم. يمكنك قراءة هذه الرسائل من لوحة
-                  التحكم الخاصة بك.
-                </p>
-              </div>
-            </div>
+  <details open>
+    <summary>كيف يعمل موقع "صراحة"؟</summary>
+    <p>
+      ببساطة، تقوم بإنشاء حساب والحصول على رابط خاص بك. بعد ذلك تشارك الرابط مع أصدقائك أو متابعينك ليستطيعوا إرسال رسائل مجهولة لك دون معرفة هويتهم. يمكنك قراءة هذه الرسائل من لوحة التحكم الخاصة بك.
+    </p>
+  </details>
 
-            <div class="faq-item">
-              <button class="faq-question">
-                <span>هل يمكن لأي شخص أن يعرف من أرسل الرسالة؟</span>
-                <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z"
-                    fill="#121417"
-                  />
-                </svg>
-              </button>
-              <div class="faq-answer">
-                <p></p>
-              </div>
-            </div>
+  <details>
+    <summary>هل يمكن لأي شخص أن يعرف من أرسل الرسالة؟</summary>
+    <p>
+      لا، جميع الرسائل تبقى مجهولة المصدر تماماً، ولا يمكن للمستلم معرفة هوية المرسل.
+    </p>
+  </details>
 
-            <div class="faq-item">
-              <button class="faq-question">
-                <span>هل الموقع آمن؟</span>
-                <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z"
-                    fill="#121417"
-                  />
-                </svg>
-              </button>
-              <div class="faq-answer">
-                <p></p>
-              </div>
-            </div>
+  <details>
+    <summary>هل الموقع آمن؟</summary>
+    <p>
+      نعم، يتم تأمين بيانات المستخدمين وعدم مشاركة أي معلومات حساسة. لكن يُفضل عدم مشاركة بيانات شخصية حساسة في الرسائل.
+    </p>
+  </details>
 
-            <div class="faq-item">
-              <button class="faq-question">
-                <span>هل يمكنني الرد على الرسائل؟</span>
-                <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z"
-                    fill="#121417"
-                  />
-                </svg>
-              </button>
-              <div class="faq-answer">
-                <p></p>
-              </div>
-            </div>
+  <details>
+    <summary>هل يمكنني الرد على الرسائل؟</summary>
+    <p>
+      لا يمكن الرد مباشرة على المرسل لأنه مجهول، لكن يمكنك نشر الرسالة مع رد علني في صفحتك الشخصية.
+    </p>
+  </details>
 
-            <div class="faq-item">
-              <button class="faq-question">
-                <span>ماذا أفعل إذا وصلتني رسالة مسيئة؟</span>
-                <svg width="14" height="9" viewBox="0 0 14 9" fill="none">
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z"
-                    fill="#121417"
-                  />
-                </svg>
-              </button>
-              <div class="faq-answer">
-                <p></p>
-              </div>
-            </div>
-          </div>
+  <details>
+    <summary>ماذا أفعل إذا وصلتني رسالة مسيئة؟</summary>
+    <p>
+      يمكنك الإبلاغ عن الرسالة من خلال زر "إبلاغ" ليتم مراجعتها من قبل فريق الإشراف، كما يمكنك تجاهلها تماماً.
+    </p>
+  </details>
+</div>
+
         </section>
 
         <!-- Articles Section -->
