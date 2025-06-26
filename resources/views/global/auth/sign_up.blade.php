@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Sign Up')
 @section('page-css')
-    <link rel="stylesheet" href="{{ url('css/pages/login_pages/signup.css') }}">
+    <link rel="stylesheet" href="{{ url('css/pages/auth/signup.css') }}">
 @endsection
 
 @section('main')

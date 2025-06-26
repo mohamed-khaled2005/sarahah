@@ -1,0 +1,93 @@
+@import url("../../globalstyle.css");
+  :root {
+    --color-background: #f7fafc;
+    --color-background-alt: #f7fafa;
+    --color-text-primary: #0d121c;
+    --color-text-secondary: #121417;
+    --color-text-muted: #667582;
+    --color-text-footer: #d5e3ff;
+    --color-text-footer-alt: #d7e4ff;
+    --color-border: #e5e8eb;
+    --color-icon-bg: #e8edf2;
+    --color-footer-bg: #000000;
+  }
+
+  /* Positioning for merged icons - may need adjustments */
+  .icon-part-1 { top: 5px; left: 4px; width: 15px; height: 13px; transform: rotate(90deg); }
+  .icon-part-2 { top: 6px; left: 11px; width: 12px; height: 13px; }
+  .icon-part-3 { top: 4px; left: 8px; width: 8px; height: 7px; }
+  .icon-part-4 { top: 13px; left: 13px; width: 8px; height: 7px; }
+  .icon-part-5 { top: 13px; left: 2px; width: 8px; height: 7px; }
+  .icon-part-6 { top: 5px; left: 3px; width: 18px; height: 7px; }
+
+  @media (max-width: 992px) {
+    .main-nav {
+      display: none; /* Hide nav on smaller screens, requires JS for hamburger menu */
+    }
+  }
+
+/* CSS from section:articles */
+.articles-section {
+    padding: 72px 0;
+  }
+  .section-title {
+    text-align: center;
+    font-family: var(--font-main);
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--color-text-primary);
+    margin: 0 0 40px 0;
+  }
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .article-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  .article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+  .article-card a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .card-image {
+    width: 100%;
+    height: 125px;
+    object-fit: cover;
+  }
+  .card-content {
+    padding: 12px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .card-title {
+    font-family: var(--font-main);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-text-primary);
+    margin: 0 0 4px 0;
+  }
+  .card-description {
+    font-family: var(--font-main);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 21px;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  @media (max-width: 992px) {
+    .articles-grid {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+  }
+

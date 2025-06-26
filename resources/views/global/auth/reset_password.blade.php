@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title','Reset Password')
 @section('page-css')
-    <link rel="stylesheet" href="{{ url('css/pages/login_pages/reset_password.css') }}">
+    <link rel="stylesheet" href="{{ url('css/pages/auth/reset_password.css') }}">
 @endsection
 @section('main')
 <main id="section-main" class="main-content reset-password-section">

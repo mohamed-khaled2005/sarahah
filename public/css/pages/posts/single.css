@@ -1,0 +1,289 @@
+      @import url("../../globalstyle.css");
+
+
+      /* Main Content */
+      .main {
+        padding: 12px 0;
+      }
+
+      /* Hero Section */
+      .hero {
+        margin-bottom: 16px;
+      }
+
+      .hero-image {
+        height: 320px;
+        background:
+          linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%),
+          url("https://cdn.builder.io/api/v1/image/assets/TEMP/115937bfa8e726950eef3e629beae9a0780e6697")
+            center/cover;
+        border-radius: 8px;
+        position: relative;
+        display: flex;
+        align-items: flex-end;
+      }
+
+      .hero-content {
+        padding: 16px;
+        color: white;
+        width: 100%;
+      }
+
+      .hero-title {
+        font-family: "Noto Serif", serif;
+        font-size: 28px;
+        font-weight: 700;
+        line-height: 35px;
+      }
+
+      .article-meta {
+        padding: 4px 0;
+        text-align: right;
+      }
+
+      .meta-text {
+        font-family: "Noto Serif", serif;
+        font-size: 14px;
+        color: #6e6387;
+      }
+
+      /* Article Content */
+      .article {
+        padding: 16px 0;
+        text-align: right;
+      }
+
+      .article-content {
+        font-family: "Noto Serif", serif;
+        color: #121217;
+        line-height: 24px;
+        margin-bottom: 32px;
+      }
+
+      .article-title {
+        font-size: 18px;
+        font-weight: 400;
+        margin-bottom: 16px;
+      }
+
+      .article-paragraph {
+        margin-bottom: 16px;
+        font-size: 16px;
+      }
+
+      .article-section {
+        margin-bottom: 16px;
+      }
+
+      .section-title {
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+
+      .article-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .article-list li {
+        margin-bottom: 4px;
+        position: relative;
+        padding-right: 16px;
+      }
+
+      .article-list li::before {
+        content: "•";
+        position: absolute;
+        right: 0;
+        color: #121217;
+      }
+
+      /* Author Section */
+      .author-section {
+        padding: 16px 0;
+        text-align: right;
+      }
+
+      .section-header {
+        font-family: "Noto Serif", serif;
+        font-size: 18px;
+        font-weight: 700;
+        color: #121217;
+        margin-bottom: 16px;
+      }
+
+      .author-card {
+        background: white;
+        padding: 16px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        justify-content: flex-end;
+        flex-direction: row-reverse;
+      }
+
+      .author-info {
+        text-align: right;
+      }
+
+      .author-name {
+        font-family: "Noto Serif", serif;
+        font-size: 16px;
+        font-weight: 500;
+        color: #121217;
+        margin-bottom: 4px;
+      }
+
+      .author-bio {
+        font-family: "Noto Serif", serif;
+        font-size: 14px;
+        color: #6e6387;
+      }
+
+      .author-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+      }
+
+      /* Related Articles */
+      .related-articles {
+        padding: 16px 0;
+      }
+
+      .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 12px;
+      }
+
+      @media (min-width: 768px) {
+        .articles-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .articles-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      .article-card {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .article-image {
+        width: 100%;
+        height: 169px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .card-content {
+        padding: 12px;
+      }
+
+      .card-title {
+        font-family: "Noto Serif", serif;
+        font-size: 16px;
+        color: #121217;
+      }
+
+      /* Comments Section */
+      .comments-section {
+        padding: 16px 0;
+      }
+
+      .comment-form {
+        margin-bottom: 24px;
+      }
+
+      .comment-textarea {
+        width: 100%;
+        min-height: 144px;
+        background: white;
+        border: 1px solid #dedbe5;
+        border-radius: 8px;
+        padding: 15px;
+        font-family: "Noto Serif", serif;
+        resize: vertical;
+        margin-bottom: 12px;
+      }
+
+      .submit-btn {
+        background: #7847eb;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-family: "Noto Serif", serif;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        float: right;
+      }
+
+      .submit-btn:hover {
+        background: #6835d1;
+      }
+
+      .comments-list {
+        space-y: 16px;
+      }
+
+      .comment {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        justify-content: flex-end;
+        margin-bottom: 16px;
+        flex-direction: row-reverse;
+      }
+
+      .comment-content {
+        text-align: right;
+        flex: 1;
+      }
+
+      .comment-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        justify-content: flex-start;
+        margin-bottom: 8px;
+      }
+
+      .comment-time {
+        font-family: "Noto Serif", serif;
+        font-size: 14px;
+        color: #6e6387;
+      }
+
+      .comment-author {
+        font-family: "Noto Serif", serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: #121217;
+      }
+
+      .comment-text {
+        font-family: "Noto Serif", serif;
+        font-size: 14px;
+        color: #121217;
+      }
+
+      .comment-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .clearfix::after {
+        content: "";
+        display: table;
+        clear: both;
+      }
