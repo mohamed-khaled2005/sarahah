@@ -1,0 +1,234 @@
+@import url('global.css');
+
+.nav-container {
+    display: block;
+    align-items: center;
+    flex: 1;
+    height: auto;}
+/* Main Content Styles */
+      .main-content {
+        display: flex;
+        width: 100%;
+        flex: 1;
+        flex-direction: column;
+      }
+
+      .content-container {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 0 16px;
+      }
+
+      @media (min-width: 1024px) {
+        .content-container {
+          padding: 0;
+        }
+      }
+
+      /* Page Title */
+      .page-title {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 12px;
+       
+      }
+
+      .title-text {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        line-height: 32px;
+        color: white;
+      }
+
+      @media (min-width: 640px) {
+        .title-text {
+          font-size: 32px;
+          line-height: 40px;
+          padding: 10px 0;
+        }
+      }
+
+      /* Search Bar Styles */
+      .search-container {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 0;
+      }
+
+      .search-bar {
+        display: flex;
+        height: 48px;
+        width: 100%;
+        min-width: 160px;
+        align-items: flex-start;
+        justify-content: flex-end;
+      }
+
+      .search-wrapper {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: flex-end;
+        border-radius: 12px;
+      }
+
+      .search-input-container {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        border-radius: 0 12px 12px 0;
+        background-color: #e8ebf2;
+        padding: 8px 16px 8px 8px;
+      }
+
+      .search-input {
+        width: 100%;
+        background: transparent;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        color: #4d5e99;
+        border: none;
+        outline: none;
+        text-align: right;
+        direction: rtl;
+      }
+
+      .search-input::placeholder {
+        color: #4d5e99;
+      }
+
+      .search-icon-container {
+        display: flex;
+        height: 40px;
+        width: 40px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px 0 0 12px;
+        background-color: #e8ebf2;
+        
+      }
+
+      /* Message List Styles */
+      .message-list {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .message-card {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: space-between;
+        background-color: #f7fafc;
+        padding: 12px 16px;
+      }
+
+      .message-content {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: center;
+        padding-left: 12px;
+      }
+
+      .message-title {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        margin-bottom: 4px;
+      }
+
+      .message-title-text {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 24px;
+        color: #0d121c;
+      }
+
+      .message-text {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+        margin-bottom: 4px;
+      }
+
+      .message-body {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
+        color: #4d5e99;
+        text-align: right;
+      }
+
+      .message-time {
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .message-time-text {
+        font-family: "Plus Jakarta Sans", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 21px;
+        color: #4d5e99;
+      }
+
+      .message-icon {
+        display: flex;
+        height: 66px;
+        flex-direction: column;
+        align-items: flex-start;
+        flex-shrink: 0;
+      }
+
+      .icon-wrapper {
+        display: flex;
+        height: 28px;
+        width: 28px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* SVG Icons */
+      .bell-icon {
+        width: 20px;
+        height: 20px;
+        fill: #0d141c;
+      }
+
+      .search-icon {
+        width: 24px;
+        height: 24px;
+        fill: #4d5e99;
+      }
+
+      .check-icon {
+        width: 19px;
+        height: 14px;
+        fill: #0d121c;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 640px) {
+        .message-card {
+          padding: 8px 12px;
+        }
+
+        .user-section {
+          gap: 12px;
+        }
+      }
