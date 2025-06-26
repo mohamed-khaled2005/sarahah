@@ -1,0 +1,247 @@
+@import url('global.css');
+
+        .nav-container{
+            
+            height: 50px;
+            margin-bottom: 10px;
+        }
+      /* Main Content Styles */
+      .main-content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 0 16px;
+      }
+
+      .content-wrapper {
+        max-width: 1152px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 32px 0;
+        justify-content: space-between;
+      }
+
+      .profile-section {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 24px;
+        padding: 0 16px;
+        width: 100%;
+      }
+
+      .profile-image-container {
+        position: relative;
+      }
+
+      .profile-image {
+        width: 280px;
+        height: 258px;
+        border-radius: 20px;
+        object-fit: cover;
+      }
+
+      .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-width: 350px;
+        width: 100%;
+      }
+
+      .action-button {
+        font-family: "Spline Sans", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 21px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        height: 40px;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+        color: #ffffff;
+      }
+
+      .action-button.primary {
+        background-color: #783df5;
+      }
+
+      .action-button.secondary {
+        background-color: #2e2938;
+      }
+
+      .action-button:hover {
+        opacity: 0.9;
+      }
+
+      .form-section {
+        flex: 1;
+        max-width: 492px;
+        width: 100%;
+      }
+
+      .form-container {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .form-title {
+        padding: 0 16px;
+      }
+
+      .form-title h1 {
+        color: #ffffff;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 40px;
+        text-align: right;
+      }
+
+      .form-field {
+        padding: 0 16px;
+      }
+
+      .field-container {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .field-label {
+        color: #ffffff;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: right;
+      }
+
+      .field-input {
+        background-color: #293638;
+        border-radius: 12px;
+        min-height: 64px;
+        padding: 16px;
+        border: none;
+        color: #ffffff;
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .field-textarea {
+        background-color: #293638;
+        border-radius: 12px;
+        min-height: 144px;
+        padding: 16px;
+        border: none;
+        color: #ffffff;
+        font-family: "Space Grotesk", sans-serif;
+        resize: vertical;
+      }
+
+      .field-input-group {
+        display: flex;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .field-input-flex {
+        flex: 1;
+        background-color: #293638;
+        height: 56px;
+        padding: 16px;
+        border: none;
+        color: #ffffff;
+        font-family: "Space Grotesk", sans-serif;
+      }
+
+      .field-input-icon {
+        background-color: #293638;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 16px;
+      }
+
+      .copy-icon {
+        width: 24px;
+        height: 24px;
+        fill: #9cb3ba;
+      }
+
+      .status-section {
+        padding: 16px;
+      }
+
+      .status-text {
+        color: #ffffff;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .save-button-section {
+        padding: 0 16px;
+      }
+
+      .save-button {
+        background-color: #265cff;
+        color: #ffffff;
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 21px;
+        padding: 10px 16px;
+        border-radius: 12px;
+        height: 40px;
+        width: 100%;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+
+      .save-button:hover {
+        opacity: 0.9;
+      }
+
+ 
+
+      /* Responsive Design */
+      @media (min-width: 1024px) {
+
+
+        .content-wrapper {
+          flex-direction: row;
+          gap: 40px;
+        }
+
+        .profile-section {
+          padding: 0 32px;
+          width: auto;
+        }
+
+        .profile-image {
+          width: 351px;
+          height: 323px;
+        }
+
+        .action-buttons {
+          max-width: 390px;
+        }
+
+        .form-title h1 {
+          font-size: 32px;
+        }
+      }
+
+      @media (min-width: 640px) {
+        .profile-image {
+          width: 280px;
+          height: 258px;
+        }
+      }
