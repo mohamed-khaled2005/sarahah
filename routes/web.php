@@ -16,11 +16,11 @@ Route::get('/blog/category',[StaticPages::class,'posts_category']);
 Route::get('single',[StaticPages::class,'pages']);
 Route::get('message',[StaticPages::class,'message_page']);
 // Users_pages
-Route::get('/users',[StaticPages::class,'user_index']);
-Route::get('/users/inbox',[StaticPages::class,'user_inbox']);
-Route::get('/users/profile',[StaticPages::class,'user_profile']);
-Route::get('/users/statistics',[StaticPages::class,'user_statistics']);
-Route::get('/users/settings',[StaticPages::class,'user_settings']);
+Route::get('/user',[StaticPages::class,'user_index']);
+Route::get('/user/inbox',[StaticPages::class,'user_inbox']);
+Route::get('/user/profile',[StaticPages::class,'user_profile']);
+Route::get('/user/statistics',[StaticPages::class,'user_statistics']);
+Route::get('/user/settings',[StaticPages::class,'user_settings']);
 
 
 // Admin_pages
