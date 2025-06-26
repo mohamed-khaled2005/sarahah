@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 @section('title','صراحة - تلقي رسائل صادقة من أصدقائك')
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/style.css') }}">

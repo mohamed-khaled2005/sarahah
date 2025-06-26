@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('layouts.app')
 @section('title','Reset Password')
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/login_pages/reset_password.css') }}">

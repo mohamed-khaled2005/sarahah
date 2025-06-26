@@ -8,21 +8,79 @@ class StaticPages extends Controller
 
     
     public function index(){
-    return view('welcome');
+    return view('home');
 }
-    // login_pages
+    // auth_pages
     public function login() {
-    return view('global_pages.login_pages.login');
+    return view('global.auth.login');
 }
     public function sign_up() {
-    return view('global_pages.login_pages.sign_up');
+    return view('global.auth.sign_up');
 }
     public function reset_password() {
-    return view('global_pages.login_pages.reset_password');
+    return view('global.auth.reset_password');
 }
 
-    // dynamic_pages
-    public function blog() {
-    return view('global_pages.dynamic_pages.blog');
+
+    // Global pages
+
+    public function posts_index() {
+    return view('global.posts.index');
 }
+    public function posts_single() {
+    return view('global.posts.single');
+}
+    public function posts_category() {
+    return view('global.posts.category');
+}
+    public function pages() {
+    return view('global.pages.single');
+}
+
+    public function message_page() {
+    return view('global.static.message');
+}
+    // admin_pages
+    public function admin_index() {
+    return view('admin.dashboard');
+}
+    public function admin_users() {
+    return view('admin.users');
+}
+    public function admin_messages() {
+    return view('admin.messages');
+}
+    public function admin_posts() {
+    return view('admin.posts');
+}
+    public function admin_reports() {
+    return view('admin.reports');
+}
+    public function admin_ads() {
+    return view('admin.ads');
+}
+    public function admin_settings() {
+    return view('admin.settings');
+}
+
+    // User_pages
+    public function user_index() {
+    return view('user.dashboard');
+}
+    public function user_inbox() {
+    return view('user.inbox');
+}
+    public function user_profile() {
+    return view('user.profile');
+}
+    public function user_statistics() {
+    return view('user.statistics');
+}
+    public function user_settings() {
+    return view('user.settings');
+}
+
+
+
+
 }
