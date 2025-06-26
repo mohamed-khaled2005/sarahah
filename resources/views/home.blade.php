@@ -315,61 +315,43 @@
         <section class="articles-section">
           <h2 class="section-title-large">أحدث المقالات</h2>
           <div class="articles-grid">
-            <article class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/7f48a815000fc9a12b13494cc28f3bdf2a6eaec6"
-                alt=""
-              />
-              <div class="article-content">
-                <h3>تحليل جديد للاتجاهات السياسية في الشرق الأوسط</h3>
-                <p>
-                  مقال يتناول تحليلات الاتجاهات السياسية الجديدة في الشرق الأوسط
-                  وتأثيراتها على المستقبل.
-                </p>
-              </div>
-            </article>
-
-            <article class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/8abcea09ccb1685af9d28d9ee4b0eae5809d56b6"
-                alt=""
-              />
-              <div class="article-content">
-                <h3>تأثير التكنولوجيا على التعليم الافتراضي</h3>
-                <p>
-                  يتناول هذا المقال تأثير التكنولوجيا على تعليم الأجيال
-                  المحرومين والتحديات المتغيرة.
-                </p>
-              </div>
-            </article>
-
-            <article class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/a1b5aea9f2474ee923554e674205d4a157db4e38"
-                alt=""
-              />
-              <div class="article-content">
-                <h3>الصحافة والإعلام في عالم الذكاء الاصطناعي</h3>
-                <p>
-                  يتناول هذا المقال الصحافة والإعلام في عالم الذكاء الاصطناعي
-                  وتأثيراتها على المجتمع.
-                </p>
-              </div>
-            </article>
-
-            <article class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17"
-                alt=""
-              />
-              <div class="article-content">
-                <h3>تجارب وتحديات الرياضة العالمية الجديدة</h3>
-                <p>
-                  يتناول هذا المقال تجارب وتحديات الرياضة العالمية الجديدة
-                  وتأثيراتها على المشاهدين.
-                </p>
-              </div>
-            </article>
+         <article class="article-card">
+        <a href="#">
+          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
+          <div class="card-content">
+            <h3 class="card-title">الحياة بعد الانفصال</h3>
+            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
+          </div>
+        </a>
+      </article>
+      <article class="article-card">
+        <a href="#">
+          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
+          <div class="card-content">
+            <h3 class="card-title">التعافي مع الانفصال</h3>
+            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
+          </div>
+        </a>
+      </article>
+      <article class="article-card">
+        <a href="#">
+          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
+          <div class="card-content">
+            <h3 class="card-title">التعافي مع الانفصال</h3>
+            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
+          </div>
+        </a>
+      </article>
+      <article class="article-card">
+        <a href="#">
+          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
+          <div class="card-content">
+            <h3 class="card-title">الحياة بعد الانفصال</h3>
+            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
+          </div>
+        </a>
+      </article>
+    
           </div>
         </section>
       </div>

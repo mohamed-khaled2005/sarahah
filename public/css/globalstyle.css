@@ -28,6 +28,7 @@
   --faq-text-secondary: #4b5563;
   --faq-radius: 12px;
   --faq-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --color-background-body: #f7fafc;
 }
 
 /* Reset and Base Styles */
@@ -70,7 +71,7 @@ html {
 
 /* Header */
 .header {
-  background: white;
+  background: var(--color-background-body);
   border-bottom: 1px solid var(--black-100);
   position: sticky;
   top: 0;

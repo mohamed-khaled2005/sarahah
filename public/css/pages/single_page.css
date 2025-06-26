@@ -1,0 +1,65 @@
+@import url("../globalstyle.css");
+/* CSS from section:privacy-policy */
+.singlecontent-section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  
+  section#single {
+    margin-top: 100px;
+    justify-content: center;
+    display: flex;
+    flex: 1;
+}
+  .content-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .main-title {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 32px;
+  }
+
+  .single-article {
+    margin-bottom: 28px;
+  }
+
+  .single-article:last-child {
+    margin-bottom: 0;
+  }
+
+  .article-title {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 23px;
+    margin-bottom: 12px;
+  }
+
+  .article-text {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .single-section {
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+    .main-title {
+      font-size: 28px;
+      line-height: 36px;
+      margin-bottom: 24px;
+    }
+    .article-title {
+      font-size: 16px;
+      line-height: 21px;
+    }
+    .article-text {
+      font-size: 14px;
+      line-height: 22px;
+    }
+  }
