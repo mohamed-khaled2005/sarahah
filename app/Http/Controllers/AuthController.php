@@ -13,31 +13,27 @@ class AuthController extends Controller
         public function login() {
     return view('global.auth.login');
 }
-
         public function login_user(Request $request) {
-    $log_data=$request->validate(
-                    [
-                        'emailorusername'    => 'required',
-                        'password' => 'required',
-                        ]
-            );
+    $log_data = $request->validate([
+        'emailorusername' => 'required|string',
+        'password' => 'required|string',
+    ]);
 
-            if(Auth::attempt(['email'=>$request->emailorusername,'password'=>$request->password])||Auth::attempt(['username'=>$request->emailorusername,'password'=>$request->password]))
-            {
-                 if(Auth::user()->is_admin)
-                    {
-                     return redirect()->route("admin.index");
-                    }
-                    else{
-                        return redirect()->route("user");
-                    }
-                
+    // نحدد نوع الحقل بناءً على هل المدخل إيميل أم لا
+    $fieldType = filter_var($request->emailorusername, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-            }
-
-            else{
-                return back()->withErrors("خطا في بيانات الدخول");
-            }
+    // محاولة واحدة فقط
+    if (Auth::attempt([$fieldType => $request->emailorusername, 'password' => $request->password])) {
+        // تحقق من نوع المستخدم
+        if (Auth::user()->is_admin) {
+            return redirect()->route("admin.index");
+        } else {
+            return redirect()->route("user");
+        }
+    } else {
+        // إعادة الصفحة مع رسالة خطأ
+        return back()->withErrors(['emailorusername' => 'خطأ في بيانات الدخول']);
+    }
 }
 
     public function sign_up() {
