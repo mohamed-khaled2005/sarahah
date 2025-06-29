@@ -3,11 +3,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticPages;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', [StaticPages::class,'index']);
+Route::get('/', [StaticPages::class,'index']) ->name('index');
 
 //login_pages
 Route::get('/login',[AuthController::class,'login'])->name('login');
 Route::get('/signup',[AuthController::class,'sign_up'])->name('register');
+Route::post('/save-user',[AuthController::class,'save_user'])->name('save-user');
 Route::get('/reset-password',[AuthController::class,'reset_password'])->name('reset_password');
 
 //Global_pages
