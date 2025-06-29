@@ -7,10 +7,11 @@ Route::get('/', [StaticPages::class,'index']) ->name('index');
 
 //login_pages
 Route::get('/login',[AuthController::class,'login'])->name('login');
+Route::post('/login_user',[AuthController::class,'login_user'])->name('login_user');
 Route::get('/signup',[AuthController::class,'sign_up'])->name('register');
 Route::post('/save-user',[AuthController::class,'save_user'])->name('save-user');
 Route::get('/reset-password',[AuthController::class,'reset_password'])->name('reset_password');
-
+Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 //Global_pages
 Route::get('/blog',[StaticPages::class,'posts_index']);
 Route::get('/blog/single',[StaticPages::class,'posts_single']);
@@ -18,7 +19,7 @@ Route::get('/blog/category',[StaticPages::class,'posts_category']);
 Route::get('single',[StaticPages::class,'pages']);
 Route::get('message',[StaticPages::class,'message_page']);
 // Users_pages
-Route::get('/user',[StaticPages::class,'user_index']);
+Route::get('/user',[StaticPages::class,'user_index'])->name("user");
 Route::get('/user/inbox',[StaticPages::class,'user_inbox']);
 Route::get('/user/profile',[StaticPages::class,'user_profile']);
 Route::get('/user/statistics',[StaticPages::class,'user_statistics']);

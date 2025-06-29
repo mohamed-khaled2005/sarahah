@@ -5,17 +5,37 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 
 class AuthController extends Controller
 {
         public function login() {
     return view('global.auth.login');
 }
+
+        public function login_user(Request $request) {
+    $log_data=$request->validate(
+                    [
+                        'emailorusername'    => 'required',
+                        'password' => 'required',
+                        ]
+            );
+
+            if(Auth::attempt(['email'=>$request->emailorusername,'password'=>$request->password])||Auth::attempt(['username'=>$request->emailorusername,'password'=>$request->password]))
+            {
+
+                return redirect()->route("user");
+
+            }
+
+            else{
+                return back()->withErrors("خطا في بيانات الدخول");
+            }
+}
+
     public function sign_up() {
     return view('global.auth.sign_up');
-}
-    public function reset_password() {
-    return view('global.auth.reset_password');
 }
 
     public function save_user(Request $request){
@@ -47,4 +67,15 @@ class AuthController extends Controller
             auth()->login($user);
             return( redirect()->route("index"));
     }
+
+    public function logout(Request $request){
+           Auth()::logout();
+           $request->session()->invalidate();
+           $request->session()->regenerateToken();
+           return redirect()->route('index');
+    }
+
+        public function reset_password() {
+    return view('global.auth.reset_password');
+}
 }

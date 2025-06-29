@@ -7,12 +7,19 @@
 <main id="section-main" class="login-main">
   <div class="login-container">
     <h1 class="login-title">تسجيل الدخول</h1>
-    <form class="login-form">
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+    {{$error}}
+    @endforeach
+    @endif
+    <form action="{{route('login_user')}}" method="post" class="login-form">
+      @csrf
+      @method("post")
       <div class="form-group">
-        <input type="text" class="form-input" placeholder="البريد الإلكتروني أو اسم المستخدم">
+        <input type="text" name="emailorusername" value="{{old('emailorusername')}}" class="form-input" placeholder="البريد الإلكتروني أو اسم المستخدم">
       </div>
       <div class="form-group">
-        <input type="password" class="form-input" placeholder="كلمة المرور">
+        <input type="password" name="password"class="form-input" value="{{old('password')}}" placeholder="كلمة المرور">
       </div>
       <div class="form-options">
         <div class="remember-me">
