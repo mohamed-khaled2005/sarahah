@@ -23,8 +23,8 @@
       <button type="submit" class="btn-submit">تسجيل الدخول</button>
     </form>
     <div class="login-links">
-      <a href="#" class="login-link">نسيت كلمة المرور؟</a>
-      <a href="#" class="login-link">ليس لديك حساب؟ أنشئ حسابا جديدا</a>
+      <a href="{{route('reset_password')}}" class="login-link">نسيت كلمة المرور؟</a>
+      <a href="{{route('register')}}" class="login-link">ليس لديك حساب؟ أنشئ حسابا جديدا</a>
     </div>
   </div>
 </main>

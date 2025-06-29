@@ -1,6 +1,22 @@
 
 @import url("../../globalstyle.css");
-
+:root {
+  --color-primary: #3d99f5;
+  --color-text-dark: #0d121c;
+  --color-text-medium: #121417;
+  --color-text-light: #61758a;
+  --color-text-link: #1d61a6;
+  --color-text-white: #ffffff;
+  --color-text-footer: #d5e3ff;
+  --color-background-body: #f7fafc;
+  --color-background-header: #f7fafa;
+  --color-background-input: #f0f2f5;
+  --color-background-dark: #0c0909;
+  --color-border: #e5e8eb;
+  --font-cairo: 'Cairo', sans-serif;
+  --font-noto-serif: 'Noto Serif', serif;
+  --font-plus-jakarta: 'Plus Jakarta Sans', sans-serif;
+}
 html {
   direction: rtl;
 }
@@ -67,10 +83,13 @@ input, button {
 
   .form-input {
     width: 100%;
-    background-color: #f2f2f5;
-    border-radius: 12px;
     padding: 16px;
+    background-color: var(--color-background-input);
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-plus-jakarta);
     font-size: 16px;
+    color: var(--color-text-link);
     text-align: right;
   }
 

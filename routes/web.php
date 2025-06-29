@@ -1,13 +1,14 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticPages;
+use App\Http\Controllers\AuthController;
 
 Route::get('/', [StaticPages::class,'index']);
 
 //login_pages
-Route::get('/login',[StaticPages::class,'login']);
-Route::get('/signup',[StaticPages::class,'sign_up']);
-Route::get('/reset-password',[StaticPages::class,'reset_password']);
+Route::get('/login',[AuthController::class,'login'])->name('login');
+Route::get('/signup',[AuthController::class,'sign_up'])->name('register');
+Route::get('/reset-password',[AuthController::class,'reset_password'])->name('reset_password');
 
 //Global_pages
 Route::get('/blog',[StaticPages::class,'posts_index']);

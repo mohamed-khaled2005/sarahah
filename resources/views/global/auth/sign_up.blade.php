@@ -25,7 +25,7 @@
       <button type="submit" class="submit-btn">إنشاء حساب جديد</button>
     </form>
     <p class="login-prompt">
-      لديك حساب بالفعل؟ <a href="#">تسجيل الدخول</a>
+      لديك حساب بالفعل؟ <a href="{{route('login')}}">تسجيل الدخول</a>
     </p>
   </div>
 </main>

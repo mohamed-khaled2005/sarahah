@@ -10,16 +10,6 @@ class StaticPages extends Controller
     public function index(){
     return view('home');
 }
-    // auth_pages
-    public function login() {
-    return view('global.auth.login');
-}
-    public function sign_up() {
-    return view('global.auth.sign_up');
-}
-    public function reset_password() {
-    return view('global.auth.reset_password');
-}
 
 
     // Global pages
