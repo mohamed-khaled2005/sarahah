@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\AuthUser;
 use App\Http\Middleware\GuestUser;
+use App\Http\Middleware\AdminUser;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -22,7 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
     $middleware->alias([
         'auth' => AuthUser::class,
-        'guest'=>GuestUser::class
+        'guest'=>GuestUser::class,
+        'admin'=>AdminUser::class
     ]);
 })
     
