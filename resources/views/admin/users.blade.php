@@ -7,6 +7,9 @@
         @section('main')
       <!-- Main Content -->
       <div class="main-content">
+        <?php use App\Models\User;
+        $users= User::all();
+        ?>
         <!-- Page Header -->
         <div class="page-header">
           <h2 class="page-title">إدارة المستخدمين</h2>
@@ -66,102 +69,23 @@
                 <tr>
                   <th>اسم المستخدم</th>
                   <th>البريد الإلكتروني</th>
-                  <th>تاريخ التس��يل</th>
+                  <th>تاريخ التسجيل</th>
                   <th>الحالة</th>
                   <th>الإجراءات</th>
                 </tr>
               </thead>
               <tbody>
+                @foreach($users as $user)
                 <tr class="table-row">
-                  <td class="table-cell">محمد العلي</td>
-                  <td class="table-cell email">m.ali@email.com</td>
-                  <td class="table-cell date">2023-01-15</td>
+                  <td class="table-cell">{{$user->name}}</td>
+                  <td class="table-cell email">{{$user->email}}</td>
+                  <td class="table-cell date">{{$user->created_at}}</td>
                   <td class="table-cell">
                     <span class="status-badge">نشط</span>
                   </td>
                   <td class="table-cell actions">تعليق, حذف, عرض</td>
                 </tr>
-                <tr class="table-row">
-                  <td class="table-cell">ليلى السليمان</td>
-                  <td class="table-cell email">l.sulaiman@email.com</td>
-                  <td class="table-cell date">2023-02-20</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">عبد الله الرحمن</td>
-                  <td class="table-cell email">a.rahman@email.com</td>
-                  <td class="table-cell date">2023-03-10</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">سارة المالكي</td>
-                  <td class="table-cell email">s.maliki@email.com</td>
-                  <td class="table-cell date">2023-04-05</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">نور الهدى</td>
-                  <td class="table-cell email">n.huda@email.com</td>
-                  <td class="table-cell date">2023-05-12</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">يوس�� الحسين</td>
-                  <td class="table-cell email">y.hussein@email.com</td>
-                  <td class="table-cell date">2023-06-18</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">ريم العامري</td>
-                  <td class="table-cell email">r.amri@email.com</td>
-                  <td class="table-cell date">2023-07-22</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">علي السيد</td>
-                  <td class="table-cell email">a.saeed@email.com</td>
-                  <td class="table-cell date">2023-08-01</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">ميرا الفهد</td>
-                  <td class="table-cell email">m.fahad@email.com</td>
-                  <td class="table-cell date">2023-09-15</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
-                <tr class="table-row">
-                  <td class="table-cell">خالد العثمان</td>
-                  <td class="table-cell email">k.othman@email.com</td>
-                  <td class="table-cell date">2023-10-20</td>
-                  <td class="table-cell">
-                    <span class="status-badge">نشط</span>
-                  </td>
-                  <td class="table-cell actions">تعليق, حذف, عرض</td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
