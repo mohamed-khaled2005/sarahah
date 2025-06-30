@@ -53,8 +53,8 @@
       <div class="sidebar">
         <div class="sidebar-content">
           <nav>
-            <div class="nav-item active">
-              <svg
+            <a href="{{route('admin.index')}}"><div class="nav-item active">
+            <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
                 fill="none"
@@ -67,9 +67,10 @@
                 />
               </svg>
               <span>لوحة التحكم</span>
-            </div>
-
-            <div class="nav-item">
+            </div></a>
+            
+            <a href="{{route('admin.users')}}">
+              <div class="nav-item">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -84,7 +85,9 @@
               </svg>
               <span>المستخدمون</span>
             </div>
-
+            </a>
+            
+            <a href="{{route('admin.messages')}}">
             <div class="nav-item">
               <svg
                 class="nav-icon"
@@ -100,8 +103,10 @@
               </svg>
               <span>الرسائل</span>
             </div>
-
-            <div class="nav-item">
+            </a>
+            
+            <a href="{{route('admin.reports')}}">
+ <div class="nav-item">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -116,8 +121,10 @@
               </svg>
               <span>التقارير</span>
             </div>
-
-            <div class="nav-item">
+            </a>
+           
+            <a href="{{route('admin.ads')}}">
+ <div class="nav-item">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -129,8 +136,10 @@
               </svg>
               <span>الإعلانات</span>
             </div>
-
-            <div class="nav-item">
+            </a>
+           
+            <a href="{{route('admin.posts')}}">
+          <div class="nav-item">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -148,8 +157,9 @@
               </svg>
               <span>المقالات</span>
             </div>
-
-            <div class="nav-item">
+            </a>
+            
+            <a href="{{route('admin.settings')}}"><div class="nav-item">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -163,7 +173,9 @@
                 />
               </svg>
               <span>الإعدادات</span>
-            </div>
+            </div></a>
+            
+
           </nav>
         </div>
       </div>
