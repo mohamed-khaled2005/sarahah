@@ -24,6 +24,7 @@ Route::middleware(['guest'])->group(
     Route::get('/reset-password',[AuthController::class,'reset_password'])->name('reset_password');
     }
 );
+
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
 

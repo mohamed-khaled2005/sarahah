@@ -1,3 +1,6 @@
+<?php use Illuminate\Support\Facades\Auth;
+$user = Auth::user();
+?>
 <!doctype html>
 <html lang="ar" dir="rtl">
   <head>
@@ -16,6 +19,7 @@
     <header class="header">
       <div class="header-container">
         <!-- Logo -->
+        <a href="/">
         <div class="logo-section">
           <img
             src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0?width=82"
@@ -24,36 +28,54 @@
           />
           <h1 class="logo-text">صراحة</h1>
         </div>
+        </a>
+        
 
-        <!-- Notification & User -->
-        <div class="header-actions">
-          <div class="notification-bell">
-            <svg
-              class="nav-icon"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-            >
-              <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-              <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-            </svg>
-          </div>
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/015fa293e459dfe000ffdda9c07ca06898cad73e?width=80"
-            alt="المستخدم"
-            class="user-avatar"
-          />
-        </div>
+      <!-- Notification & User -->
+<div class="header-actions">
+  <div class="notification-bell">
+    <svg
+      class="nav-icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    </svg>
+  </div>
+
+  <div class="user-dropdown">
+    <img
+      src="https://cdn.builder.io/api/v1/image/assets/TEMP/015fa293e459dfe000ffdda9c07ca06898cad73e?width=80"
+      alt="المستخدم"
+      class="user-avatar"
+    />
+    <div class="dropdown-menu">
+      <p class="username">{{$user->name}}</p>
+      <form action="{{route('logout')}}" method="post">
+        @csrf
+        @method("post")
+        <input type="submit" value="Logout" class="logout-btn" >
+      </form>
+
+    </div>
+  </div>
+</div>
+
+
 
       </div>
     </header>
+
+
     <div class="main-container">
     <!-- Sidebar -->
       <div class="sidebar">
         <div class="sidebar-content">
           <nav>
-            <a href="{{route('admin.index')}}"><div class="nav-item active">
+            <a href="{{route('admin.index')}}"><div class="nav-item {{ request()->routeIs('admin.index') ? 'active' : '' }}">
             <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -70,7 +92,7 @@
             </div></a>
             
             <a href="{{route('admin.users')}}">
-              <div class="nav-item">
+              <div class="nav-item {{ request()->routeIs('admin.users') ? 'active' : '' }}">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -88,7 +110,7 @@
             </a>
             
             <a href="{{route('admin.messages')}}">
-            <div class="nav-item">
+            <div class="nav-item {{ request()->routeIs('admin.messages') ? 'active' : '' }}">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -106,7 +128,7 @@
             </a>
             
             <a href="{{route('admin.reports')}}">
- <div class="nav-item">
+ <div class="nav-item {{ request()->routeIs('admin.reports') ? 'active' : '' }}">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -124,7 +146,7 @@
             </a>
            
             <a href="{{route('admin.ads')}}">
- <div class="nav-item">
+ <div class="nav-item {{ request()->routeIs('admin.ads') ? 'active' : '' }}">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -139,7 +161,7 @@
             </a>
            
             <a href="{{route('admin.posts')}}">
-          <div class="nav-item">
+          <div class="nav-item {{ request()->routeIs('admin.posts') ? 'active' : '' }}">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -159,7 +181,7 @@
             </div>
             </a>
             
-            <a href="{{route('admin.settings')}}"><div class="nav-item">
+            <a href="{{route('admin.settings')}}"><div class="nav-item {{ request()->routeIs('admin.settings') ? 'active' : '' }}-item">
               <svg
                 class="nav-icon"
                 viewBox="0 0 24 24"
@@ -181,5 +203,28 @@
       </div>
     @yield('main')
         </div>
+
+    <script>
+  const avatar = document.getElementById('userAvatar');
+  const menu = document.getElementById('dropdownMenu');
+
+  // عند النقر على الصورة
+  avatar.addEventListener('click', function(event) {
+    event.stopPropagation(); // منع انتقال الحدث للأعلى
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+  });
+
+  // عند النقر خارج القائمة
+  document.addEventListener('click', function() {
+    menu.style.display = 'none';
+  });
+
+  // عند النقر داخل القائمة نفسها لا تُغلق
+  menu.addEventListener('click', function(event) {
+    event.stopPropagation();
+  });
+
+</script>
+
     </body>
     </html>

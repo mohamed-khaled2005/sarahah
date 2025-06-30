@@ -120,7 +120,7 @@
       .nav-item.active {
         background-color: #ebedf2;
       }
-
+      
       .nav-item:hover {
         background-color: #ebedf2;
       }
@@ -151,6 +151,79 @@
         text-align: right;
         margin-bottom: 32px;
       }
+
+    .header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* مسافة بين الجرس وصورة المستخدم */
+}
+
+.notification-bell .nav-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #555;
+}
+
+.user-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.user-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #ddd;
+}
+
+/* القائمة المنسدلة */
+.dropdown-menu {
+  display: none; /* مخفية في البداية */
+  position: absolute;
+  top: 110%; /* أسفل الصورة */
+  left:0;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  width: 150px;
+  z-index: 100;
+  text-align: center;
+  padding: 8px 0;
+}
+
+/* إظهار القائمة عند hover */
+.user-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+/* تنسيق محتوى القائمة */
+.dropdown-menu .username {
+  margin: 0;
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 1px solid #eee;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  width: 80%;
+  margin-top: 6px;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
 
 
        /* Responsive Design */
