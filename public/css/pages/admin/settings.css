@@ -1,0 +1,423 @@
+ * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Plus Jakarta Sans",
+          -apple-system,
+          Roboto,
+          Helvetica,
+          sans-serif;
+        background-color: #fafafa;
+        direction: rtl;
+        min-height: 100vh;
+      }
+
+      .font-cairo {
+        font-family:
+          "Cairo",
+          -apple-system,
+          Roboto,
+          Helvetica,
+          sans-serif;
+      }
+
+      /* Header */
+      .header {
+        background-color: #f7fafa;
+        border-bottom: 1px solid #e5e8eb;
+        padding: 12px 44px;
+      }
+
+      .header-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .logo-section img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      .logo-section h1 {
+        font-size: 23px;
+        font-weight: 700;
+        color: #0d121c;
+        line-height: 1.5;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+      }
+
+      .notification-btn {
+        background: #e8edf2;
+        border-radius: 12px;
+        padding: 8px 12px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .notification-btn svg {
+        width: 20px;
+        height: 20px;
+        fill: #0d141c;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      /* Main Layout */
+      .main-layout {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        min-height: calc(100vh - 67px);
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 320px;
+        background-color: #fafafa;
+        padding: 16px;
+        min-height: 700px;
+      }
+
+      .sidebar-content {
+        background-color: #fafafa;
+        padding: 16px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 700px;
+      }
+
+      .nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 8px 12px;
+        border-radius: 20px;
+        text-decoration: none;
+        color: #121217;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
+        transition: background-color 0.15s ease;
+      }
+
+      .nav-item:hover {
+        background-color: #ebedf2;
+      }
+
+      .nav-item.active {
+        background-color: #ebedf2;
+      }
+
+      .nav-item svg {
+        width: 24px;
+        height: 24px;
+        fill: #121217;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        max-width: 960px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .content-header {
+        padding: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 12px;
+        width: 100%;
+      }
+
+      .page-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #121217;
+        line-height: 1.25;
+        text-align: right;
+        min-width: 288px;
+      }
+
+      /* Section */
+      .section {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+
+      .section-header {
+        padding: 16px 16px 8px 16px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #121217;
+        line-height: 1.28;
+      }
+
+      .section-content {
+        padding: 16px;
+      }
+
+      /* Logo Upload Section */
+      .logo-upload {
+        display: flex;
+        padding: 56px 24px;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+        border-radius: 12px;
+        border: 2px dashed #d6d9e3;
+        cursor: pointer;
+        transition: border-color 0.15s ease;
+      }
+
+      .logo-upload:hover {
+        border-color: #3d99f5;
+      }
+
+      .logo-upload-content {
+        display: flex;
+        max-width: 480px;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .logo-upload-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #121217;
+        line-height: 1.28;
+      }
+
+      .logo-upload-subtitle {
+        font-size: 14px;
+        font-weight: 400;
+        color: #121217;
+        line-height: 1.5;
+      }
+
+      /* Input Fields */
+      .input-container {
+        max-width: 480px;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-end;
+        align-content: flex-end;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .input-field {
+        display: flex;
+        min-width: 160px;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+      }
+
+      .input {
+        display: flex;
+        height: 56px;
+        padding: 15px;
+        justify-content: flex-end;
+        align-items: center;
+        width: 100%;
+        border-radius: 12px;
+        border: 1px solid #d6d9e3;
+        background: #fafafa;
+        font-family: inherit;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #4f5053;
+        text-align: right;
+      }
+
+      .input:focus {
+        outline: none;
+        border-color: #3d99f5;
+        background: #fff;
+      }
+
+      .input.filled {
+        color: #455a93;
+      }
+
+      .input.privacy {
+        color: #5c698a;
+      }
+
+      /* Toggle Section */
+      .toggle-section {
+        height: 56px;
+        min-height: 56px;
+        padding: 0 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #fafafa;
+      }
+
+      .toggle-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .toggle-switch {
+        width: 51px;
+        height: 31px;
+        padding: 2px;
+        border-radius: 15.5px;
+        background: #ebedf2;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+      }
+
+      .toggle-switch.active {
+        background: #3d99f5;
+      }
+
+      .toggle-knob {
+        width: 27px;
+        height: 27px;
+        border-radius: 13.5px;
+        background: #fff;
+        box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.15);
+        transition: transform 0.15s ease;
+      }
+
+      .toggle-switch.active .toggle-knob {
+        transform: translateX(20px);
+      }
+
+      .toggle-label {
+        font-size: 16px;
+        font-weight: 400;
+        color: #121217;
+        line-height: 1.5;
+        flex: 1;
+        text-align: right;
+        margin-right: 16px;
+      }
+
+      /* Save Button */
+      .save-section {
+        padding: 12px 16px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+      }
+
+      .save-btn {
+        height: 40px;
+        min-width: 84px;
+        max-width: 480px;
+        padding: 0 16px;
+        background: #3d99f5;
+        border: none;
+        border-radius: 20px;
+        color: #fff;
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        line-height: 1.5;
+        cursor: pointer;
+        transition: background-color 0.15s ease;
+      }
+
+      .save-btn:hover {
+        background: #2684e0;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .header {
+          padding: 12px 24px;
+        }
+
+        .main-layout {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          min-height: auto;
+        }
+
+        .sidebar-content {
+          min-height: auto;
+          flex-direction: row;
+          justify-content: flex-start;
+          overflow-x: auto;
+        }
+
+        .nav-menu {
+          flex-direction: row;
+          min-width: max-content;
+        }
+
+        .page-title {
+          font-size: 24px;
+          text-align: right;
+        }
+
+        .content-header {
+          align-items: stretch;
+        }
+
+        .input-container {
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .logo-upload {
+          padding: 32px 16px;
+        }
+      }
