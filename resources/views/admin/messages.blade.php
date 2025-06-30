@@ -1,7 +1,6 @@
   @extends('layouts.admin')
   @section('title','صراحة - إدارة الرسائل')
   @section('page-css')
-  <link rel="stylesheet" href="{{url('css/pages/admin/index.css')}}"/>
   <link rel="stylesheet" href="{{url('css/pages/admin/messages.css')}}"/>
   @endsection
 

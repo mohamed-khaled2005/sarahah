@@ -2,7 +2,6 @@
   @extends('layouts.admin')
   @section('title','صراحة - إعدادات الموقع')
   @section('page-css')
-  <link rel="stylesheet" href="{{url('css/pages/admin/index.css')}}"/>
   <link rel="stylesheet" href="{{url('css/pages/admin/settings.css')}}"/>
   @endsection
         @section('main')

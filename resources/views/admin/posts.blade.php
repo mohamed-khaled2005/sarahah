@@ -1,7 +1,6 @@
   @extends('layouts.admin')
   @section('title','صراحة - إدارة المقالات')
   @section('page-css')
-  <link rel="stylesheet" href="{{url('css/pages/admin/index.css')}}"/>
   <link rel="stylesheet" href="{{url('css/pages/admin/posts.css')}}"/>
   @endsection
 
