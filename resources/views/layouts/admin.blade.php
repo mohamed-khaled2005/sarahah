@@ -47,25 +47,22 @@ $user = Auth::user();
   </div>
 
   <div class="user-dropdown">
-    <img
-      src="https://cdn.builder.io/api/v1/image/assets/TEMP/015fa293e459dfe000ffdda9c07ca06898cad73e?width=80"
-      alt="المستخدم"
-      class="user-avatar"
-    />
-    <div class="dropdown-menu">
-      <p class="username">{{$user->name}}</p>
-      <form action="{{route('logout')}}" method="post">
-        @csrf
-        @method("post")
-        <input type="submit" value="Logout" class="logout-btn" >
-      </form>
-
-    </div>
+  <img
+    id="userAvatar"
+    src="{{url('images/profile.png')}}"
+    alt="المستخدم"
+    class="user-avatar"
+  />
+  <div id="dropdownMenu" class="dropdown-menu">
+    <p class="username">{{$user->name}}</p>
+    <form action="{{route('logout')}}" method="post">
+      @csrf
+      <input type="submit" value="Logout" class="logout-btn">
+    </form>
   </div>
 </div>
 
-
-
+</div>
       </div>
     </header>
 
@@ -203,20 +200,39 @@ $user = Auth::user();
       </div>
     @yield('main')
         </div>
-
-    <script>
+        <script>document.addEventListener('DOMContentLoaded', function() {
   const avatar = document.getElementById('userAvatar');
   const menu = document.getElementById('dropdownMenu');
+  let isMenuOpen = false;
 
   // عند النقر على الصورة
   avatar.addEventListener('click', function(event) {
-    event.stopPropagation(); // منع انتقال الحدث للأعلى
-    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    event.stopPropagation();
+    isMenuOpen = !isMenuOpen;
+    menu.style.display = isMenuOpen ? 'block' : 'none';
   });
 
-  // عند النقر خارج القائمة
-  document.addEventListener('click', function() {
+  // عند تمرير الماوس (hover) على الصورة
+  avatar.addEventListener('mouseenter', function() {
+    menu.style.display = 'block';
+    isMenuOpen = true;
+  });
+
+  // عند تحريك الماوس خارج الصورة والقائمة
+  avatar.addEventListener('mouseleave', function() {
+    // نتحقق إن الماوس لم يدخل القائمة نفسها
+    setTimeout(() => {
+      if (!menu.matches(':hover')) {
+        menu.style.display = 'none';
+        isMenuOpen = false;
+      }
+    }, 100);
+  });
+
+  // عند تحريك الماوس خارج القائمة
+  menu.addEventListener('mouseleave', function() {
     menu.style.display = 'none';
+    isMenuOpen = false;
   });
 
   // عند النقر داخل القائمة نفسها لا تُغلق
@@ -224,7 +240,14 @@ $user = Auth::user();
     event.stopPropagation();
   });
 
+  // عند النقر خارج القائمة والصورة تغلق
+  document.addEventListener('click', function() {
+    if (isMenuOpen) {
+      menu.style.display = 'none';
+      isMenuOpen = false;
+    }
+  });
+});
 </script>
-
     </body>
     </html>
