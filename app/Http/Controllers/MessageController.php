@@ -45,4 +45,31 @@ class MessageController extends Controller
 
         return redirect()->back()->with('success', 'تم إرسال الرسالة بنجاح!');
     }
+
+     public function delete_message($id)
+    {
+        $user = auth()->user();
+        $message = Message::where('id', $id)->where('user_id', $user->id)->first();
+
+        if (!$message) {
+            return response()->json(['error' => 'الرسالة غير موجودة أو غير مسموح لك بحذفها.'], 404);
+        }
+
+        $message->delete();
+
+        return response()->json(['success' => 'تم حذف الرسالة بنجاح.']);
+    }
+
+    public function markRead($id)
+    {
+        $message = Message::find($id);
+        if (!$message) {
+            return response()->json(['success' => false], 404);
+        }
+        if (!$message->is_read) {
+            $message->is_read = true;
+            $message->save();
+        }
+        return response()->json(['success' => true]);
+    }
 }

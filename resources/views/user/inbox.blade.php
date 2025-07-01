@@ -46,214 +46,318 @@
             </div>
           </div>
 
-          <!-- Message List -->
-          <div class="message-list">
-            <!-- Message 1 -->
-            <div class="message-card">
-              <div class="message-content">
-                <div class="message-title">
-                  <span class="message-title-text">رسالة جديدة</span>
-                </div>
-                <div class="message-text">
-                  <span class="message-body"
-                    >مرحبا يا سارة، أتمنى أن تكوني بخير وعافية. أتمنى أن تكوني
-                    بخير وعافية.</span
-                  >
-                </div>
-                <div class="message-time">
-                  <span class="message-time-text">الوقت: 10:30 ص</span>
-                </div>
-              </div>
+<div class="message-list" id="message-list">
+  {{-- سيتم تحميل الرسائل هنا بالجاڤا سكريبت --}}
+</div>
 
-              <div class="message-icon">
-                <div class="icon-wrapper">
-                  <svg
-                    class="check-icon"
-                    viewBox="0 0 19 14"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
+<button id="load-more">أعرض المزيد</button>
 
-            <!-- Message 2 -->
-            <div class="message-card">
-              <div class="message-content">
-                <div class="message-title">
-                  <span class="message-title-text">رسالة جديدة</span>
-                </div>
-                <div class="message-text">
-                  <span class="message-body"
-                    >مرحبا يا سارة، أتمنى أن تكوني بخير وعافية. أتمنى أن تكوني
-                    بخير وعافية.</span
-                  >
-                </div>
-                <div class="message-time">
-                  <span class="message-time-text">الوقت: 11:45 ص</span>
-                </div>
-              </div>
-
-              <div class="message-icon">
-                <div class="icon-wrapper">
-                  <svg
-                    class="check-icon"
-                    viewBox="0 0 19 14"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Message 3 -->
-            <div class="message-card">
-              <div class="message-content">
-                <div class="message-title">
-                  <span class="message-title-text">رسالة جديدة</span>
-                </div>
-                <div class="message-text">
-                  <span class="message-body"
-                    >مرحبا يا سارة، أتمنى أن تكوني بخير وعافية. أتمنى أن تكوني
-                    بخير وعافية.</span
-                  >
-                </div>
-                <div class="message-time">
-                  <span class="message-time-text">الوقت: 12:15 ص</span>
-                </div>
-              </div>
-
-              <div class="message-icon">
-                <div class="icon-wrapper">
-                  <svg
-                    class="check-icon"
-                    viewBox="0 0 19 14"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Message 4 -->
-            <div class="message-card">
-              <div class="message-content">
-                <div class="message-title">
-                  <span class="message-title-text">رسالة جديدة</span>
-                </div>
-                <div class="message-text">
-                  <span class="message-body"
-                    >مرحبا يا سارة، أتمنى أن تكوني بخير وعافية. أتمنى أن تكوني
-                    بخير وعافية.</span
-                  >
-                </div>
-                <div class="message-time">
-                  <span class="message-time-text">الوقت: 13:30 ص</span>
-                </div>
-              </div>
-
-              <div class="message-icon">
-                <div class="icon-wrapper">
-                  <svg
-                    class="check-icon"
-                    viewBox="0 0 19 14"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Message 5 -->
-            <div class="message-card">
-              <div class="message-content">
-                <div class="message-title">
-                  <span class="message-title-text">رسالة جديدة</span>
-                </div>
-                <div class="message-text">
-                  <span class="message-body"
-                    >مرحبا يا سارة، أتمنى أن تكوني بخير وعافية. أتمنى أن تكوني
-                    بخير وعافية.</span
-                  >
-                </div>
-                <div class="message-time">
-                  <span class="message-time-text">الوقت: 14:45 ص</span>
-                </div>
-              </div>
-
-              <div class="message-icon">
-                <div class="icon-wrapper">
-                  <svg
-                    class="check-icon"
-                    viewBox="0 0 19 14"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            <!-- Message 6 -->
-            <div class="message-card">
-              <div class="message-content">
-                <div class="message-title">
-                  <span class="message-title-text">رسالة جديدة</span>
-                </div>
-                <div class="message-text">
-                  <span class="message-body"
-                    >مرحبا يا سارة، أتمنى أن تكوني بخير وعافية. أتمنى أن تكوني
-                    بخير وعافية.</span
-                  >
-                </div>
-                <div class="message-time">
-                  <span class="message-time-text">الوقت: 15:15 ص</span>
-                </div>
-              </div>
-
-              <div class="message-icon">
-                <div class="icon-wrapper">
-                  <svg
-                    class="check-icon"
-                    viewBox="0 0 19 14"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+<!-- Popup -->
+<div id="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popup-title" tabindex="-1">
+  <div id="popup">
+    <button class="btn-close" aria-label="إغلاق">&times;</button>
+    <h2 id="popup-title">محتوى الرسالة</h2>
+    <div class="content" tabindex="0"></div>
+    <div class="popup-time"></div>
+    <div class="btn-group">
+      <button class="btn-delete">حذف الرسالة</button>
+      <button class="btn-report">تبليغ</button>
     </div>
+  </div>
+</div>
+
+<!-- Notification -->
+<div id="notification" role="alert" aria-live="assertive"></div>
+
+
+<script>
+  // قراءة توكن CSRF من Blade
+  const csrfToken = '{{ csrf_token() }}';
+
+  // بيانات الرسائل تأتي من Controller كـ JSON
+  const messages = @json($messages);
+
+  // عناصر الـ DOM
+  const messageList = document.getElementById('message-list');
+  const loadMoreBtn = document.getElementById('load-more');
+
+  const popupOverlay = document.getElementById('popup-overlay');
+  const popupContent = document.querySelector('#popup .content');
+  const popupTime = document.querySelector('#popup .popup-time');
+  const btnClose = document.querySelector('#popup .btn-close');
+  const btnDelete = document.querySelector('#popup .btn-delete');
+  const btnReport = document.querySelector('#popup .btn-report');
+  const notification = document.getElementById('notification');
+
+  let currentMessageId = null;
+  let currentIndex = 0;
+  const PAGE_SIZE = 5;
+
+  function showNotification(message, isError = false) {
+    notification.textContent = message;
+    if (isError) {
+      notification.classList.add('error');
+    } else {
+      notification.classList.remove('error');
+    }
+    notification.classList.add('show');
+    setTimeout(() => {
+      notification.classList.remove('show');
+    }, 3500);
+  }
+
+  function loadMessages() {
+    const end = currentIndex + PAGE_SIZE;
+    const slice = messages.slice(currentIndex, end);
+
+    slice.forEach(m => {
+      const card = document.createElement('div');
+      card.classList.add('message-card');
+      card.setAttribute('tabindex', '0');
+      card.dataset.id = m.id;
+      card.dataset.content = m.content;
+      card.dataset.created = m.created_at;
+      card.dataset.isRead = m.is_read;
+
+      const contentDiv = document.createElement('div');
+      contentDiv.classList.add('message-content');
+
+      const titleDiv = document.createElement('div');
+      titleDiv.classList.add('message-title');
+      const titleSpan = document.createElement('span');
+      titleSpan.classList.add('message-title-text');
+      titleSpan.textContent = m.is_read ? 'رسالة مقروءة' : 'رسالة جديدة';
+      titleDiv.appendChild(titleSpan);
+
+      const bodyDiv = document.createElement('div');
+      bodyDiv.classList.add('message-text');
+      const bodySpan = document.createElement('span');
+      bodySpan.classList.add('message-body');
+      bodySpan.textContent = m.content.length > 60 ? m.content.substring(0, 60) + '...' : m.content;
+      bodyDiv.appendChild(bodySpan);
+
+      const timeDiv = document.createElement('div');
+      timeDiv.classList.add('message-time');
+      const timeSpan = document.createElement('span');
+      timeSpan.classList.add('message-time-text');
+      timeSpan.textContent = 'وقت الاستلام: ' + m.created_at;
+      timeDiv.appendChild(timeSpan);
+
+      contentDiv.appendChild(titleDiv);
+      contentDiv.appendChild(bodyDiv);
+      contentDiv.appendChild(timeDiv);
+
+      card.appendChild(contentDiv);
+
+      if (m.is_read) {
+        const iconDiv = document.createElement('div');
+        iconDiv.classList.add('message-icon');
+        iconDiv.setAttribute('aria-hidden', 'true');
+        iconDiv.innerHTML = `
+          <svg class="check-icon" viewBox="0 0 19 14" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"/>
+          </svg>`;
+        card.appendChild(iconDiv);
+      }
+
+      messageList.appendChild(card);
+
+      card.addEventListener('click', () => openPopup(card));
+    });
+
+    currentIndex += PAGE_SIZE;
+
+    if (currentIndex >= messages.length) {
+      loadMoreBtn.style.display = 'none';
+    } else {
+      loadMoreBtn.style.display = 'block';
+    }
+  }
+
+  function openPopup(card) {
+    currentMessageId = card.dataset.id;
+    popupContent.textContent = card.dataset.content;
+    popupTime.textContent = 'وقت الاستلام: ' + card.dataset.created;
+
+    popupOverlay.style.display = 'flex';
+    popupOverlay.focus();
+
+    if (card.dataset.isRead === '0' || card.dataset.isRead === 'false') {
+      fetch(`/messages/mark-read/${currentMessageId}`, {
+        method: 'POST',
+        headers: {
+          'X-CSRF-TOKEN': csrfToken,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(resp => {
+        if (resp.ok) {
+          card.dataset.isRead = 'true';
+          card.querySelector('.message-title-text').textContent = 'رسالة مقروءة';
+
+          if (!card.querySelector('.message-icon')) {
+            const iconDiv = document.createElement('div');
+            iconDiv.classList.add('message-icon');
+            iconDiv.setAttribute('aria-hidden', 'true');
+            iconDiv.innerHTML = `
+              <svg class="check-icon" viewBox="0 0 19 14" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"/>
+              </svg>`;
+            card.appendChild(iconDiv);
+          }
+        }
+      });
+    }
+  }
+
+  btnClose.addEventListener('click', () => {
+    popupOverlay.style.display = 'none';
+  });
+
+  popupOverlay.addEventListener('click', (e) => {
+    if (e.target === popupOverlay) {
+      popupOverlay.style.display = 'none';
+    }
+  });
+
+  btnDelete.addEventListener('click', () => {
+    if (!currentMessageId) return showNotification('حدث خطأ، الرجاء إعادة المحاولة.', true);
+
+    confirmModal('هل أنت متأكد من حذف هذه الرسالة؟').then(confirmed => {
+      if (!confirmed) return;
+
+      fetch(`/messages/delete/${currentMessageId}`, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': csrfToken,
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          showNotification('تم حذف الرسالة.');
+          popupOverlay.style.display = 'none';
+
+          // إزالة البطاقة من القائمة
+          const cardToRemove = [...messageList.children].find(c => c.dataset.id === currentMessageId);
+          if (cardToRemove) {
+            messageList.removeChild(cardToRemove);
+          }
+          currentMessageId = null;
+        } else {
+          showNotification('فشل حذف الرسالة.', true);
+        }
+      })
+      .catch(() => showNotification('فشل في الاتصال بالخادم.', true));
+    });
+  });
+
+  btnReport.addEventListener('click', () => {
+    showNotification('تم الضغط على زر التبليغ (لم يتم تفعيله بعد).');
+  });
+
+  loadMoreBtn.addEventListener('click', () => {
+    loadMessages();
+  });
+
+  function confirmModal(message) {
+    return new Promise((resolve) => {
+      let existing = document.getElementById('confirm-modal');
+      if (existing) existing.remove();
+
+      const modal = document.createElement('div');
+      modal.id = 'confirm-modal';
+      modal.style.position = 'fixed';
+      modal.style.top = '0';
+      modal.style.left = '0';
+      modal.style.right = '0';
+      modal.style.bottom = '0';
+      modal.style.background = 'rgba(0,0,0,0.7)';
+      modal.style.display = 'flex';
+      modal.style.justifyContent = 'center';
+      modal.style.alignItems = 'center';
+      modal.style.zIndex = '2000';
+
+      const box = document.createElement('div');
+      box.style.background = '#222';
+      box.style.color = '#eee';
+      box.style.padding = '20px 30px';
+      box.style.borderRadius = '12px';
+      box.style.maxWidth = '400px';
+      box.style.textAlign = 'center';
+      box.style.boxShadow = '0 0 15px #6a6aff';
+
+      const text = document.createElement('p');
+      text.textContent = message;
+      text.style.fontSize = '18px';
+      text.style.marginBottom = '25px';
+
+      const btnYes = document.createElement('button');
+      btnYes.textContent = 'نعم';
+      btnYes.style.margin = '0 10px';
+      btnYes.style.padding = '8px 20px';
+      btnYes.style.border = 'none';
+      btnYes.style.background = '#6a6aff';
+      btnYes.style.color = 'white';
+      btnYes.style.fontWeight = '600';
+      btnYes.style.borderRadius = '8px';
+      btnYes.style.cursor = 'pointer';
+
+      const btnNo = document.createElement('button');
+      btnNo.textContent = 'لا';
+      btnNo.style.margin = '0 10px';
+      btnNo.style.padding = '8px 20px';
+      btnNo.style.border = 'none';
+      btnNo.style.background = '#ff5c5c';
+      btnNo.style.color = 'white';
+      btnNo.style.fontWeight = '600';
+      btnNo.style.borderRadius = '8px';
+      btnNo.style.cursor = 'pointer';
+
+      box.appendChild(text);
+      box.appendChild(btnYes);
+      box.appendChild(btnNo);
+      modal.appendChild(box);
+      document.body.appendChild(modal);
+
+      btnYes.focus();
+
+      btnYes.onclick = () => {
+        modal.remove();
+        resolve(true);
+      };
+      btnNo.onclick = () => {
+        modal.remove();
+        resolve(false);
+      };
+    });
+  }
+
+  // تحميل أول مجموعة من الرسائل عند تحميل الصفحة
+  loadMessages();
+
+  /*---------------Search---------------------*/
+  const searchInput = document.querySelector('.search-input');
+const messageCards = document.querySelectorAll('.message-card');
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+
+  messageCards.forEach(card => {
+    const content = card.dataset.content.toLowerCase();
+
+    if (content.includes(query)) {
+      card.style.display = 'flex'; // أو 'block' حسب التصميم
+    } else {
+      card.style.display = 'none';
+    }
+  });
+});
+
+
+</script>
+
 
 @endsection

@@ -54,5 +54,8 @@ Route::middleware(['admin'])->group(
 
 Route::get('/message/{identifier?}',[MessageController::class,'message_page'])->name('message.page');
 Route::post('/message/{identifier}',[MessageController::class,'send_message'])->name('send.message');
- 
+Route::middleware('auth')->group(function () {
+    Route::delete('/messages/delete/{id}', [MessageController::class, 'delete_message'])->name('messages.delete');
+    Route::post('/messages/mark-read/{id}', [MessageController::class, 'markRead'])->name('messages.markRead');
+});
 

@@ -50,9 +50,26 @@ class UserController extends Controller
     ]);
 }
 
-    public function user_inbox() {
-    return view('user.inbox');
+    public function user_inbox()
+{
+    // نفترض المستخدم مسجل دخول
+    $user = auth()->user();
+
+    // جلب جميع الرسائل الخاصة بالمستخدم (ممكن تستخدم paginate لو الرسائل كثيرة)
+   $messages = Message::where('user_id', auth()->id())
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->map(function($m) {
+            return [
+                'id' => $m->id,
+                'content' => $m->content,
+                'is_read' => $m->is_read,
+                'created_at' => $m->created_at->format('h:i A'),
+            ];
+        });
+    return view('user.inbox', compact('messages'));
 }
+
     public function user_profile() {
     return view('user.profile');
 }
