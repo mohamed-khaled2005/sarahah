@@ -217,19 +217,7 @@
 
     
 
-      /* SVG Icons */
-      .icon {
-        width: 20px;
-        height: 20px;
-        color: #0d141c;
-      }
-
-      .icon-white {
-        width: 24px;
-        height: 24px;
-        color: white;
-      }
-
+     
       /* Responsive Design */
       @media (max-width: 1200px) {
         .header {

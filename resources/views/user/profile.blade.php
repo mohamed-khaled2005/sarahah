@@ -3,94 +3,79 @@
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/user/profile.css') }}">
 @endsection
+
+
+{{-- profile.blade.php --}}
 @section('main')
-      <!-- Main Content -->
-      <div class="main-content">
-        <div class="content-wrapper">
-               <!-- Right Section - Profile Form -->
-          <div class="form-section">
-            <div class="form-container">
-              <!-- Title -->
-              <div class="form-title">
-                <h1>تعديل الملف الشخصي</h1>
-              </div>
+<div class="profile-widget">
 
-              <!-- Username Field -->
-              <div class="form-field">
-                <div class="field-container">
-                  <label class="field-label">اسم المستخدم</label>
-                  <input type="text" class="field-input" placeholder="" />
-                </div>
-              </div>
-
-              <!-- Bio Field -->
-              <div class="form-field">
-                <div class="field-container">
-                  <label class="field-label">النبذة التعريفية</label>
-                  <textarea class="field-textarea" placeholder=""></textarea>
-                </div>
-              </div>
-
-              <!-- Profile Link Field -->
-              <div class="form-field">
-                <div class="field-container">
-                  <label class="field-label">رابط الملف الشخصي العام</label>
-                  <div class="field-input-group">
-                    <input
-                      type="text"
-                      class="field-input-flex"
-                      placeholder=""
-                    />
-                    <div class="field-input-icon">
-                      <svg
-                        class="copy-icon"
-                        width="18"
-                        height="19"
-                        viewBox="0 0 18 19"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          clip-rule="evenodd"
-                          d="M17.25 0.5H5.25C4.83579 0.5 4.5 0.835786 4.5 1.25V5H0.75C0.335786 5 0 5.33579 0 5.75V17.75C0 18.1642 0.335786 18.5 0.75 18.5H12.75C13.1642 18.5 13.5 18.1642 13.5 17.75V14H17.25C17.6642 14 18 13.6642 18 13.25V1.25C18 0.835786 17.6642 0.5 17.25 0.5ZM12 17H1.5V6.5H12V17ZM16.5 12.5H13.5V5.75C13.5 5.33579 13.1642 5 12.75 5H6V2H16.5V12.5Z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Status -->
-              <div class="status-section">
-                <div class="status-text">الحالة: نشط</div>
-              </div>
-
-              <!-- Save Button -->
-              <div class="save-button-section">
-                <button class="save-button">حفظ التغييرات</button>
-              </div>
-            </div>
-          </div>
-          <!-- Left Section - Profile Image and Action Buttons -->
-          <div class="profile-section">
-            <div class="profile-image-container">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/23a0be8bfb4729298239b5e7a9b37d9c6e565f82"
-                alt="Profile"
-                class="profile-image"
-              />
-            </div>
-
-            <div class="action-buttons">
-              <button class="action-button primary">تعديل الملف الشخصي</button>
-              <button class="action-button secondary">تغيير الصورة</button>
-              <button class="action-button secondary">حذف الحساب</button>
-            </div>
-          </div>
-
-       
+    {{-- Flash messages --}}
+    @if(session('success'))
+        <div class="pw-alert pw-alert-success">
+            {{ session('success') }}
+            <button type="button" class="pw-close" onclick="this.parentElement.remove()">×</button>
         </div>
-      </div>
+    @endif
 
+    @if($errors->any())
+        <div class="pw-alert pw-alert-danger">
+            <ul class="mb-0">
+                @foreach($errors->all() as $err) <li>{{ $err }}</li> @endforeach
+            </ul>
+            <button type="button" class="pw-close" onclick="this.parentElement.remove()">×</button>
+        </div>
+    @endif
+
+    <div class="pw-card">
+        <form class="pw-form" method="POST"
+              action="{{ route('user.profile.update') }}" enctype="multipart/form-data">
+            @csrf
+
+            {{-- بيانات المستخدم --}}
+            <div class="pw-left">
+                <label class="pw-label">الاسم الكامل</label>
+                <input name="name" value="{{ old('name',$user->name) }}"
+                       class="pw-input @error('name') pw-invalid @enderror">
+                @error('name') <div class="pw-feedback">{{ $message }}</div> @enderror
+
+                <label class="pw-label">اسم المستخدم</label>
+                <input name="username" value="{{ old('username',$user->username) }}"
+                       class="pw-input @error('username') pw-invalid @enderror">
+                @error('username') <div class="pw-feedback">{{ $message }}</div> @enderror
+
+                <label class="pw-label">النبذة التعريفية</label>
+                <textarea name="bio" rows="3"
+                          class="pw-input @error('bio') pw-invalid @enderror">{{ old('bio',$user->bio) }}</textarea>
+                @error('bio') <div class="pw-feedback">{{ $message }}</div> @enderror
+
+                <button class="pw-btn">💾 حفظ التغييرات</button>
+            </div>
+
+            {{-- صورة البروفايل --}}
+            <div class="pw-right">
+                <img id="preview"
+                     src="{{ $user->avatar ? asset('avatars/'.$user->avatar) : asset('images/profile.png') }}"
+                     alt="Avatar" class="pw-avatar">
+
+                <input type="file" name="avatar" accept="image/*"
+                       class="pw-input-file @error('avatar') pw-invalid @enderror"
+                       onchange="previewImg(this)">
+                @error('avatar') <div class="pw-feedback">{{ $message }}</div> @enderror
+            </div>
+        </form>
+    </div>
+</div>
+
+{{-- معاينة الصورة قبل الرفع --}}
+<script>
+function previewImg(input){
+    if (input.files && input.files[0]){
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById('preview').src = e.target.result;
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection
+
+

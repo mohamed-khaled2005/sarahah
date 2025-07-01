@@ -1,247 +1,159 @@
 @import url('global.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-        .nav-container{
-            
-            height: auto;
+.profile-widget {
+    font-family: 'Inter', sans-serif;
+    direction: rtl;
+    padding: 40px 0px;
+    box-sizing: border-box;
+}
 
-        }
-      /* Main Content Styles */
-      .main-content {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        padding: 0 16px;
-      }
+input{
+  background-color: #293638 !important;
+}
 
-      .content-wrapper {
-        max-width: 1152px;
-        width: 100%;
-        display: flex;
+/* تنسيقات التنبيهات */
+.pw-alert {
+    padding: 15px 18px;
+    border-radius: 12px;
+    font-size: 15px;
+    margin-bottom: 25px;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pw-alert-success {
+    background-color: #e6f8ef;
+    color: #2e7d57;
+}
+
+.pw-alert-danger {
+    background-color: #fdecea;
+    color: #d32f2f;
+}
+
+.pw-close {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* البطاقة */
+.pw-card {
+    border-radius: 20px;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.06);
+   
+    backdrop-filter: blur(6px);
+   
+  
+}
+
+/* التخطيط العام */
+.pw-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.pw-left {
+    flex: 1 1 60%;
+}
+
+.pw-right {
+    flex: 1 1 35%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* الحقول */
+.pw-label {
+    font-weight: 600;
+    color: white;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.pw-input,
+.pw-input-file,
+textarea.pw-input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid #293638;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    background-color: #293638;
+    transition: 0.2s ease-in-out;
+    box-sizing: border-box;
+    color: white;
+    max-width: 600px;
+}
+
+.pw-input:focus,
+textarea.pw-input:focus,
+.pw-input-file:focus {
+    border-color: #5a67d8;
+    box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.15);
+    outline: none;
+}
+
+.pw-invalid {
+    border-color: #e53e3e;
+}
+
+.pw-feedback {
+    color: #e53e3e;
+    font-size: 13px;
+    margin-top: -12px;
+    margin-bottom: 12px;
+}
+
+/* الصورة */
+.pw-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid black;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: 0.3s ease;
+}
+
+.pw-avatar:hover {
+    transform: scale(1.05);
+}
+
+/* زر الحفظ */
+.pw-btn {
+    background-color: #5a67d8;
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.pw-btn:hover {
+    background-color: #434190;
+}
+
+/* استجابة الموبايل */
+@media (max-width: 768px) {
+    .pw-form {
         flex-direction: column;
-        gap: 24px;
-        padding: 32px 0;
-        justify-content: space-between;
-      }
+    }
 
-      .profile-section {
-        display: flex;
+    .pw-right {
         align-items: center;
-        flex-direction: column;
-        gap: 24px;
-        padding: 0 16px;
-        width: 100%;
-      }
-
-      .profile-image-container {
-        position: relative;
-      }
-
-      .profile-image {
-        width: 280px;
-        height: 258px;
-        border-radius: 20px;
-        object-fit: cover;
-      }
-
-      .action-buttons {
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        max-width: 350px;
-        width: 100%;
-      }
-
-      .action-button {
-        font-family: "Spline Sans", sans-serif;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 21px;
-        padding: 10px 16px;
-        border-radius: 12px;
-        height: 40px;
-        text-align: center;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s;
-        color: #ffffff;
-      }
-
-      .action-button.primary {
-        background-color: #783df5;
-      }
-
-      .action-button.secondary {
-        background-color: #2e2938;
-      }
-
-      .action-button:hover {
-        opacity: 0.9;
-      }
-
-      .form-section {
-        flex: 1;
-        max-width: 492px;
-        width: 100%;
-      }
-
-      .form-container {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-      }
-
-      .form-title {
-        padding: 0 16px;
-      }
-
-      .form-title h1 {
-        color: #ffffff;
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 40px;
-        text-align: right;
-      }
-
-      .form-field {
-        padding: 0 16px;
-      }
-
-      .field-container {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-
-      .field-label {
-        color: #ffffff;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 16px;
-        line-height: 24px;
-        text-align: right;
-      }
-
-      .field-input {
-        background-color: #293638;
-        border-radius: 12px;
-        min-height: 64px;
-        padding: 16px;
-        border: none;
-        color: #ffffff;
-        font-family: "Space Grotesk", sans-serif;
-      }
-
-      .field-textarea {
-        background-color: #293638;
-        border-radius: 12px;
-        min-height: 144px;
-        padding: 16px;
-        border: none;
-        color: #ffffff;
-        font-family: "Space Grotesk", sans-serif;
-        resize: vertical;
-      }
-
-      .field-input-group {
-        display: flex;
-        border-radius: 12px;
-        overflow: hidden;
-      }
-
-      .field-input-flex {
-        flex: 1;
-        background-color: #293638;
-        height: 56px;
-        padding: 16px;
-        border: none;
-        color: #ffffff;
-        font-family: "Space Grotesk", sans-serif;
-      }
-
-      .field-input-icon {
-        background-color: #293638;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0 16px;
-      }
-
-      .copy-icon {
-        width: 24px;
-        height: 24px;
-        fill: #9cb3ba;
-      }
-
-      .status-section {
-        padding: 16px;
-      }
-
-      .status-text {
-        color: #ffffff;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 16px;
-        line-height: 24px;
-      }
-
-      .save-button-section {
-        padding: 0 16px;
-      }
-
-      .save-button {
-        background-color: #265cff;
-        color: #ffffff;
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 21px;
-        padding: 10px 16px;
-        border-radius: 12px;
-        height: 40px;
-        width: 100%;
-        text-align: center;
-        border: none;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-
-      .save-button:hover {
-        opacity: 0.9;
-      }
-
- 
-
-      /* Responsive Design */
-      @media (min-width: 1024px) {
-
-
-        .content-wrapper {
-          flex-direction: row;
-          gap: 40px;
-        }
-
-        .profile-section {
-          padding: 0 32px;
-          width: auto;
-        }
-
-        .profile-image {
-          width: 351px;
-          height: 323px;
-        }
-
-        .action-buttons {
-          max-width: 390px;
-        }
-
-        .form-title h1 {
-          font-size: 32px;
-        }
-      }
-
-      @media (min-width: 640px) {
-        .profile-image {
-          width: 280px;
-          height: 258px;
-        }
-      }
+    }
+}

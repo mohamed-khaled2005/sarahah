@@ -3,208 +3,124 @@
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/user/settings.css') }}">
 @endsection
+
 @section('main')
-      <!-- Main content -->
-      <main class="main-content">
-        <div class="content-wrapper">
-          <div class="settings-container">
-            <!-- Message Settings Section -->
-            <div class="settings-section">
-              <div class="section-title">
-                <h2>إعدادات الرسائل</h2>
-              </div>
-              <div class="section-content">
-                <div class="settings-item">
-                  <div class="settings-toggle">
-                    <div
-                      class="toggle-switch active"
-                      onclick="toggleSwitch(this)"
-                    >
-                      <div class="toggle-handle"></div>
-                    </div>
-                  </div>
-                  <div class="settings-content">
-                    <div class="content-title">
-                      <h3>الرسائل المجهولة</h3>
-                    </div>
-                    <div class="content-description">
-                      <p>تفعيل الرسائل المجهولة من المستخدمين الآخرين</p>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="settings-item">
-                  <div class="settings-toggle">
-                    <div
-                      class="toggle-switch active"
-                      onclick="toggleSwitch(this)"
-                    >
-                      <div class="toggle-handle"></div>
-                    </div>
-                  </div>
-                  <div class="settings-content">
-                    <div class="content-title">
-                      <h3>تصفية الكلمات البذيئة</h3>
-                    </div>
-                    <div class="content-description">
-                      <p>تفعيل تصفية الكلمات البذيئة في الرسائل</p>
-                    </div>
-                  </div>
-                </div>
+<div class="main-content">
+  <div class="content-wrapper">
 
-                <div class="settings-item">
-                  <div class="settings-toggle">
-                    <div
-                      class="toggle-switch active"
-                      onclick="toggleSwitch(this)"
-                    >
-                      <div class="toggle-handle"></div>
-                    </div>
-                  </div>
-                  <div class="settings-content">
-                    <div class="content-title">
-                      <h3>إشعارات الرسائل</h3>
-                    </div>
-                    <div class="content-description">
-                      <p>تفعيل الإشعارات للرسائل الجديدة</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+    <!-- Right Section - Password Change Form -->
+    <div class="form-section">
+      <div class="form-container">
 
-            <!-- Privacy Section -->
-            <div class="settings-section">
-              <div class="section-title">
-                <h2>الخصوصية</h2>
-              </div>
-              <div class="section-content">
-                <div class="settings-item">
-                  <div class="settings-toggle">
-                    <div
-                      class="toggle-switch active"
-                      onclick="toggleSwitch(this)"
-                    >
-                      <div class="toggle-handle"></div>
-                    </div>
-                  </div>
-                  <div class="settings-content">
-                    <div class="content-title">
-                      <h3>إخفاء الاسم</h3>
-                    </div>
-                    <div class="content-description">
-                      <p>إخفاء اسم المستخدم عن المستخدمين الآخرين</p>
-                    </div>
-                  </div>
-                </div>
+        <!-- ✅ رسالة النجاح -->
+        @if (session('success'))
+          <div style="color: green; font-weight: bold;">{{ session('success') }}</div>
+        @endif
 
-                <div class="settings-item">
-                  <div class="settings-toggle">
-                    <button
-                      class="view-button"
-                      onclick="viewIncomingMessages()"
-                    >
-                      View
-                    </button>
-                  </div>
-                  <div class="settings-content">
-                    <div class="content-title">
-                      <h3>الرسائل الواردة</h3>
-                    </div>
-                    <div class="content-description">
-                      <p>تحديد من يمكنه إرسال الرسائل</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+        <!-- ✅ رسالة الخطأ العامة -->
+        @if (session('error'))
+          <div style="color: red; font-weight: bold;">{{ session('error') }}</div>
+        @endif
 
-            <!-- Appearance Section -->
-            <div class="settings-section">
-              <div class="section-title">
-                <h2>المظهر</h2>
-              </div>
-              <div class="section-content">
-                <div class="settings-item">
-                  <div class="settings-button">
-                    <button class="action-button" onclick="selectThemeColor()">
-                      dropdown
-                    </button>
-                  </div>
-                  <div class="settings-content">
-                    <div class="content-title">
-                      <h3>لون الموضوع</h3>
-                    </div>
-                    <div class="content-description">
-                      <p>اختر لون الموضوع الرئيسي</p>
-                    </div>
-                  </div>
-                </div>
+        <!-- ✅ النموذج -->
+        <form method="POST" action="{{ route('user.update.password') }}">
+          @csrf
 
-                <div class="settings-item">
-                  <div class="settings-button">
-                    <button class="action-button" onclick="uploadBackground()">
-                      تحميل
-                    </button>
-                  </div>
-                  <div class="settings-content">
-                    <div class="content-title">
-                      <h3>صورة خلفية</h3>
-                    </div>
-                    <div class="content-description">
-                      <p>تحميل صورة خلفية للملف الشخصي</p>
-                    </div>
-                  </div>
-                </div>
+          <!-- كلمة المرور الحالية -->
+          <div class="form-field">
+            <div class="field-container">
+              <label for="current_password" class="field-label">كلمة المرور الحالية</label>
+              <div class="field-input-group">
+                <input type="password" id="current_password" name="current_password" class="field-input-flex" required>
               </div>
+              @error('current_password')
+                <div style="color:red;">{{ $message }}</div>
+              @enderror
             </div>
           </div>
-        </div>
-      </main>
 
+          <!-- كلمة المرور الجديدة -->
+          <div class="form-field">
+            <div class="field-container">
+              <label for="new_password" class="field-label">كلمة المرور الجديدة</label>
+              <div class="field-input-group">
+                <input type="password" id="new_password" name="new_password" class="field-input-flex" required>
+              </div>
+              @error('new_password')
+                <div style="color:red;">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
 
-    <script>
-      // Toggle switch functionality
-      function toggleSwitch(element) {
-        element.classList.toggle("active");
+          <!-- تأكيد كلمة المرور -->
+          <div class="form-field">
+            <div class="field-container">
+              <label for="new_password_confirmation" class="field-label">تأكيد كلمة المرور الجديدة</label>
+              <div class="field-input-group">
+                <input type="password" id="new_password_confirmation" name="new_password_confirmation" class="field-input-flex" required>
+              </div>
+              @error('new_password_confirmation')
+                <div style="color:red;">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
 
-        // You can add more functionality here, like saving the state
-        const isActive = element.classList.contains("active");
-        console.log("Toggle switched:", isActive);
-      }
+          <!-- زر حفظ -->
+          <div class="save-button-section">
+            <button type="submit" class="pw-btn">💾 حفظ التغييرات</button>
+          </div>
+        </form>
 
-      // Navigation tab switching
-      function switchTab(tabName) {
-        // Remove active class from all tabs
-        const tabs = document.querySelectorAll(".nav-tab");
-        tabs.forEach((tab) => tab.classList.remove("active"));
+      </div>
+    </div>
 
-        // Add active class to clicked tab
-        event.target.classList.add("active");
+<!-- Left Section - Account Actions -->
+<div class="profile-section">
+  <div class="action-buttons">
 
-        console.log("Switched to tab:", tabName);
-        // You can add navigation logic here
-      }
+    <!-- زر تعطيل أو إعادة تنشيط الحساب -->
+    <form method="POST" action="{{ route('user.toggle_active') }}">
+      @csrf
+      @if(auth()->user()->is_active)
+        <button type="submit" class="action-button secondary">🚫 تعطيل الحساب</button>
+      @else
+        <button type="submit" class="action-button success">✅ إعادة تنشيط الحساب</button>
+      @endif
+    </form>
 
-      // Button click handlers
-      function viewIncomingMessages() {
-        console.log("View incoming messages clicked");
-        // Add your logic here
-      }
+    <!-- زر حذف الحساب يفتح النافذة المنبثقة -->
+    <button type="button" class="action-button danger" onclick="openDeleteModal()">🗑️ حذف الحساب</button>
 
-      function selectThemeColor() {
-        console.log("Select theme color clicked");
-        // Add your logic here
-      }
+  </div>
+</div>
 
-      function uploadBackground() {
-        console.log("Upload background clicked");
-        // Add your logic here
-      }
+<!-- ✅ النافذة المنبثقة لتأكيد الحذف -->
+<div id="deleteModal" class="modal-overlay">
+  <div class="modal-box">
+    <h3>⚠️ تأكيد حذف الحساب</h3>
+    <p>هل أنت متأكد أنك تريد حذف حسابك؟ لا يمكن التراجع عن هذا الإجراء.</p>
+    <form method="POST" action="{{ route('user.delete') }}">
+      @csrf
+      <div class="modal-buttons">
+        <button type="submit" class="modal-confirm">نعم، احذف</button>
+        <button type="button" class="modal-cancel" onclick="closeDeleteModal()">إلغاء</button>
+      </div>
+    </form>
+  </div>
+</div>
 
-      // Initialize the page
-      document.addEventListener("DOMContentLoaded", function () {
-        console.log("Saraha Settings Page Loaded");
-      });
-    </script>
+<script>
+    function openDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'flex';
+  }
+
+  function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+  }
+</script>
+
+  </div>
+</div>
+
 @endsection

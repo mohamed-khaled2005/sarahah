@@ -5,6 +5,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotificationController;
+
+
+Route::post('/notifications/mark-read',
+    [NotificationController::class, 'markRead']
+)->name('notifications.markRead')->middleware('auth');
+
+
 
 Route::get('/', [StaticPages::class,'index']) ->name('index');
 //Global_pages
@@ -28,15 +36,21 @@ Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 
 
 // Users_Pages
-Route::middleware(['auth'])->group(
-    function(){
-    Route::get('/user',[UserController::class,'user_index'])->name("user");
-    Route::get('/user/inbox',[UserController::class,'user_inbox'])->name("user.index");
-    Route::get('/user/profile',[UserController::class,'user_profile'])->name("user.profile");
-    Route::get('/user/statistics',[UserController::class,'user_statistics'])->name("user.statistics");
-    Route::get('/user/settings',[UserController::class,'user_settings'])->name("user.settings");
-    }
-);
+Route::middleware(['auth'])->prefix('user')->group(function () {
+    Route::get ('/',           [UserController::class,'user_index'])->name('user');
+    Route::get ('/inbox',      [UserController::class,'user_inbox'])->name('user.index');
+    Route::get ('/profile',    [UserController::class,'user_profile'])->name('user.profile');
+    Route::post('/profile',    [UserController::class,'update_profile'])->name('user.profile.update');
+    Route::get ('/settings',   [UserController::class,'user_settings'])->name('user.settings');
+    Route::post('/update-password', [UserController::class, 'update_password'])->name('user.update.password');
+    Route::post('/deactivate', [UserController::class, 'deactivate_account'])->name('user.deactivate');
+    Route::post('/delete', [UserController::class, 'delete_account'])->name('user.delete');
+    Route::post('/toggle-active', [UserController::class, 'toggle_active'])->name('user.toggle_active');
+    Route::post('/notifications/mark-read', [NotificationController::class, 'markRead'])
+     ->name('notifications.markRead');
+
+});
+
 
 
 // Admin_pages

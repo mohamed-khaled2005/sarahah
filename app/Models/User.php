@@ -22,7 +22,9 @@ class User extends Authenticatable
     'username',
     'email',
     'password',
-    'is_admin', // ✅ أضفناه هنا
+    'is_admin',
+    'bio',        // ✅
+    'avatar', // ✅ أضفناه هنا
 ];
 
 
@@ -48,4 +50,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+public function messages()
+{
+    return $this->hasMany(Message::class, 'user_id'); // عدّل اسم العمود إذا كان مختلفًا
+}
+
 }

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\message;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+
+
 Carbon::setLocale('ar');
 
 class UserController extends Controller
@@ -70,13 +75,108 @@ class UserController extends Controller
     return view('user.inbox', compact('messages'));
 }
 
-    public function user_profile() {
-    return view('user.profile');
+ public function user_profile()
+    {
+        return view('user.profile', ['user' => auth()->user()]);
+    }
+
+
+public function update_profile(Request $request)
+{
+    $user = auth()->user();
+
+    $v = Validator::make($request->all(), [
+        'name'     => 'required|string|max:255',
+        'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+        'bio'      => 'nullable|string',
+        'avatar'   => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    if ($v->fails()) {
+        return back()->withErrors($v)->withInput();
+    }
+
+    $data = $v->validated();
+
+    // حفظ الصورة في مجلد public/avatars مباشرة
+    if ($request->hasFile('avatar')) {
+        // حذف الصورة القديمة إن وجدت
+        if ($user->avatar && file_exists(public_path('avatars/' . $user->avatar))) {
+            unlink(public_path('avatars/' . $user->avatar));
+        }
+
+        $fileName = uniqid() . '.' . $request->file('avatar')->extension();
+        $request->file('avatar')->move(public_path('avatars'), $fileName);
+        $data['avatar'] = $fileName;
+    }
+
+    $user->update($data);
+
+    return back()->with('success', '✅ تم تحديث الملف.');
 }
-    public function user_statistics() {
-    return view('user.statistics');
-}
+
+
+
+    
     public function user_settings() {
     return view('user.settings');
 }
+
+
+
+public function update_password(Request $request)
+{
+    $user = auth()->user();
+
+    $request->validate([
+        'current_password' => 'required',
+        'new_password' => 'required|min:8|confirmed',
+    ]);
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        return back()->with('error', 'كلمة المرور الحالية غير صحيحة');
+    }
+
+    $user->password = Hash::make($request->new_password);
+    $user->save();
+
+    return back()->with('success', '✅ تم تحديث كلمة المرور بنجاح');
+}
+
+public function deactivate_account(Request $request)
+{
+    $user = auth()->user();
+    $user->is_active = false; // تأكد أن هذا الحقل موجود
+    $user->save();
+
+    return back()->with('success', 'تم تعطيل الحساب مؤقتاً');
+}
+
+public function delete_account(Request $request)
+{
+    $user = auth()->user();
+    auth()->logout();
+    $user->delete();
+
+    return redirect('/')->with('success', 'تم حذف الحساب بنجاح.');
+}
+
+
+public function toggle_active(Request $request)
+{
+    $user = auth()->user();
+
+    // قم بتبديل الحالة من مفعل إلى غير مفعل والعكس
+    $user->is_active = !$user->is_active;
+    $user->save();
+
+    $message = $user->is_active
+        ? '✅ تم إعادة تفعيل الحساب.'
+        : '🚫 تم تعطيل الحساب مؤقتاً.';
+
+    return back()->with('success', $message);
+}
+
+
+
 }
