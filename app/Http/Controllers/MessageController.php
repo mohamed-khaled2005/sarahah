@@ -3,37 +3,46 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\message;
+use App\Models\Message;
 use App\Models\User;
 
 class MessageController extends Controller
 {
-    public function message_page($id)
+    protected function findUserByIdOrUsername($identifier)
     {
-    return view("global.static.message", ['id' => $id]);
+        if (is_numeric($identifier)) {
+            return User::find($identifier);
+        } else {
+            return User::where('username', $identifier)->first();
+        }
     }
 
-    public function send_message(Request $request, $id)
-{
-    // تحقق أن المستخدم موجود
-    $user = User::find($id);
-    if (!$user) {
-        return redirect()->back()->with('error', 'المستخدم غير موجود.');
+    public function message_page($identifier)
+    {
+        $user = $this->findUserByIdOrUsername($identifier);
+        if (!$user) {
+            abort(404, 'المستخدم غير موجود.');
+        }
+
+        return view("global.static.message", ['user' => $user]);
     }
 
-    // تحقق من صحة البيانات
-    $validated = $request->validate([
-        'message-content' => 'required|string|max:1000',
-    ]);
+    public function send_message(Request $request, $identifier)
+    {
+        $user = $this->findUserByIdOrUsername($identifier);
+        if (!$user) {
+            return redirect()->back()->with('error', 'المستخدم غير موجود.');
+        }
 
-    // إنشاء الرسالة
-    $message = new Message();
-    $message->user_id = $id;
-    $message->content = $validated['message-content'];
-    $message->save();
+        $validated = $request->validate([
+            'message-content' => 'required|string|max:1000',
+        ]);
 
-    // إعادة توجيه مع رسالة نجاح
-    return redirect()->back()->with('success', 'تم إرسال الرسالة بنجاح!');
-}
+        $message = new Message();
+        $message->user_id = $user->id;
+        $message->content = $validated['message-content'];
+        $message->save();
 
+        return redirect()->back()->with('success', 'تم إرسال الرسالة بنجاح!');
+    }
 }

@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="{{ url('css/globalstyle.css') }}">
-  </head>
-     <style>
+    <style>
+      /* --- نفس الـ CSS الموجود سابقًا --- */
       * {
         margin: 0;
         padding: 0;
@@ -33,8 +33,6 @@
         flex-direction: column;
       }
 
-      
-      /* Main Content with Purple Gradient */
       .main-content {
         flex: 1;
         background: linear-gradient(180deg, #5412eb 0%, #191919 100%);
@@ -59,7 +57,6 @@
         width: 100%;
       }
 
-      /* Profile Section */
       .profile-section {
         display: flex;
         padding: 16px;
@@ -117,7 +114,6 @@
         border-radius: 50%;
       }
 
-      /* Message Input Section */
       .message-section {
         display: flex;
         max-width: 480px;
@@ -170,7 +166,6 @@
         color: #999;
       }
 
-      /* Help Text */
       .help-text {
         display: flex;
         padding: 4px 16px 12px 16px;
@@ -193,7 +188,6 @@
         width: 100%;
       }
 
-      /* Send Button */
       .send-section {
         display: flex;
         padding: 12px 16px;
@@ -246,7 +240,6 @@
         height: 24px;
       }
 
-      /* Footer */
       .footer {
         display: flex;
         height: 59px;
@@ -261,7 +254,6 @@
         line-height: 24px;
       }
 
-      /* Responsive Design */
       @media (max-width: 1280px) {
         .header {
           padding: 0 80px;
@@ -339,20 +331,22 @@
         }
       }
     </style>
+  </head>
   <body>
     <!-- Header -->
     <header class="header">
       <div class="container">
         <div class="header-content">
-          <a href="/" class="logo"><div class="logo">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0"
-              alt="Logo"
-              class="logo-img"
-            />
-            <h1 class="logo-text">صراحة</h1>
-          </div></a>
-         
+          <a href="/" class="logo">
+            <div class="logo">
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0"
+                alt="Logo"
+                class="logo-img"
+              />
+              <h1 class="logo-text">صراحة</h1>
+            </div>
+          </a>
 
           <!-- Navigation -->
           <nav class="nav">
@@ -427,29 +421,29 @@
       </div>
     </header>
 
-      <!-- Main content with purple gradient background -->
-      <div class="main-content">
-        <div class="content-area">
-          <div class="content-wrapper">
-            <!-- Profile Section -->
-            <div class="profile-section">
-              <div class="profile-content">
-                <div class="profile-info">
-                  <div class="profile-name">Sophia Bennett</div>
-                  <div class="profile-subtitle">قم بارسال رسالتك المجهولة</div>
-                </div>
-                <img
-                  class="profile-avatar"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/3c96996ca3c0142be6a28655f2bc050756ff0b8a?width=256"
-                  alt="Sophia Bennett"
-                />
+    <!-- Main content with purple gradient background -->
+    <div class="main-content">
+      <div class="content-area">
+        <div class="content-wrapper">
+          <!-- Profile Section -->
+          <div class="profile-section">
+            <div class="profile-content">
+              <div class="profile-info">
+                <!-- بدل النص الثابت هنا استبدل باسم المستخدم الحقيقي -->
+                <div class="profile-name">{{ $user->name ?? 'المستخدم' }}</div>
+                <div class="profile-subtitle">قم بارسال رسالتك المجهولة</div>
               </div>
+              <img
+                class="profile-avatar"
+                src="{{ $user->avatar_url ?? 'https://cdn.builder.io/api/v1/image/assets/TEMP/3c96996ca3c0142be6a28655f2bc050756ff0b8a?width=256' }}"
+                alt="{{ $user->name ?? 'المستخدم' }}"
+              />
             </div>
+          </div>
 
-            <!-- Message Input Section -->
-             <form action="{{ route('send.message', ['id' => $id]) }}" method="post">
-              @csrf
-              @method('post')
+          <!-- Message Input Section -->
+          <form action="{{ route('send.message', ['identifier' => $user->username]) }}" method="post">
+            @csrf
             <div class="message-section">
               <div class="message-input">
                 <div class="textarea-wrapper">
@@ -458,11 +452,13 @@
                     placeholder="اكتب رسالتك هنا..."
                     id="messageInput"
                     name="message-content"
+                    required
+                    maxlength="1000"
                   ></textarea>
                 </div>
               </div>
             </div>
-          
+
             <!-- Help Text -->
             <div class="help-text">
               <p>قم بارسال ما تريدة بصدق وشفافية</p>
@@ -472,7 +468,7 @@
             <div class="send-section">
               <button class="send-button" type="submit">
                 <div class="send-content">
-                  <span class="send-text">إرسال الأن</span>
+                  <span class="send-text">إرسال الآن</span>
                   <img
                     src="https://cdn.builder.io/api/v1/image/assets/TEMP/7e6ec1ac7a9c7d35064de79f1247d89b68d60744?width=48"
                     class="send-icon"
@@ -481,12 +477,11 @@
                 </div>
               </button>
             </div>
-              </form>
-          </div>
-
-          <!-- Footer -->
-          <div class="footer">جميع الحقوق محفوظة - صراحة © 2025</div>
+          </form>
         </div>
+
+        <!-- Footer -->
+        <div class="footer">جميع الحقوق محفوظة - صراحة © 2025</div>
       </div>
     </div>
   </body>

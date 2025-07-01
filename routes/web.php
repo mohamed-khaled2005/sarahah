@@ -52,7 +52,7 @@ Route::middleware(['admin'])->group(
     }
 );
 
-Route::get('/message/{id?}',[MessageController::class,'message_page'])->name('message.page');
-Route::post('/message/{id}',[MessageController::class,'send_message'])->name('send.message');
+Route::get('/message/{identifier?}',[MessageController::class,'message_page'])->name('message.page');
+Route::post('/message/{identifier}',[MessageController::class,'send_message'])->name('send.message');
  
 

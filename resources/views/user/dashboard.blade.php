@@ -9,65 +9,37 @@
         <h2 class="font-plus-jakarta">الأحداث الأخيرة</h2>
       </div>
 
-      <div class="activities-list">
-        <!-- Activity Item 1 -->
+<div id="activities-container" class="activities-list">
+    @foreach($messages as $message)
         <div class="activity-item">
-          <div class="activity-content">
-            <div class="activity-text font-plus-jakarta">
-              رسالة جديدة من صديق
+            <div class="activity-content">
+                <div class="activity-text font-plus-jakarta">
+                    رسالة جديدة من مجهول
+                </div>
+                <div class="activity-time font-plus-jakarta">
+                    {{ $message->created_at->diffForHumans() }}
+                </div>
             </div>
-            <div class="activity-time font-plus-jakarta">منذ 5 دقائق</div>
-          </div>
-          <div class="activity-avatar">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/f9a99e12816791102350b00cdad9726078d52f83"
-              alt="User"
-              class="avatar-img"
-            />
-            <div class="avatar-line long"></div>
-          </div>
+            <div class="activity-avatar {{ $loop->first ? '' : 'with-line-top' }}">
+                @if(!$loop->first)
+                    <div class="avatar-line short"></div>
+                @endif
+                <img
+                    src="{{ url('images/profile.png') }}"
+                    alt="User"
+                    class="avatar-img"
+                />
+                <div class="avatar-line long"></div>
+            </div>
         </div>
+    @endforeach
+</div>
 
-        <!-- Activity Item 2 -->
-        <div class="activity-item">
-          <div class="activity-content">
-            <div class="activity-text font-plus-jakarta">
-              رسالة جديدة من عابد الله
-            </div>
-            <div class="activity-time light font-plus-jakarta">
-              منذ 10 دقائق
-            </div>
-          </div>
-          <div class="activity-avatar with-line-top">
-            <div class="avatar-line short"></div>
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/3afb99ff5ed489f6d568ea1189e0885ba18c3f9f"
-              alt="User"
-              class="avatar-img"
-            />
-            <div class="avatar-line long"></div>
-          </div>
-        </div>
+@if ($messages->hasMorePages())
+    <button id="load-more-btn" data-next-page="{{ $messages->currentPage() + 1 }}" class="btn-load-more">عرض المزيد</button>
+@endif
 
-        <!-- Activity Item 3 -->
-        <div class="activity-item">
-          <div class="activity-content">
-            <div class="activity-text font-plus-jakarta">
-              رسالة جديدة من محمد
-            </div>
-            <div class="activity-time font-plus-jakarta">منذ 15 دقائق</div>
-          </div>
-          <div class="activity-avatar with-line-top">
-            <div class="avatar-line short"></div>
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/66415bb9fb29b2becd308be4a322a5f74308a268"
-              alt="User"
-              class="avatar-img"
-            />
-            <div class="avatar-line long"></div>
-          </div>
-        </div>
-      </div>
+
    
     <script>
       function copyToClipboard() {
@@ -116,6 +88,55 @@
 
         document.body.removeChild(textArea);
       }
+
+      /* ال pagination */
+      document.addEventListener('DOMContentLoaded', function() {
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    if (!loadMoreBtn) return;
+
+    loadMoreBtn.addEventListener('click', function() {
+        const nextPage = this.getAttribute('data-next-page');
+        const url = '{{ route("user") }}' + '?page=' + nextPage;
+
+        this.disabled = true;
+        this.textContent = 'جاري التحميل...';
+
+        fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            // ننشئ عنصر مؤقت لتحليل كامل الصفحة المُعادة
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+
+            // نبحث عن العناصر الجديدة في الصفحة المُعادة فقط داخل container الرسائل
+            const newItems = tempDiv.querySelectorAll('#activities-container .activity-item');
+
+            if (newItems.length === 0) {
+                // لو مفيش عناصر جديدة نخفي زر "عرض المزيد"
+                loadMoreBtn.style.display = 'none';
+                return;
+            }
+
+            // نضيف العناصر الجديدة إلى الـ container الأصلي
+            const container = document.getElementById('activities-container');
+            newItems.forEach(item => {
+                container.appendChild(item);
+            });
+
+            // تحديث رقم الصفحة التالية للزر
+            const newPage = parseInt(nextPage) + 1;
+            loadMoreBtn.setAttribute('data-next-page', newPage);
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'عرض المزيد';
+        })
+        .catch(err => {
+            console.error('Error loading more messages:', err);
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'عرض المزيد';
+        });
+    });
+});
+
     </script>
   </body>
 </html>
@@ -151,7 +172,7 @@
           <!-- URL Field -->
           <div class="url-field">
             <span class="url-text font-plus-jakarta" id="shareUrl"
-              >https://example.com/share/id=434</span
+              >{{url('message/' . $user_name);}}</span
             >
           </div>
         <!-- Share Section -->

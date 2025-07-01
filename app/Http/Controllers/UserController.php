@@ -33,12 +33,20 @@ class UserController extends Controller
 
     // وقت آخر رسالة بصيغة "منذ 5 دقائق"
     $lastMessageTime = $lastMessage ? $lastMessage->created_at->diffForHumans() : 'لا توجد رسائل بعد';
+    // الحصول على معرف المستخدم الحالي
 
+   $messages = Message::where('user_id', $userId)
+                ->orderBy('created_at', 'desc')
+                ->paginate(4);  // بدل get()
+    $user_name = auth()->user()->username;
+         
     return view('user.dashboard', [
+        'user_name'=>$user_name,
         'todayMessagesCount'    => $todayMessagesCount,
         'totalMessagesCount'    => $totalMessagesCount,
         'featuredMessagesCount' => $featuredMessagesCount,
         'lastMessageTime'       => $lastMessageTime,
+        'messages'=>$messages
     ]);
 }
 
