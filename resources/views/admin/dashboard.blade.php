@@ -1,3 +1,4 @@
+  
   @extends('layouts.admin')
   @section('title','صراحة - لوحة التحكم')
   @section('page-css')
@@ -8,35 +9,43 @@
        @section('main')
       <!-- Main Content -->
       <div class="main-content">
+        <?php
+      
+        
+        ?>
         <!-- Page Title -->
         <h2 class="page-title">لوحة التحكم</h2>
 
         <!-- Stats Cards -->
         <div class="stats-grid">
-          <div class="stats-card">
-            <h3>إجمالي المستخدمين</h3>
-            <div class="value">12,345</div>
-            <div class="change positive">+5%</div>
-          </div>
+  <div class="stats-card">
+    <h3>إجمالي المستخدمين</h3>
+    <div class="value">{{$users_number}}</div>
+    <div class="change {{ strpos($monthlyChange, '-') === false ? 'positive' : 'negative' }}">
+        {{$monthlyChange}}
+    </div>
+  </div>
 
-          <div class="stats-card">
-            <h3>الرسائل اليومية</h3>
-            <div class="value">678</div>
-            <div class="change negative">-2%</div>
-          </div>
+  <div class="stats-card">
+    <h3>الرسائل اليومية</h3>
+    <div class="value">{{$daily_messages_number}}</div>
+    <div class="change {{ strpos($dailyChange, '-') === false ? 'positive' : 'negative' }}">
+        {{$dailyChange}}
+    </div>
+  </div>
 
-          <div class="stats-card">
-            <h3>الرسائل المبلغ عنها</h3>
-            <div class="value">90</div>
-            <div class="change positive">+10%</div>
-          </div>
+  <div class="stats-card">
+    <h3>الرسائل المبلغ عنها</h3>
+    <div class="value">0</div>
+    <div class="change positive">+10%</div>
+  </div>
 
-          <div class="stats-card">
-            <h3>الزوار اليومية</h3>
-            <div class="value">1,234</div>
-            <div class="change positive">+8%</div>
-          </div>
-        </div>
+  <div class="stats-card">
+    <h3>الزوار اليومية</h3>
+    <div class="value">0</div>
+    <div class="change positive">+8%</div>
+  </div>
+</div>
 
         <!-- Chart Section -->
         <div class="chart-section">
@@ -44,14 +53,14 @@
             <div class="chart-title">
               الرسائل اليومية خلال الأيام السبعة الماضية
             </div>
-            <div class="chart-value">500</div>
+            <div class="chart-value">{{$totalMessagesLastWeek}}</div>
             <div class="chart-subtitle">
-              <span class="change">+10%</span>
+              <span class="change">{{$weeklyChange}}</span>
               <span class="period">الأيام السبعة الماضية</span>
             </div>
           </div>
 
-          <div class="chart-container">
+          <!-- <div class="chart-container">
             <svg
               width="100%"
               height="148"
@@ -84,9 +93,9 @@
                 stroke-width="3"
               />
             </svg>
-          </div>
+          </div> -->
 
-          <div class="chart-days">
+          <!-- <div class="chart-days">
             <span>السبت</span>
             <span>الجمعة</span>
             <span>الخميس</span>
@@ -94,7 +103,8 @@
             <span>الثلاثاء</span>
             <span>الاثنين</span>
             <span>الأحد</span>
-          </div>
+          </div> -->
+          <canvas id="messagesChart"></canvas>
         </div>
 
         <!-- Recent Events -->
@@ -217,6 +227,35 @@
           </div>
         </div>
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+    const labels = {!! json_encode(array_keys($dailyMessages->toArray())) !!};
+    const data = {!! json_encode(array_values($dailyMessages->toArray())) !!};
+
+    const ctx = document.getElementById('messagesChart').getContext('2d');
+    const messagesChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels, // التواريخ
+            datasets: [{
+                label: 'عدد الرسائل اليومية',
+                data: data,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    });
+</script>
       @endsection
 
 
