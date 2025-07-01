@@ -127,28 +127,36 @@
           <div class="stats-grid">
                 <div class="stat-card">
               <div class="stat-title font-plus-jakarta">رسائل اليوم</div>
-              <div class="stat-value font-plus-jakarta">50</div>
+              <div class="stat-value font-plus-jakarta">{{$todayMessagesCount}}</div>
             </div>
               <div class="stat-card">
               <div class="stat-title font-plus-jakarta">إجمالي الرسائل</div>
-              <div class="stat-value font-plus-jakarta">1200</div>
+              <div class="stat-value font-plus-jakarta">{{$totalMessagesCount}}</div>
             </div>
                  <div class="stat-card">
               <div class="stat-title font-plus-jakarta">الرسائل المميزة</div>
-              <div class="stat-value font-plus-jakarta">10</div>
+              <div class="stat-value font-plus-jakarta">{{$featuredMessagesCount}}</div>
             </div>
             <div class="stat-card">
               <div class="stat-title font-plus-jakarta">آخر رسالة</div>
-              <div class="stat-value font-plus-jakarta">منذ 5 دقائق</div>
+              <div class="stat-value font-plus-jakarta">{{$lastMessageTime}}</div>
             </div>
        
           
         
           </div>
 
-          <!-- Share Section -->
+          
+
+          <!-- URL Field -->
+          <div class="url-field">
+            <span class="url-text font-plus-jakarta" id="shareUrl"
+              >https://example.com/share/id=434</span
+            >
+          </div>
+        <!-- Share Section -->
           <div class="share-section">
-            <button class="share-btn">
+            <button class="share-btn" onclick="copyToClipboard()">
               <svg
                 class="icon-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -164,25 +172,10 @@
                   fill="white"
                 />
               </svg>
-              <span class="share-btn-text font-plus-jakarta"
-                >مشاركة رابط صفحتي</span
-              >
-            </button>
-          </div>
-
-          <!-- URL Field -->
-          <div class="url-field">
-            <span class="url-text font-plus-jakarta" id="shareUrl"
-              >https://example.com/share/id=434</span
-            >
-          </div>
-
-          <!-- Copy Button -->
-          <div class="copy-section">
-            <button class="copy-btn" onclick="copyToClipboard()">
-              <span class="copy-btn-text font-plus-jakarta" id="copyBtnText"
+               <span class="copy-btn-text font-plus-jakarta" id="copyBtnText"
                 >نسخ الرابط</span
               >
             </button>
           </div>
+
 @endsection

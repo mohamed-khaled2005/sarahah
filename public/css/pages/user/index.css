@@ -2,6 +2,7 @@
 @import url('global.css');
       /* Share Section */
       .share-section {
+        margin-top: 20px;
         display: flex;
         justify-content: center;
         align-items: flex-start;
@@ -39,29 +40,40 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+.url-field {
+  margin-top: 20px;
+  width: 100% !important;
+  background-color: #1e1e2f !important;
+  padding: 10px 15px !important;
+  border-radius: 6px !important;
+  box-sizing: border-box !important;
+  box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.1) !important;
+  border: 1.5px solid #3a3a55 !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
+  cursor: text !important;
+  user-select: all !important;
+}
 
-      /* URL Field */
-      .url-field {
-        display: flex;
-        align-items: center;
-        width: 928px;
-        height: 32px;
-        padding: 15px;
-        background: #f7fafc;
-        border: 1px solid #cfd6e8;
-        border-radius: 12px;
-        margin: 16px auto;
-        justify-content: flex-end;
-      }
+.url-field:hover, 
+.url-field:focus {
+  border-color: #7f8aff !important;
+  box-shadow: 0 0 8px #7f8aff !important;
+  outline: none !important;
+}
 
-      .url-text {
-        color: #000;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 700;
-        line-height: 21px;
-        font-family: sans-serif !important;
-      }
+.url-text {
+  color: #a0a0ff !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  word-break: break-all !important;
+  display: block !important;
+  width: 100% !important;
+  user-select: all !important;
+  text-align: center !important;  /* هنا: اجبار المحاذاة لليسار */
+}
+
+
 
       /* Copy Button */
       .copy-section {
