@@ -63,11 +63,11 @@
         <div class="nav-container">
           <div class="nav-tabs-wrapper">
             <div class="nav-tabs">
-              <a href="#" class="nav-tab font-plus-jakarta">الإعدادات</a>
-              <a href="#" class="nav-tab font-plus-jakarta">الإحصائيات</a>
-              <a href="#" class="nav-tab font-plus-jakarta">الملف الشخصي</a>
-              <a href="#" class="nav-tab font-plus-jakarta">الرسائل</a>
-              <a href="#" class="nav-tab active font-plus-jakarta"
+              <a href="{{route('user.settings')}}" class="nav-tab {{ request()->routeIs('user.settings') ? 'active' : '' }} font-plus-jakarta">الإعدادات</a>
+              <a href="{{route('user.statistics')}}" class="nav-tab {{ request()->routeIs('user.statistics') ? 'active' : '' }} font-plus-jakarta">الإحصائيات</a>
+              <a href="{{route('user.profile')}}" class="nav-tab {{ request()->routeIs('user.profile') ? 'active' : '' }} font-plus-jakarta">الملف الشخصي</a>
+              <a href="{{route('user.index')}}" class="nav-tab {{ request()->routeIs('user.index') ? 'active' : '' }} font-plus-jakarta">الرسائل</a>
+              <a href="{{route('user')}}" class="nav-tab {{ request()->routeIs('user') ? 'active' : '' }} font-plus-jakarta"
                 >الصفحة الرئيسية</a
               >
             </div>

@@ -77,7 +77,7 @@
               <tbody>
                 @foreach($users as $user)
                 <tr class="table-row">
-                  <td class="table-cell">{{$user->name}}</td>
+                  <td class="table-cell">{{$user->username}}</td>
                   <td class="table-cell email">{{$user->email}}</td>
                   <td class="table-cell date">{{$user->created_at}}</td>
                   <td class="table-cell">

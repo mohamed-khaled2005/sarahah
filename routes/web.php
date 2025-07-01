@@ -4,15 +4,14 @@ use App\Http\Controllers\StaticPages;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
 
 Route::get('/', [StaticPages::class,'index']) ->name('index');
-
 //Global_pages
     Route::get('/blog',[StaticPages::class,'posts_index']);
     Route::get('/blog/single',[StaticPages::class,'posts_single']);
     Route::get('/blog/category',[StaticPages::class,'posts_category']);
     Route::get('single',[StaticPages::class,'pages']);
-    Route::get('message',[StaticPages::class,'message_page']);
 
 //login_pages
 Route::middleware(['guest'])->group(
@@ -53,7 +52,7 @@ Route::middleware(['admin'])->group(
     }
 );
 
-
-
+Route::get('/message/{id?}',[MessageController::class,'message_page'])->name('message.page');
+Route::post('/message/{id}',[MessageController::class,'send_message'])->name('send.message');
  
 
