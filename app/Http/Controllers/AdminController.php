@@ -145,13 +145,27 @@ return view('admin.dashboard', [
     return view('admin.users');
 }
     public function admin_messages() {
-    return view('admin.messages');
+    
+        $messages = Message::latest()->get();
+
+        return view('admin.messages',['messages'=>$messages]);
+
 }
     public function admin_posts() {
     return view('admin.posts');
 }
     public function admin_reports() {
-    return view('admin.reports');
+
+        $messages = Message::latest()->get();
+        $reports = Report::latest()->get();
+
+        return view('admin.reports',[
+            
+            'messages'=>$messages,
+            'reports'=>$reports,
+        
+        ]);
+
 }
     public function admin_ads() {
     return view('admin.ads');

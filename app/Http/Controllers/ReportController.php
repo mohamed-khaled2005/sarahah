@@ -31,5 +31,10 @@ public function store(Request $request)
         $reg_event->save();
     return response()->json(['success' => true]);
 }
+public function destroyBulk(Request $request){
+    Report::whereIn('id', $request->ids ?? [])->delete();
+    return response()->json(['success'=>true]);
+}
+
 
 }

@@ -72,7 +72,10 @@ Route::middleware(['admin'])->group(
     Route::get('/admin/ads',[AdminController::class,'admin_ads'])->name('admin.ads');
     Route::post('/admin/users/{user}/toggle', [UserController::class, 'toggle'])->name('admin.users.toggle');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
+    Route::delete('/admin/messages/{id}', [MessageController::class, 'destroy']);
     Route::get('/admin/settings',[AdminController::class,'admin_settings'])->name('admin.settings');
+    Route::post('/admin/reports/delete-bulk', [ReportController::class,'destroyBulk']);
+
 
     }
 );

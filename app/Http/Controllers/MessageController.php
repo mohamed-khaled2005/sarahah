@@ -98,4 +98,17 @@ class MessageController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function destroy($id)
+    {
+        $message = Message::find($id);
+
+        if (!$message) {
+            return response()->json(['success' => false, 'message' => 'الرسالة غير موجودة'], 404);
+        }
+
+        $message->delete();
+
+        return response()->json(['success' => true, 'message' => 'تم حذف الرسالة بنجاح']);
+    }
 }

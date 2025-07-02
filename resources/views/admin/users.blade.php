@@ -46,11 +46,12 @@
     <div class="table-container">
       <table class="table">
         <thead class="table-header">
-          <tr><th>اسم المستخدم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th><th>الحالة</th><th>الإجراءات</th></tr>
+          <tr><th>(ID)المستخدم</th><th>اسم المستخدم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th><th>الحالة</th><th>الإجراءات</th></tr>
         </thead>
         <tbody id="userTableBody">
           @foreach($users as $user)
           <tr class="table-row">
+            <td>{{ $user->id }}</td>
             <td>{{ $user->username }}</td>
             <td class="email">{{ $user->email }}</td>
             <td>{{ $user->created_at->format('Y‑m‑d') }}</td>
@@ -104,11 +105,9 @@
   <!-- Error Message Container -->
   <div id="errorMessage" style="display: none;"></div>
 
-  <!-- Pagination -->
-  <div class="pagination-section">
-    <button class="pagination-button active">1</button>
-  </div>
-</div>
+
+<!-- Pagination -->
+<div class="pagination-container" id="pagination"></div>
 
 <!-- ========== JavaScript ========== -->
 <script>
@@ -366,6 +365,45 @@ document.addEventListener('DOMContentLoaded', () => {
       window.location.href = `/admin/users/${userId}/edit`;
     });
   });
+});
+
+/*---------------Pagination-----------------------*/
+
+document.addEventListener('DOMContentLoaded', () => {
+  const rowsPerPage = 8; // عدد الصفوف لكل صفحة
+  const tableBody = document.querySelector('tbody'); // يتعامل مع أول tbody في الصفحة
+  const allRows = [...tableBody.querySelectorAll('tr')];
+  const pagination = document.getElementById('pagination');
+
+  let currentPage = 1;
+  const totalPages = Math.ceil(allRows.length / rowsPerPage);
+
+  function showPage(page) {
+    currentPage = page;
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    allRows.forEach((row, i) => {
+      row.style.display = (i >= start && i < end) ? '' : 'none';
+    });
+
+    renderPagination();
+  }
+
+  function renderPagination() {
+    pagination.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+      btn.textContent = i;
+      btn.addEventListener('click', () => showPage(i));
+      pagination.appendChild(btn);
+    }
+  }
+
+  if (totalPages > 1) {
+    showPage(1);
+  }
 });
 </script>
 
