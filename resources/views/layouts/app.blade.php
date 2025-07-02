@@ -62,7 +62,8 @@
 
           <!-- Auth Buttons -->
           <div class="auth-buttons">
-            <div class="auth-item">
+            <a href="{{route('register')}}">
+              <div class="auth-item">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
                   d="M11.9997 15C12.4463 15 12.8902 15.0264 13.3278 15.0771C11.9947 15.3824 10.9997 16.5743 10.9997 18C10.9997 19.6568 12.3429 20.9999 13.9997 21H14.9997V21.0723C11.4434 21.3576 7.85662 21.1364 4.3483 20.4053C3.79567 20.2901 3.46657 19.712 3.74088 19.2188C4.34646 18.1311 5.30072 17.1747 6.52116 16.4463C8.09286 15.5083 10.0186 15 11.9997 15Z"
@@ -82,15 +83,20 @@
                 />
                 <circle cx="12" cy="8" r="5" fill="#222222" />
               </svg>
+              
               <span>تسجيل</span>
             </div>
-            <div class="auth-item">
+            </a>
+            <a href="{{route('login')}}">
+        <div class="auth-item">
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/a6ae1ad276a92fa031b9cca3906be42279304e59"
                 alt=""
               />
               <span>دخول</span>
             </div>
+            </a>
+           
           </div>
         </div>
       </div>

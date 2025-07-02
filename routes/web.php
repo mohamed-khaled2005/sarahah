@@ -32,11 +32,11 @@ Route::get('/', [StaticPages::class,'index']) ->name('index');
 //login_pages
 Route::middleware(['guest'])->group(
     function(){
-    Route::get('/login',[AuthController::class,'login'])->name('login')->middleware('throttle:5,1');;
+    Route::get('/login',[AuthController::class,'login'])->name('login')->middleware('throttle:5,1');
     Route::post('/login_user',[AuthController::class,'login_user'])->name('login_user');
-    Route::get('/signup',[AuthController::class,'sign_up'])->name('register');
+    Route::get('/signup',[AuthController::class,'sign_up'])->name('register')->middleware('throttle:5,1');
     Route::post('/save-user',[AuthController::class,'save_user'])->name('save-user');
-    Route::get('/reset-password',[AuthController::class,'reset_password'])->name('reset_password');
+    Route::get('/reset-password',[AuthController::class,'reset_password'])->name('reset_password')->middleware('throttle:5,1');
     }
 );
 
