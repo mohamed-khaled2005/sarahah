@@ -36,14 +36,14 @@
 
   <div class="stats-card">
     <h3>الرسائل المبلغ عنها</h3>
-    <div class="value">0</div>
-    <div class="change positive">+10%</div>
+    <div class="value">{{$reports_count}}</div>
+    <div class="change positive">{{$reportsMonthlyChange}}</div>
   </div>
 
   <div class="stats-card">
-    <h3>الزوار اليومية</h3>
-    <div class="value">0</div>
-    <div class="change positive">+8%</div>
+    <h3>المستخدمين خلال شهر</h3>
+    <div class="value">{{$currentMonthUsers}}</div>
+    <div class="change positive">{{$monthlyChange}}</div>
   </div>
 </div>
 
@@ -59,173 +59,58 @@
               <span class="period">الأيام السبعة الماضية</span>
             </div>
           </div>
-
-          <!-- <div class="chart-container">
-            <svg
-              width="100%"
-              height="148"
-              viewBox="0 0 826 148"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <linearGradient
-                  id="chartGradient"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="148"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stop-color="#EBEDF2" />
-                  <stop offset="0.5" stop-color="#EBEDF2" stop-opacity="0" />
-                </linearGradient>
-              </defs>
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M5.1841 188.356C36.5545 188.356 36.5545 36.2887 67.925 36.2887C99.2954 36.2887 99.2954 70.8494 130.666 70.8494C162.036 70.8494 162.036 160.707 193.407 160.707C224.777 160.707 224.777 57.0251 256.148 57.0251C287.519 57.0251 287.519 174.531 318.888 174.531C350.259 174.531 350.259 105.41 381.629 105.41C413 105.41 413 77.7615 444.371 77.7615C475.741 77.7615 475.741 209.092 507.112 209.092C538.481 209.092 538.481 257.477 569.852 257.477C601.223 257.477 601.223 1.72803 632.593 1.72803C663.964 1.72803 663.964 139.971 695.335 139.971C726.704 139.971 726.704 222.916 758.074 222.916C789.445 222.916 789.445 43.2008 820.816 43.2008V257.477H569.852H5.1841V188.356Z"
-                fill="url(#chartGradient)"
-              />
-              <path
-                d="M5.1841 188.356C36.5545 188.356 36.5545 36.2887 67.925 36.2887C99.2954 36.2887 99.2954 70.8494 130.666 70.8494C162.036 70.8494 162.036 160.707 193.407 160.707C224.777 160.707 224.777 57.0251 256.148 57.0251C287.519 57.0251 287.519 174.531 318.888 174.531C350.259 174.531 350.259 105.41 381.629 105.41C413 105.41 413 77.7615 444.371 77.7615C475.741 77.7615 475.741 209.092 507.112 209.092C538.481 209.092 538.481 257.477 569.852 257.477C601.223 257.477 601.223 1.72803 632.593 1.72803C663.964 1.72803 663.964 139.971 695.335 139.971C726.704 139.971 726.704 222.916 758.074 222.916C789.445 222.916 789.445 43.2008 820.816 43.2008"
-                stroke="#5C698A"
-                stroke-width="3"
-              />
-            </svg>
-          </div> -->
-
-          <!-- <div class="chart-days">
-            <span>السبت</span>
-            <span>الجمعة</span>
-            <span>الخميس</span>
-            <span>الأربعاء</span>
-            <span>الثلاثاء</span>
-            <span>الاثنين</span>
-            <span>الأحد</span>
-          </div> -->
           <canvas id="messagesChart"></canvas>
         </div>
 
         <!-- Recent Events -->
         <h3 class="events-title">أحدث الأحداث</h3>
 
-        <div class="events-list">
-          <div class="event-item">
+        {{-- events-timeline.blade.php --}}
+<div class="events-list" id="eventsList">
+    @foreach ($events as $index => $event)
+        <div class="event-item {{ $index >= 4 ? 'hidden' : '' }}">
             <div class="event-icon-container">
-              <svg
-                class="event-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <line x1="19" y1="8" x2="24" y2="3" />
-                <line x1="17" y1="6" x2="22" y2="1" />
-              </svg>
-              <div class="event-line"></div>
-            </div>
-            <div class="event-content">
-              <div class="event-title">تسجيل المستخدم الجديد</div>
-              <div class="event-time">منذ 5 دقائق</div>
-            </div>
-          </div>
+                {{-- خط علوي صغير لكل العناصر ما عدا أوّل واحد --}}
+                @if ($index > 0)
+                    <div class="event-line short"></div>
+                @endif
 
-          <div class="event-item">
-            <div class="event-icon-container">
-              <div class="event-line short"></div>
-              <svg
-                class="event-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"
-                />
-                <line x1="4" y1="22" x2="4" y2="15" />
-              </svg>
-              <div class="event-line"></div>
-            </div>
-            <div class="event-content">
-              <div class="event-title">تقرير جديد</div>
-              <div class="event-time">منذ 10 دقائق</div>
-            </div>
-          </div>
+                {{-- أيقونة حسب نوع الحدث --}}
+                @if ($event->type === 'تسجيل المستخدم الجديد')
+                    <!-- أيقونة مستخدم -->
+                    <svg class="event-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <line x1="19" y1="8" x2="24" y2="3"/>
+                        <line x1="17" y1="6" x2="22" y2="1"/>
+                    </svg>
+                @else
+                    <!-- أيقونة تقرير -->
+                    <svg class="event-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+                        <line x1="4" y1="22" x2="4" y2="15"/>
+                    </svg>
+                @endif
 
-          <div class="event-item">
-            <div class="event-icon-container">
-              <div class="event-line short"></div>
-              <svg
-                class="event-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                />
-                <path
-                  d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"
-                />
-              </svg>
-              <div class="event-line"></div>
+                {{-- خط سفلي لكل العناصر ما عدا آخر واحد --}}
+                @if (!$loop->last)
+                    <div class="event-line"></div>
+                @endif
             </div>
-            <div class="event-content">
-              <div class="event-title">تعديل الرسالة</div>
-              <div class="event-time">منذ 15 دقائق</div>
-            </div>
-          </div>
 
-          <div class="event-item">
-            <div class="event-icon-container">
-              <div class="event-line short"></div>
-              <svg
-                class="event-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                <circle cx="9" cy="7" r="4" />
-                <line x1="19" y1="8" x2="24" y2="3" />
-                <line x1="17" y1="6" x2="22" y2="1" />
-              </svg>
-              <div class="event-line"></div>
-            </div>
             <div class="event-content">
-              <div class="event-title">تسجيل المستخدم الجديد</div>
-              <div class="event-time">منذ 20 دقائق</div>
+                <div class="event-title">{{ $event->type }}</div>
+                <div class="event-time">{{ $event->created_at->diffForHumans() }}</div>
             </div>
-          </div>
-
-          <div class="event-item">
-            <div class="event-icon-container">
-              <div class="event-line short"></div>
-              <svg
-                class="event-icon"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"
-                />
-                <line x1="4" y1="22" x2="4" y2="15" />
-              </svg>
-            </div>
-            <div class="event-content">
-              <div class="event-title">تقرير جديد</div>
-              <div class="event-time">منذ 25 دقائق</div>
-            </div>
-          </div>
         </div>
+    @endforeach
+</div>
+
+@if ($events->count() > 4)
+    <button id="loadMoreBtn" class="load-more">اعرض المزيد</button>
+@endif
+
+
       </div>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <script>
@@ -255,6 +140,29 @@
             }
         }
     });
+
+/*-------------events------------*/
+document.addEventListener('DOMContentLoaded', () => {
+    const itemsPerPage = 4;                       // عدد العناصر كل مرّة
+    const items        = [...document.querySelectorAll('#eventsList .event-item')];
+    let visibleCount   = itemsPerPage;            // المعروض حاليًا
+
+    const btn = document.getElementById('loadMoreBtn');
+    if (!btn) return;                             // لا يوجد زر = أقل من 4 عناصر أصلاً
+
+    btn.addEventListener('click', () => {
+        // أكشف العناصر التالية
+        const next = items.slice(visibleCount, visibleCount + itemsPerPage);
+        next.forEach(el => el.classList.remove('hidden'));
+        visibleCount += itemsPerPage;
+
+        // أخفي الزر إذا لم يتبقّ عناصر
+        if (visibleCount >= items.length) {
+            btn.style.display = 'none';
+        }
+    });
+});
+
 </script>
       @endsection
 

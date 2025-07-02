@@ -178,3 +178,87 @@
           padding: 8px;
         }
       }
+
+
+      /* ===============  Timeline Events  =============== */
+.events-list {
+    direction: rtl;                     /* للعربية */
+    position: relative;
+    margin: 1rem 0;
+    padding-right: 28px;                /* مسافة يمين للأيقونة */
+    border-right: 2px solid #dbe0ff;    /* الخط العمودي */
+}
+
+.event-item {
+    display: flex;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.event-icon-container {
+    width: 24px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.event-icon {
+    width: 22px;
+    height: 22px;
+    color: #4a4acc;        /* بنفسجي متناسق مع لوحتك */
+    background: #fff;
+    border-radius: 50%;
+    padding: 2px;
+    z-index: 2;
+}
+
+.event-line {
+    flex-grow: 1;
+    width: 2px;
+    background: #dbe0ff;
+    margin-top: 4px;
+}
+
+.event-line.short {
+    flex-grow: 0;
+    height: 14px;
+}
+
+.event-content {
+    margin-right: 12px;
+}
+
+.event-title {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 2px;
+}
+
+.event-time {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+/* زر "اعرض المزيد" */
+.load-more {
+    display: block;
+    margin: 0 auto 16px;
+    padding: 8px 20px;
+    font-size: 0.9rem;
+    background: #4a4acc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.load-more:hover {
+    background: #373fa0;
+}
+
+/* إخفاء العناصر */
+.hidden {
+    display: none;
+}

@@ -6,12 +6,17 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\message;
 use Carbon\Carbon;
+use App\Models\Report;
+use App\Models\Event;
+
 
 
 class AdminController extends Controller
 {
        // admin_pages
     public function admin_index() {
+        app()->setLocale('ar');
+        $events = Event::latest()->take(40)->get();
         $users_number=User::count();
         $daily_messages_number=Message::where('created_at', '>=', Carbon::now()->subDay())->count();
         $sevenDaysAgo = Carbon::now()->subDays(7);
@@ -97,20 +102,47 @@ if ($previousMonthUsers > 0) {
 }
 $monthlyChangeString = ($monthlyChange > 0 ? '+' : '') . round($monthlyChange, 2) . '%';
 
-        return view('admin.dashboard',[
-        'dailyMessages' => $dailyMessages,
-        'users_number'=>   $users_number,
-        'daily_messages_number' => $daily_messages_number,
-        'totalMessagesLastWeek' =>$totalMessagesLastWeek,
-        'currentDayCount' => $currentDayCount,
-        'dailyChange' => $dailyChangeString,
 
-        'currentWeekCount' => $currentWeekCount,
-        'weeklyChange' => $weeklyChangeString,
+// إجمالي الرسائل المُبلَّغ عنها
+$reports_count = Report::count();
 
-        'currentMonthUsers' => $currentMonthUsers,
-        'monthlyChange' => $monthlyChangeString,
-    ]);
+// الرسائل المبلّغ عنها هذا الشهر
+$reportsCurrentMonth = Report::whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])->count();
+
+// الرسائل المبلّغ عنها الشهر السابق
+$reportsPreviousMonth = Report::whereBetween('created_at', [$previousMonthStart, $previousMonthEnd])->count();
+
+// نسبة التغيير
+$reportsMonthlyChange = 0;
+if ($reportsPreviousMonth > 0) {
+    $reportsMonthlyChange = (($reportsCurrentMonth - $reportsPreviousMonth) / $reportsPreviousMonth) * 100;
+}
+$reportsMonthlyChangeString = ($reportsMonthlyChange > 0 ? '+' : '') . round($reportsMonthlyChange, 2) . '%';
+
+
+
+        
+
+
+return view('admin.dashboard', [
+    'dailyMessages' => $dailyMessages,
+    'users_number'=>   $users_number,
+    'daily_messages_number' => $daily_messages_number,
+    'totalMessagesLastWeek' =>$totalMessagesLastWeek,
+    'currentDayCount' => $currentDayCount,
+    'dailyChange' => $dailyChangeString,
+
+    'currentWeekCount' => $currentWeekCount,
+    'weeklyChange' => $weeklyChangeString,
+
+    'currentMonthUsers' => $currentMonthUsers,
+    'monthlyChange' => $monthlyChangeString,
+
+    // المتغيرات الجديدة
+    'reports_count' => $reports_count,
+    'reportsMonthlyChange' => $reportsMonthlyChangeString,
+    'events'=>$events,
+]);
 }
 
     public function admin_users() {
