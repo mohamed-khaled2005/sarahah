@@ -322,3 +322,10 @@
     #load-more:hover {
       background-color: #4a4acc;
     }
+
+
+    /*star icon*/
+
+  .star-icon {
+  fill: #4a4acc;
+}

@@ -1,16 +1,24 @@
 <?php
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\StaticPages;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\{
+    StaticPages, AuthController, AdminController,
+    UserController, MessageController, NotificationController, ReportController
+};
 
+Route::middleware('auth')->group(function () {
 
-Route::post('/notifications/mark-read',
-    [NotificationController::class, 'markRead']
-)->name('notifications.markRead')->middleware('auth');
+    /* صندوق الوارد */
+    Route::get ('/user/inbox',               [UserController::class,'user_inbox'])->name('user.inbox');
+
+    /* وظائف Ajax */
+    Route::post('/messages/mark-read/{id}',  [MessageController::class, 'markRead'])->name('messages.markRead');
+    Route::delete('/messages/delete/{id}',   [MessageController::class, 'delete_message'])->name('messages.delete');
+    Route::post('/messages/toggle-featured/{message}', [UserController::class,'toggleFeatured'])
+        ->name('messages.toggleFeatured');
+
+    Route::post('/reports', [ReportController::class,'store'])->name('reports.store');
+    Route::post('/notifications/mark-read', [NotificationController::class,'markRead'])
+        ->name('notifications.markRead');
+});
 
 
 

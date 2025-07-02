@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 
 
+
 Carbon::setLocale('ar');
 
 class UserController extends Controller
@@ -55,25 +56,40 @@ class UserController extends Controller
     ]);
 }
 
-    public function user_inbox()
-{
-    // نفترض المستخدم مسجل دخول
-    $user = auth()->user();
 
-    // جلب جميع الرسائل الخاصة بالمستخدم (ممكن تستخدم paginate لو الرسائل كثيرة)
-   $messages = Message::where('user_id', auth()->id())
-        ->orderBy('created_at', 'desc')
-        ->get()
-        ->map(function($m) {
-            return [
-                'id' => $m->id,
-                'content' => $m->content,
-                'is_read' => $m->is_read,
-                'created_at' => $m->created_at->format('h:i A'),
-            ];
-        });
-    return view('user.inbox', compact('messages'));
-}
+    public function user_inbox()
+    {
+        $messages = Message::where('user_id', auth()->id())
+            ->latest()
+            ->get()
+            ->map(fn ($m) => [
+                'id'          => $m->id,
+                'content'     => $m->content,
+                'is_read'     => $m->is_read,
+                'is_featured' => $m->is_featured,
+                'created_at'  => $m->created_at->format('h:i A'),
+            ]);
+
+        return view('user.inbox', compact('messages'));
+    }
+
+    public function toggleFeatured(Message $message)
+    {
+        // إن كان لديك سياسة (Policy) فعّالة اترك السطر، وإلا علّق عليه
+        // $this->authorize('update', $message);
+
+        if ($message->user_id !== auth()->id()) {
+            return response()->json(['status' => 'forbidden'], 403);
+        }
+
+        $message->is_featured = ! $message->is_featured;
+        $message->save();
+
+        return response()->json([
+            'status'      => 'ok',
+            'is_featured' => $message->is_featured,
+        ]);
+    }
 
  public function user_profile()
     {

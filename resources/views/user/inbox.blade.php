@@ -4,18 +4,24 @@
     <link rel="stylesheet" href="{{ url('css/pages/user/inbox.css') }}">
 @endsection
 @section('main')
-      <!-- Main Content -->
-     <div class="main-content">
-        <div class="content-container">
-          <!-- Page Title -->
-          <div class="page-title">
-            <div>
-              <h2 class="title-text">صندوق الوارد</h2>
-            </div>
-          </div>
+<style>
+  .message-card.featured   {border-right:4px solid gold}
+  .message-card .star-icon {margin-inline-start:4px}
+  #notification            {transition:opacity .25s;opacity:0}
+  #notification.show       {opacity:1}
+  #notification.error      {background:#ff4d4d}
+  /* نوافذ منبثقة مصغّرة */
+  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;justify-content:center;align-items:center;z-index:3000}
+  .modal-box    {background:#222;color:#eee;padding:20px 30px;border-radius:12px;max-width:420px;width:94%;box-shadow:0 0 18px #6a6aff;text-align:center}
+  .modal-box button{margin:0 6px;padding:7px 20px;border:none;border-radius:8px;color:#fff;cursor:pointer}
+  .modal-box .btn-ok{background:#6a6aff}
+  .modal-box .btn-cancel{background:#ff5c5c}
+  .modal-box textarea{width:100%;min-height:90px;margin-bottom:14px;border-radius:8px;border:none;padding:10px;background:#333;color:#eee;font-family:inherit;resize:vertical}
+</style>
 
-          <!-- Search Bar -->
-          <div class="search-container">
+<div class="main-content">
+  <h2 class="title-text">صندوق الوارد</h2>
+ <div class="search-container">
             <div class="search-bar">
               <div class="search-wrapper">
                 <!-- Search Input - Right side for RTL -->
@@ -46,317 +52,237 @@
             </div>
           </div>
 
-<div class="message-list" id="message-list">
-  {{-- سيتم تحميل الرسائل هنا بالجاڤا سكريبت --}}
+  <div id="message-list"></div>
+  <button id="load-more">أعرض المزيد</button>
 </div>
 
-<button id="load-more">أعرض المزيد</button>
-
-<!-- Popup -->
-<div id="popup-overlay" role="dialog" aria-modal="true" aria-labelledby="popup-title" tabindex="-1">
+<div id="popup-overlay" role="dialog" aria-modal="true" tabindex="-1" style="display:none">
   <div id="popup">
     <button class="btn-close" aria-label="إغلاق">&times;</button>
     <h2 id="popup-title">محتوى الرسالة</h2>
     <div class="content" tabindex="0"></div>
     <div class="popup-time"></div>
     <div class="btn-group">
-      <button class="btn-delete">حذف الرسالة</button>
+      <button class="btn-delete">حذف</button>
       <button class="btn-report">تبليغ</button>
+      <button class="btn-feature"></button>
     </div>
   </div>
 </div>
 
-<!-- Notification -->
 <div id="notification" role="alert" aria-live="assertive"></div>
 
-
 <script>
-  // قراءة توكن CSRF من Blade
-  const csrfToken = '{{ csrf_token() }}';
+const csrfToken  = '{{ csrf_token() }}';
+const messages   = @json($messages);
+const reportURL  = '{{ route('reports.store') }}';
+const PAGE_SIZE  = 5;
 
-  // بيانات الرسائل تأتي من Controller كـ JSON
-  const messages = @json($messages);
+const messageList   = document.getElementById('message-list');
+const loadMoreBtn   = document.getElementById('load-more');
+const popupOverlay  = document.getElementById('popup-overlay');
+const popup         = document.getElementById('popup');
+const popupContent  = popup.querySelector('.content');
+const popupTime     = popup.querySelector('.popup-time');
+const btnClose      = popup.querySelector('.btn-close');
+const btnDelete     = popup.querySelector('.btn-delete');
+const btnReport     = popup.querySelector('.btn-report');
+const btnFeature    = popup.querySelector('.btn-feature');
+const searchInput   = document.querySelector('.search-input');
+const notification  = document.getElementById('notification');
 
-  // عناصر الـ DOM
-  const messageList = document.getElementById('message-list');
-  const loadMoreBtn = document.getElementById('load-more');
+let currentMessageId = null;
+let currentIndex     = 0;
 
-  const popupOverlay = document.getElementById('popup-overlay');
-  const popupContent = document.querySelector('#popup .content');
-  const popupTime = document.querySelector('#popup .popup-time');
-  const btnClose = document.querySelector('#popup .btn-close');
-  const btnDelete = document.querySelector('#popup .btn-delete');
-  const btnReport = document.querySelector('#popup .btn-report');
-  const notification = document.getElementById('notification');
+/* إشعار */
+function notify(text, err = false) {
+  notification.textContent = text;
+  notification.classList.toggle('error', err);
+  notification.classList.add('show');
+  setTimeout(() => notification.classList.remove('show'), 3000);
+}
 
-  let currentMessageId = null;
-  let currentIndex = 0;
-  const PAGE_SIZE = 5;
+/* مودال تأكيد */
+function modalConfirm(text) {
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-box">
+        <p style="margin-bottom:18px">${text}</p>
+        <button class="btn-ok">نعم</button>
+        <button class="btn-cancel">لا</button>
+      </div>`;
+    document.body.appendChild(overlay);
+    overlay.querySelector('.btn-ok').onclick     = () => { overlay.remove(); resolve(true); };
+    overlay.querySelector('.btn-cancel').onclick = () => { overlay.remove(); resolve(false); };
+  });
+}
 
-  function showNotification(message, isError = false) {
-    notification.textContent = message;
-    if (isError) {
-      notification.classList.add('error');
-    } else {
-      notification.classList.remove('error');
-    }
-    notification.classList.add('show');
-    setTimeout(() => {
-      notification.classList.remove('show');
-    }, 3500);
+/* مودال كتابة السبب */
+function modalPrompt(title) {
+  return new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.className = 'modal-overlay';
+    overlay.innerHTML = `
+      <div class="modal-box" dir="rtl">
+        <h3 style="margin-bottom:14px">${title}</h3>
+        <textarea placeholder="اكتب هنا..." required style="width:100%;min-height:90px;border-radius:8px;border:none;padding:10px;background:#333;color:#eee;margin-bottom:14px"></textarea>
+        <div>
+          <button class="btn-ok">إرسال</button>
+          <button class="btn-cancel">إلغاء</button>
+        </div>
+      </div>`;
+    document.body.appendChild(overlay);
+    const textarea = overlay.querySelector('textarea');
+    textarea.focus();
+    overlay.querySelector('.btn-ok').onclick     = () => {
+      const v = textarea.value.trim();
+      if (v) { overlay.remove(); resolve(v); }
+    };
+    overlay.querySelector('.btn-cancel').onclick = () => { overlay.remove(); resolve(null); };
+  });
+}
+
+/* إنشاء بطاقة رسالة */
+function buildCard(m) {
+  const card = document.createElement('div');
+  card.className = 'message-card' + (m.is_featured ? ' featured' : '');
+  Object.assign(card.dataset, {
+    id         : m.id,
+    content    : m.content,
+    created    : m.created_at,
+    isRead     : m.is_read,
+    isFeatured : m.is_featured ? 'true' : 'false'
+  });
+  card.innerHTML = `
+    <div class="message-content">
+      <div class="message-title">
+        <span class="message-title-text">${m.is_read ? 'رسالة مقروءة' : 'رسالة جديدة'}</span>
+        ${m.is_featured ? '<svg class="star-icon" viewBox="0 0 24 24" width="22"><path d="M12 2l3 7h7l-5.5 4.5L18 22l-6-3-6 3 1.5-8.5L2 9h7z"/></svg>' : ''}
+      </div>
+      <div class="message-text"><span>${m.content.length > 60 ? m.content.slice(0, 60) + '…' : m.content}</span></div>
+      <div class="message-time"><span>وقت الاستلام: ${m.created_at}</span></div>
+    </div>
+    ${m.is_read ? '<svg class="check-icon" viewBox="0 0 19 14" width="24"><path d="M18.53 1.28L6.53 13.28c-.14.14-.33.22-.53.22s-.39-.08-.53-.22L.22 8.03a.75.75 0 111.06-1.06L6 11.69 17.47.22a.75.75 0 111.06 1.06z"/></svg>' : ''}`;
+  card.addEventListener('click', () => openPopup(card));
+  return card;
+}
+
+/* تحميل الرسائل */
+function loadMessages() {
+  messages.slice(currentIndex, currentIndex + PAGE_SIZE).forEach(m => messageList.appendChild(buildCard(m)));
+  currentIndex += PAGE_SIZE;
+  loadMoreBtn.style.display = currentIndex < messages.length ? 'block' : 'none';
+}
+
+/* فتح الرسالة */
+function openPopup(card) {
+  currentMessageId = card.dataset.id;
+  popupContent.textContent = card.dataset.content;
+  popupTime.textContent = 'وقت الاستلام: ' + card.dataset.created;
+  btnFeature.textContent = card.dataset.isFeatured === 'true' ? 'إزالة التمييز' : 'تمييز';
+  popupOverlay.style.display = 'flex';
+
+  if (card.dataset.isRead === '0' || card.dataset.isRead === 'false') {
+    fetch(`/messages/mark-read/${currentMessageId}`, {
+      method: 'POST',
+      headers: { 'X-CSRF-TOKEN': csrfToken }
+    }).then(r => {
+      if (r.ok) {
+        card.dataset.isRead = 'true';
+        card.querySelector('.message-title-text').textContent = 'رسالة مقروءة';
+        if (!card.querySelector('.check-icon')) {
+          card.insertAdjacentHTML('beforeend',
+            '<svg class="check-icon" viewBox="0 0 19 14" width="24"><path d="M18.53 1.28L6.53 13.28c-.14.14-.33.22-.53.22s-.39-.08-.53-.22L.22 8.03a.75.75 0 111.06-1.06L6 11.69 17.47.22a.75.75 0 111.06 1.06z"/></svg>');
+        }
+      }
+    });
   }
+}
 
-  function loadMessages() {
-    const end = currentIndex + PAGE_SIZE;
-    const slice = messages.slice(currentIndex, end);
+/* زر الإغلاق */
+btnClose.onclick = () => popupOverlay.style.display = 'none';
+popupOverlay.addEventListener('click', e => { if (e.target === popupOverlay) popupOverlay.style.display = 'none'; });
 
-    slice.forEach(m => {
-      const card = document.createElement('div');
-      card.classList.add('message-card');
-      card.setAttribute('tabindex', '0');
-      card.dataset.id = m.id;
-      card.dataset.content = m.content;
-      card.dataset.created = m.created_at;
-      card.dataset.isRead = m.is_read;
+/* زر الحذف */
+btnDelete.onclick = () => {
+  modalConfirm('هل أنت متأكد من الحذف؟').then(ok => {
+    if (!ok) return;
+    fetch(`/messages/delete/${currentMessageId}`, {
+      method: 'DELETE',
+      headers: { 'X-CSRF-TOKEN': csrfToken }
+    }).then(r => {
+      if (r.ok) {
+        notify('تم الحذف');
+        popupOverlay.style.display = 'none';
+        document.querySelector(`[data-id="${currentMessageId}"]`)?.remove();
+      } else {
+        notify('فشل الحذف', true);
+      }
+    }).catch(() => notify('خطأ اتصال', true));
+  });
+};
 
-      const contentDiv = document.createElement('div');
-      contentDiv.classList.add('message-content');
+/* زر التبليغ */
+btnReport.onclick = () => {
+  modalPrompt('سبب التبليغ').then(reason => {
+    if (!reason) return;
+    btnReport.disabled = true;
+    fetch(reportURL, {
+      method: 'POST',
+      headers: {
+        'X-CSRF-TOKEN': csrfToken,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ message_id: currentMessageId, reason })
+    }).then(r => {
+      notify(r.ok ? 'تم إرسال التبليغ' : 'فشل التبليغ', !r.ok);
+    }).catch(() => notify('خطأ اتصال', true))
+      .finally(() => btnReport.disabled = false);
+  });
+};
 
-      const titleDiv = document.createElement('div');
-      titleDiv.classList.add('message-title');
-      const titleSpan = document.createElement('span');
-      titleSpan.classList.add('message-title-text');
-      titleSpan.textContent = m.is_read ? 'رسالة مقروءة' : 'رسالة جديدة';
-      titleDiv.appendChild(titleSpan);
+/* زر التمييز */
+btnFeature.onclick = () => {
+  btnFeature.disabled = true;
+  fetch(`/messages/toggle-featured/${currentMessageId}`, {
+    method: 'POST',
+    headers: { 'X-CSRF-TOKEN': csrfToken }
+  })
+    .then(r => r.json())
+    .then(data => {
+      const card = document.querySelector(`[data-id="${currentMessageId}"]`);
+      card.dataset.isFeatured = data.is_featured ? 'true' : 'false';
+      btnFeature.textContent = data.is_featured ? 'إزالة التمييز' : 'تمييز';
 
-      const bodyDiv = document.createElement('div');
-      bodyDiv.classList.add('message-text');
-      const bodySpan = document.createElement('span');
-      bodySpan.classList.add('message-body');
-      bodySpan.textContent = m.content.length > 60 ? m.content.substring(0, 60) + '...' : m.content;
-      bodyDiv.appendChild(bodySpan);
-
-      const timeDiv = document.createElement('div');
-      timeDiv.classList.add('message-time');
-      const timeSpan = document.createElement('span');
-      timeSpan.classList.add('message-time-text');
-      timeSpan.textContent = 'وقت الاستلام: ' + m.created_at;
-      timeDiv.appendChild(timeSpan);
-
-      contentDiv.appendChild(titleDiv);
-      contentDiv.appendChild(bodyDiv);
-      contentDiv.appendChild(timeDiv);
-
-      card.appendChild(contentDiv);
-
-      if (m.is_read) {
-        const iconDiv = document.createElement('div');
-        iconDiv.classList.add('message-icon');
-        iconDiv.setAttribute('aria-hidden', 'true');
-        iconDiv.innerHTML = `
-          <svg class="check-icon" viewBox="0 0 19 14" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"/>
-          </svg>`;
-        card.appendChild(iconDiv);
+      if (data.is_featured) {
+        card.classList.add('featured');
+        if (!card.querySelector('.star-icon')) {
+          card.querySelector('.message-title').insertAdjacentHTML('beforeend',
+            '<svg class="star-icon" viewBox="0 0 24 24" width="22"><path d="M12 2l3 7h7l-5.5 4.5L18 22l-6-3-6 3 1.5-8.5L2 9h7z"/></svg>');
+        }
+      } else {
+        card.classList.remove('featured');
+        card.querySelector('.star-icon')?.remove();
       }
 
-      messageList.appendChild(card);
+      notify(data.is_featured ? 'تم تمييز الرسالة' : 'تم إلغاء التمييز');
+    }).catch(() => notify('فشل التمييز', true))
+    .finally(() => btnFeature.disabled = false);
+};
 
-      card.addEventListener('click', () => openPopup(card));
-    });
-
-    currentIndex += PAGE_SIZE;
-
-    if (currentIndex >= messages.length) {
-      loadMoreBtn.style.display = 'none';
-    } else {
-      loadMoreBtn.style.display = 'block';
-    }
-  }
-
-  function openPopup(card) {
-    currentMessageId = card.dataset.id;
-    popupContent.textContent = card.dataset.content;
-    popupTime.textContent = 'وقت الاستلام: ' + card.dataset.created;
-
-    popupOverlay.style.display = 'flex';
-    popupOverlay.focus();
-
-    if (card.dataset.isRead === '0' || card.dataset.isRead === 'false') {
-      fetch(`/messages/mark-read/${currentMessageId}`, {
-        method: 'POST',
-        headers: {
-          'X-CSRF-TOKEN': csrfToken,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-      })
-      .then(resp => {
-        if (resp.ok) {
-          card.dataset.isRead = 'true';
-          card.querySelector('.message-title-text').textContent = 'رسالة مقروءة';
-
-          if (!card.querySelector('.message-icon')) {
-            const iconDiv = document.createElement('div');
-            iconDiv.classList.add('message-icon');
-            iconDiv.setAttribute('aria-hidden', 'true');
-            iconDiv.innerHTML = `
-              <svg class="check-icon" viewBox="0 0 19 14" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M18.5306 1.28062L6.53063 13.2806C6.38995 13.4215 6.19906 13.5006 6 13.5006C5.80094 13.5006 5.61005 13.4215 5.46937 13.2806L0.219375 8.03063C-0.0736812 7.73757 -0.0736812 7.26243 0.219375 6.96937C0.512431 6.67632 0.987569 6.67632 1.28062 6.96937L6 11.6897L17.4694 0.219375C17.7624 -0.073681 18.2376 -0.073681 18.5306 0.219375C18.8237 0.512431 18.8237 0.987569 18.5306 1.28062V1.28062Z"/>
-              </svg>`;
-            card.appendChild(iconDiv);
-          }
-        }
-      });
-    }
-  }
-
-  btnClose.addEventListener('click', () => {
-    popupOverlay.style.display = 'none';
-  });
-
-  popupOverlay.addEventListener('click', (e) => {
-    if (e.target === popupOverlay) {
-      popupOverlay.style.display = 'none';
-    }
-  });
-
-  btnDelete.addEventListener('click', () => {
-    if (!currentMessageId) return showNotification('حدث خطأ، الرجاء إعادة المحاولة.', true);
-
-    confirmModal('هل أنت متأكد من حذف هذه الرسالة؟').then(confirmed => {
-      if (!confirmed) return;
-
-      fetch(`/messages/delete/${currentMessageId}`, {
-        method: 'DELETE',
-        headers: {
-          'X-CSRF-TOKEN': csrfToken,
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      .then(response => {
-        if (response.ok) {
-          showNotification('تم حذف الرسالة.');
-          popupOverlay.style.display = 'none';
-
-          // إزالة البطاقة من القائمة
-          const cardToRemove = [...messageList.children].find(c => c.dataset.id === currentMessageId);
-          if (cardToRemove) {
-            messageList.removeChild(cardToRemove);
-          }
-          currentMessageId = null;
-        } else {
-          showNotification('فشل حذف الرسالة.', true);
-        }
-      })
-      .catch(() => showNotification('فشل في الاتصال بالخادم.', true));
-    });
-  });
-
-  btnReport.addEventListener('click', () => {
-    showNotification('تم الضغط على زر التبليغ (لم يتم تفعيله بعد).');
-  });
-
-  loadMoreBtn.addEventListener('click', () => {
-    loadMessages();
-  });
-
-  function confirmModal(message) {
-    return new Promise((resolve) => {
-      let existing = document.getElementById('confirm-modal');
-      if (existing) existing.remove();
-
-      const modal = document.createElement('div');
-      modal.id = 'confirm-modal';
-      modal.style.position = 'fixed';
-      modal.style.top = '0';
-      modal.style.left = '0';
-      modal.style.right = '0';
-      modal.style.bottom = '0';
-      modal.style.background = 'rgba(0,0,0,0.7)';
-      modal.style.display = 'flex';
-      modal.style.justifyContent = 'center';
-      modal.style.alignItems = 'center';
-      modal.style.zIndex = '2000';
-
-      const box = document.createElement('div');
-      box.style.background = '#222';
-      box.style.color = '#eee';
-      box.style.padding = '20px 30px';
-      box.style.borderRadius = '12px';
-      box.style.maxWidth = '400px';
-      box.style.textAlign = 'center';
-      box.style.boxShadow = '0 0 15px #6a6aff';
-
-      const text = document.createElement('p');
-      text.textContent = message;
-      text.style.fontSize = '18px';
-      text.style.marginBottom = '25px';
-
-      const btnYes = document.createElement('button');
-      btnYes.textContent = 'نعم';
-      btnYes.style.margin = '0 10px';
-      btnYes.style.padding = '8px 20px';
-      btnYes.style.border = 'none';
-      btnYes.style.background = '#6a6aff';
-      btnYes.style.color = 'white';
-      btnYes.style.fontWeight = '600';
-      btnYes.style.borderRadius = '8px';
-      btnYes.style.cursor = 'pointer';
-
-      const btnNo = document.createElement('button');
-      btnNo.textContent = 'لا';
-      btnNo.style.margin = '0 10px';
-      btnNo.style.padding = '8px 20px';
-      btnNo.style.border = 'none';
-      btnNo.style.background = '#ff5c5c';
-      btnNo.style.color = 'white';
-      btnNo.style.fontWeight = '600';
-      btnNo.style.borderRadius = '8px';
-      btnNo.style.cursor = 'pointer';
-
-      box.appendChild(text);
-      box.appendChild(btnYes);
-      box.appendChild(btnNo);
-      modal.appendChild(box);
-      document.body.appendChild(modal);
-
-      btnYes.focus();
-
-      btnYes.onclick = () => {
-        modal.remove();
-        resolve(true);
-      };
-      btnNo.onclick = () => {
-        modal.remove();
-        resolve(false);
-      };
-    });
-  }
-
-  // تحميل أول مجموعة من الرسائل عند تحميل الصفحة
-  loadMessages();
-
-  /*---------------Search---------------------*/
-  const searchInput = document.querySelector('.search-input');
-const messageCards = document.querySelectorAll('.message-card');
-
+/* البحث */
 searchInput.addEventListener('input', () => {
-  const query = searchInput.value.trim().toLowerCase();
-
-  messageCards.forEach(card => {
-    const content = card.dataset.content.toLowerCase();
-
-    if (content.includes(query)) {
-      card.style.display = 'flex'; // أو 'block' حسب التصميم
-    } else {
-      card.style.display = 'none';
-    }
+  const q = searchInput.value.trim().toLowerCase();
+  [...messageList.children].forEach(c => {
+    c.style.display = c.dataset.content.toLowerCase().includes(q) ? 'flex' : 'none';
   });
 });
 
-
+/* تحميل أولي */
+loadMessages();
+loadMoreBtn.onclick = loadMessages;
 </script>
 
 
