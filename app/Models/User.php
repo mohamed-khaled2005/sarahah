@@ -24,7 +24,8 @@ class User extends Authenticatable
     'password',
     'is_admin',
     'bio',        // ✅
-    'avatar', // ✅ أضفناه هنا
+    'avatar',
+    'is_active' // ✅ أضفناه هنا
 ];
 
 

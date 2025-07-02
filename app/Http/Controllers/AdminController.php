@@ -119,11 +119,6 @@ if ($reportsPreviousMonth > 0) {
 }
 $reportsMonthlyChangeString = ($reportsMonthlyChange > 0 ? '+' : '') . round($reportsMonthlyChange, 2) . '%';
 
-
-
-        
-
-
 return view('admin.dashboard', [
     'dailyMessages' => $dailyMessages,
     'users_number'=>   $users_number,
@@ -144,6 +139,7 @@ return view('admin.dashboard', [
     'events'=>$events,
 ]);
 }
+
 
     public function admin_users() {
     return view('admin.users');

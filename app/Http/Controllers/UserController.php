@@ -133,7 +133,41 @@ public function update_profile(Request $request)
 
 
 
-    
+    public function toggle(User $user)
+{
+    try {
+        $user->update(['is_active' => !$user->is_active]);
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'تم تحديث حالة المستخدم بنجاح'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'فشل في تحديث الحالة: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+public function destroy(User $user)
+{
+    try {
+        $user->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'تم حذف المستخدم بنجاح'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'فشل في حذف المستخدم: ' . $e->getMessage()
+        ], 500);
+    }
+}
+
+
     public function user_settings() {
     return view('user.settings');
 }
