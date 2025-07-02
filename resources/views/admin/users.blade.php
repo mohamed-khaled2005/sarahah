@@ -46,7 +46,7 @@
     <div class="table-container">
       <table class="table">
         <thead class="table-header">
-          <tr><th>(ID)المستخدم</th><th>اسم المستخدم</th><th>البريد الإلكتروني</th><th>تاريخ التسجيل</th><th>الحالة</th><th>الإجراءات</th></tr>
+          <tr><th class="sortable"><span class="sort-icon">▲</span>(ID)المستخدم</th><th class="sortable"><span class="sort-icon">▲</span>اسم المستخدم</th><th>البريد الإلكتروني</th><th class="sortable"><span class="sort-icon">▲</span>تاريخ التسجيل</th><th class="sortable"><span class="sort-icon">▲</span>الحالة</th><th>الإجراءات</th></tr>
         </thead>
         <tbody id="userTableBody">
           @foreach($users as $user)
@@ -405,6 +405,36 @@ document.addEventListener('DOMContentLoaded', () => {
     showPage(1);
   }
 });
+
+/*-----------------Pagination---------------------*/
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("th.sortable").forEach((th) => {
+    th.addEventListener("click", function () {
+      const table = th.closest("table");
+      const tbody = table.querySelector("tbody");
+      const index = Array.from(th.parentNode.children).indexOf(th);
+      const ascending = !th.classList.contains("asc");
+
+      // إزالة السورتينج من كل الأعمدة
+      table.querySelectorAll("th").forEach((t) => {
+        t.classList.remove("asc", "desc");
+      });
+
+      // أضف الكلاس للحالة الجديدة
+      th.classList.add(ascending ? "asc" : "desc");
+
+      // رتب الصفوف
+      Array.from(tbody.querySelectorAll("tr"))
+        .sort((a, b) => {
+          const A = a.children[index].textContent.trim();
+          const B = b.children[index].textContent.trim();
+          return ascending ? A.localeCompare(B) : B.localeCompare(A);
+        })
+        .forEach((tr) => tbody.appendChild(tr));
+    });
+  });
+});
+
 </script>
 
 <style>

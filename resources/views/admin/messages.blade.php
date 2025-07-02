@@ -23,16 +23,16 @@
       <table class="table">
         <thead>
           <tr>
-            <th>المحتوى</th><th>المرسل</th><th>تاريخ الإرسال</th><th>ID المستخدم</th><th>الإجراء</th>
+            <th class="sortable"><span class="sort-icon">▲</span> ID المستخدم</th><th>المحتوى</th><th>المرسل</th><th class="sortable"><span class="sort-icon">▲</span>تاريخ الإرسال</th><th>الإجراء</th>
           </tr>
         </thead>
         <tbody id="msgBody">
           @foreach($messages as $msg)
           <tr data-id="{{ $msg->id }}">
+            <td>{{ $msg->user_id }}</td>
             <td>{{ $msg->content }}</td>
             <td>مجهول</td>
             <td>{{ $msg->created_at->format('Y-m-d H:i') }}</td>
-            <td>{{ $msg->user_id }}</td>
             <td>
               <button class="btn-delete" data-id="{{ $msg->id }}">حذف</button>
             </td>
@@ -182,6 +182,34 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+/*------------------SORTING MESSAGE----------------*/
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("th.sortable").forEach((th) => {
+    th.addEventListener("click", function () {
+      const table = th.closest("table");
+      const tbody = table.querySelector("tbody");
+      const index = Array.from(th.parentNode.children).indexOf(th);
+      const ascending = !th.classList.contains("asc");
+
+      // إزالة السورتينج من كل الأعمدة
+      table.querySelectorAll("th").forEach((t) => {
+        t.classList.remove("asc", "desc");
+      });
+
+      // أضف الكلاس للحالة الجديدة
+      th.classList.add(ascending ? "asc" : "desc");
+
+      // رتب الصفوف
+      Array.from(tbody.querySelectorAll("tr"))
+        .sort((a, b) => {
+          const A = a.children[index].textContent.trim();
+          const B = b.children[index].textContent.trim();
+          return ascending ? A.localeCompare(B) : B.localeCompare(A);
+        })
+        .forEach((tr) => tbody.appendChild(tr));
+    });
+  });
+});
 
 </script>
 @endsection
