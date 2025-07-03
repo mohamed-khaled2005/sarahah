@@ -1,13 +1,16 @@
 <?php
 use App\Http\Controllers\{
-    StaticPages, AuthController, AdminController,
-    UserController, MessageController, NotificationController, ReportController
+    StaticPages, AuthController, AdminController,BlogController,
+    UserController, MessageController, NotificationController, ReportController,PageController
 };
+
+
+use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
 
     /* صندوق الوارد */
-    Route::get ('/user/inbox',               [UserController::class,'user_inbox'])->name('user.inbox');
+    Route::get ('/user/inbox',[UserController::class,'user_inbox'])->name('user.inbox');
 
     /* وظائف Ajax */
     Route::post('/messages/mark-read/{id}',  [MessageController::class, 'markRead'])->name('messages.markRead');
@@ -25,9 +28,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/', [StaticPages::class,'index']) ->name('index');
 //Global_pages
     Route::get('/blog',[StaticPages::class,'posts_index']);
-    Route::get('/blog/single',[StaticPages::class,'posts_single']);
+    Route::get('/blog/{slug?}', [BlogController::class, 'show'])->name('blog.show');
     Route::get('/blog/category',[StaticPages::class,'posts_category']);
     Route::get('single',[StaticPages::class,'pages']);
+
+
 
 //login_pages
 Route::middleware(['guest'])->group(
@@ -70,12 +75,30 @@ Route::middleware(['admin'])->group(
     Route::get('/admin/posts',[AdminController::class,'admin_posts'])->name('admin.posts');
     Route::get('/admin/reports',[AdminController::class,'admin_reports'])->name('admin.reports');
     Route::get('/admin/ads',[AdminController::class,'admin_ads'])->name('admin.ads');
+    Route::get('/admin/ads', [AdminController::class, 'admin_ads'])->name('admin.ads.index');
+
+// مسار لجلب بيانات إعلان محدد بواسطة AJAX
+Route::get('/admin/ads/show', [AdminController::class, 'show_ads'])->name('admin.ads.show');
+
+// مسار لتحديث بيانات إعلان بواسطة AJAX
+Route::post('/admin/ads/update', [AdminController::class, 'update_ads'])->name('admin.ads.update');
     Route::post('/admin/users/{user}/toggle', [UserController::class, 'toggle'])->name('admin.users.toggle');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     Route::delete('/admin/messages/{id}', [MessageController::class, 'destroy']);
     Route::get('/admin/settings',[AdminController::class,'admin_settings'])->name('admin.settings');
     Route::post('/admin/reports/delete-bulk', [ReportController::class,'destroyBulk']);
+// CRUD عبر AJAX
+    Route::get('/admin/posts/{id}/edit', [AdminController::class, 'edit_post'])->name('admin.posts.edit');
+    Route::post('/admin/posts', [AdminController::class, 'store_post'])->name('admin.posts.store');
+    Route::put('/admin/posts/{id}', [AdminController::class, 'update_post'])->name('admin.posts.update');
+    Route::delete('/admin/posts/{id}', [AdminController::class, 'destroy_post'])->name('admin.posts.destroy');
 
+       Route::get('/admin/pages', [AdminController::class, 'admin_pages'])->name('pages.index');
+    Route::post('/admin/pages', [AdminController::class, 'pages_store'])->name('admin.pages.store');
+    // تعديل هنا: اسم المسار لدالة جلب البيانات للتعديل
+    Route::get('/admin/pages/{page}/edit-data', [AdminController::class, 'pages_getpagedata'])->name('admin.pages.edit_data');
+    Route::put('/admin/pages/{page}', [AdminController::class, 'update_pages'])->name('admin.pages.update');
+    Route::delete('/admin/pages/{page}', [AdminController::class, 'destroy_pages'])->name('admin.pages.destroy');
 
     }
 );
@@ -87,3 +110,4 @@ Route::middleware('auth')->group(function () {
     Route::post('/messages/mark-read/{id}', [MessageController::class, 'markRead'])->name('messages.markRead');
 });
 
+    Route::get('/{slug?}',[PageController::class,'show'])->name('page.show');

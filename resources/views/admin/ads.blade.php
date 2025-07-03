@@ -1,78 +1,219 @@
-  @extends('layouts.admin')
-  @section('title','صراحة - إدارة الإعلانات')
-  @section('page-css')
-  <link rel="stylesheet" href="{{url('css/pages/admin/ads.css')}}"/>
-  @endsection
+@extends('layouts.admin')
+@section('title', 'صراحة - إدارة الإعلانات')
+@section('page-css')
+<link rel="stylesheet" href="{{ url('css/pages/admin/ads.css') }}" />
+<style>
+    .toggle-section {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    .toggle-container {
+        display: flex;
+        align-items: center;
+    }
+    .toggle-switch {
+        width: 50px;
+        height: 28px;
+        background-color: #ccc;
+        border-radius: 14px;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    .toggle-switch.active {
+        background-color: #4CAF50; /* لون أخضر عند التفعيل */
+    }
+    .toggle-knob {
+        width: 24px;
+        height: 24px;
+        background-color: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        transition: left 0.3s;
+    }
+    .toggle-switch.active .toggle-knob {
+        left: 24px; /* تحريك الزر لليمين عند التفعيل */
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+    .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+    }
+    .form-textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        min-height: 200px; /* ارتفاع افتراضي أكبر */
+        box-sizing: border-box; /* لضمان أن البادينج لا يزيد العرض الكلي */
+    }
+    .tab-item.active {
+       /* لون التاب النشط */
+        color: black;
+    }
+</style>
+@endsection
 
-       @section('main')
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Content Header -->
-        <div class="content-header">
-          <h2 class="page-title">إدارة الإعلانات</h2>
+@section('main')
+<main class="main-content">
+    <div class="content-header">
+        <h2 class="page-title">إدارة الإعلانات</h2>
+        <button class="add-btn" style="display: none;">+ إضافة إعلان جديد</button>
+    </div>
+
+    <div class="tab-navigation">
+        <div class="tab-list" id="adTabs">
+            {{-- نستخدم $adTypes لإنشاء التابات بالاسم العربي للعرض والاسم الإنجليزي للداتا --}}
+            @foreach($adTypes as $dbName => $displayName)
+                <a href="#" class="tab-item" data-ad-name="{{ $dbName }}">
+                    {{ $displayName }}
+                </a>
+            @endforeach
         </div>
+    </div>
 
-        <!-- Tab Navigation -->
-        <div class="tab-navigation">
-          <div class="tab-list">
-            <a href="#" class="tab-item active">إعلان الراية العلوية</a>
-            <a href="#" class="tab-item">إعلان الشريط الأيمن</a>
-            <a href="#" class="tab-item">إعلان الشريط الأيسر</a>
-            <a href="#" class="tab-item">إعلان داخل المحتوى</a>
-            <a href="#" class="tab-item">إعلان تذييل الصفحة</a>
-          </div>
-        </div>
-
-        <!-- Form Section -->
-        <div class="form-section">
-          <div class="form-group">
-            <label class="form-label">كود الإعلان</label>
+    <div class="form-section">
+        <div class="form-group">
+            <label class="form-label" for="adCodeTextarea">كود الإعلان</label>
             <textarea
-              class="form-textarea"
-              placeholder="أدخل كود الإعلان هنا..."
+                class="form-textarea"
+                id="adCodeTextarea"
+                placeholder="أدخل كود الإعلان هنا..."
             ></textarea>
-          </div>
         </div>
+    </div>
 
-        <!-- Toggle Section -->
-        <div class="toggle-section">
-          <div class="toggle-container">
-            <div class="toggle-switch" onclick="toggleSwitch(this)">
-              <div class="toggle-knob"></div>
+    <div class="toggle-section">
+              <div class="toggle-label">تفعيل الإعلان</div>
+
+        <div class="toggle-container">
+            <div class="toggle-switch" id="adToggleSwitch">
+                <div class="toggle-knob"></div>
             </div>
-          </div>
-          <div class="toggle-label">تفعيل الإعلان</div>
         </div>
+    </div>
 
-        <!-- Action Section -->
-        <div class="action-section">
-          <button class="save-btn">حفظ جميع الإعلانات</button>
-        </div>
+    <div class="action-section">
+        <button class="save-btn" id="saveAdButton">💾 حفظ الإعلان</button>
+    </div>
 
-        <!-- Warning Section -->
-        <div class="warning-section">
-          <p class="warning-text">يرجى التأكد من أن يكون كود الإعلان صحيح</p>
-        </div>
-      </main>
+    <div class="warning-section">
+        <p class="warning-text">يرجى التأكد من أن يكون كود الإعلان صحيح.</p>
+    </div>
+</main>
 
-    <script>
-      function toggleSwitch(element) {
+<script>
+    const adTabs = document.getElementById('adTabs');
+    const adCodeTextarea = document.getElementById('adCodeTextarea');
+    const adToggleSwitch = document.getElementById('adToggleSwitch');
+    const saveAdButton = document.getElementById('saveAdButton');
+
+    let currentAdName = ''; // لتخزين الاسم الإنجليزي للإعلان النشط حاليًا
+
+    function toggleSwitch(element) {
         element.classList.toggle("active");
-      }
+    }
 
-      // Tab functionality
-      document.querySelectorAll(".tab-item").forEach((tab) => {
+    async function loadAdData(adName) {
+        try {
+            const response = await fetch(`/admin/ads/show?name=${encodeURIComponent(adName)}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'خطأ في جلب بيانات الإعلان.');
+            }
+            const data = await response.json();
+
+            adCodeTextarea.value = data.code || '';
+            if (data.active) {
+                adToggleSwitch.classList.add('active');
+            } else {
+                adToggleSwitch.classList.remove('active');
+            }
+            currentAdName = adName; // تحديث الاسم الإنجليزي للإعلان النشط
+        } catch (error) {
+            console.error('Error loading ad data:', error);
+            alert('حدث خطأ أثناء تحميل بيانات الإعلان: ' + error.message);
+            adCodeTextarea.value = '';
+            adToggleSwitch.classList.remove('active');
+            currentAdName = '';
+        }
+    }
+
+    adTabs.querySelectorAll(".tab-item").forEach((tab) => {
         tab.addEventListener("click", function (e) {
-          e.preventDefault();
+            e.preventDefault();
 
-          // Remove active class from all tabs
-          document
-            .querySelectorAll(".tab-item")
-            .forEach((t) => t.classList.remove("active"));
+            adTabs.querySelectorAll(".tab-item").forEach((t) => t.classList.remove("active"));
+            this.classList.add("active");
 
-          // Add active class to clicked tab
-          this.classList.add("active");
+            const selectedAdName = this.dataset.adName; // نحصل على الاسم الإنجليزي من data-ad-name
+            loadAdData(selectedAdName);
         });
-      });
-    </script>
-    @endsection
+    });
+
+    adToggleSwitch.addEventListener('click', function() {
+        toggleSwitch(this);
+    });
+
+    saveAdButton.addEventListener('click', async function() {
+        if (!currentAdName) {
+            alert('يرجى اختيار نوع الإعلان أولاً.');
+            return;
+        }
+
+        const adCode = adCodeTextarea.value;
+        const isActive = adToggleSwitch.classList.contains('active');
+
+        try {
+            const response = await fetch('/admin/ads/update', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    name: currentAdName, // نرسل الاسم الإنجليزي
+                    code: adCode,
+                    active: isActive
+                })
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                let errorMessage = 'حدث خطأ أثناء حفظ الإعلان.';
+                if (errorData.errors) {
+                    errorMessage += '\n' + Object.values(errorData.errors).flat().join('\n');
+                } else if (errorData.message) {
+                    errorMessage = errorData.message;
+                }
+                throw new Error(errorMessage);
+            }
+
+            const data = await response.json();
+            alert(data.message);
+
+        } catch (error) {
+            console.error('Error saving ad:', error);
+            alert('فشل حفظ الإعلان: ' + error.message);
+        }
+    });
+
+    // تحميل بيانات أول إعلان عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', () => {
+        const firstTab = adTabs.querySelector('.tab-item');
+        if (firstTab) {
+            firstTab.classList.add('active');
+            loadAdData(firstTab.dataset.adName); // نستخدم الاسم الإنجليزي
+        }
+    });
+</script>
+@endsection

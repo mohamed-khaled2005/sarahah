@@ -29,17 +29,17 @@
           </div>
         </div>
 
-        <!-- Links Section -->
-        <div class="section">
+      
+        <!-- <div class="section">
           <div class="section-header">
-            <h3 class="section-title">الروابط</h3>
+            <h3 class="section-title">القائمة العلوية</h3>
           </div>
           <div class="input-container">
             <div class="input-field">
               <input
-                type="url"
+                type="text"
                 class="input"
-                placeholder="رابط فيس بوك"
+                placeholder="رابط"
                 value=""
               />
             </div>
@@ -66,7 +66,7 @@
           </div>
         </div>
 
-        <!-- Messages Section -->
+  
         <div class="section">
           <div class="section-header">
             <h3 class="section-title">الرسائل</h3>
@@ -83,7 +83,7 @@
           </div>
         </div>
 
-        <!-- Toggle Section -->
+        
         <div class="toggle-section">
           <div class="toggle-container">
             <div class="toggle-switch" onclick="toggleSwitch(this)">
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="toggle-label">تفعيل / تعطيل الإعلانات</div>
-        </div>
+        </div> -->
 
         <!-- Save Button -->
         <div class="save-section">

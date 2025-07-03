@@ -1,294 +1,409 @@
-  @extends('layouts.admin')
-  @section('title','صراحة - إدارة المقالات')
-  @section('page-css')
-  <link rel="stylesheet" href="{{url('css/pages/admin/posts.css')}}"/>
-  @endsection
+@extends('layouts.admin')
+@section('title', 'صراحة - إدارة المقالات')
+@section('page-css')
+<link rel="stylesheet" href="{{ url('css/pages/admin/posts.css') }}" />
+@endsection
 
-      @section('main')
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Content Header -->
-        <div class="content-header">
-          <h2 class="page-title">إدارة المقالات</h2>
-          <button class="add-btn">+ إضافة مقال جديد</button>
-        </div>
+@section('main')
+<main class="main-content">
+    <div class="content-header">
+        <h2 class="page-title">إدارة المقالات</h2>
+        <button class="add-btn" onclick="openPostModal()">+ إضافة مقال جديد</button>
+    </div>
 
-        <!-- Search Section -->
-        <div class="search-section">
-          <div class="search-container">
+    <div class="search-section">
+        <div class="search-container">
             <div class="search-wrapper">
-              <div class="search-icon">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M19.5306 18.4694L14.8366 13.7762C17.6629 10.383 17.3204 5.36693 14.0591 2.38935C10.7978 -0.588237 5.77134 -0.474001 2.64867 2.64867C-0.474001 5.77134 -0.588237 10.7978 2.38935 14.0591C5.36693 17.3204 10.383 17.6629 13.7762 14.8366L18.4694 19.5306C18.7624 19.8237 19.2376 19.8237 19.5306 19.5306C19.8237 19.2376 19.8237 18.7624 19.5306 18.4694ZM1.75 8.5C1.75 4.77208 4.77208 1.75 8.5 1.75C12.2279 1.75 15.25 4.77208 15.25 8.5C15.25 12.2279 12.2279 15.25 8.5 15.25C4.77379 15.2459 1.75413 12.2262 1.75 8.5Z"
-                    fill="#61668A"
-                  />
-                </svg>
-              </div>
-              <input
-                type="text"
-                class="search-input"
-                placeholder="ابحث عن مقال"
-              />
+                <input type="text" class="search-input" id="searchInput" placeholder="ابحث عن مقال">
             </div>
-          </div>
         </div>
+    </div>
 
-        <!-- Filter Section -->
-        <div class="filter-section">
-          <button class="filter-dropdown">
-            <span>حسب التصنيف</span>
-            <svg
-              width="14"
-              height="9"
-              viewBox="0 0 14 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M13.6922 1.94219L7.44219 8.19219C7.32496 8.30955 7.16588 8.37549 7 8.37549C6.83412 8.37549 6.67504 8.30955 6.55781 8.19219L0.307812 1.94219C0.0635991 1.69797 0.0635991 1.30203 0.307812 1.05781C0.552026 0.813599 0.947974 0.813599 1.19219 1.05781L7 6.86641L12.8078 1.05781C13.052 0.813599 13.448 0.813599 13.6922 1.05781C13.9364 1.30203 13.9364 1.69797 13.6922 1.94219Z"
-                fill="#121217"
-              />
-            </svg>
-          </button>
-          <button class="filter-dropdown">
-            <span>حسب الكاتب</span>
-            <svg
-              width="14"
-              height="9"
-              viewBox="0 0 14 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M13.6922 1.94219L7.44219 8.19219C7.32496 8.30955 7.16588 8.37549 7 8.37549C6.83412 8.37549 6.67504 8.30955 6.55781 8.19219L0.307812 1.94219C0.0635991 1.69797 0.0635991 1.30203 0.307812 1.05781C0.552026 0.813599 0.947974 0.813599 1.19219 1.05781L7 6.86641L12.8078 1.05781C13.052 0.813599 13.448 0.813599 13.6922 1.05781C13.9364 1.30203 13.9364 1.69797 13.6922 1.94219Z"
-                fill="#121217"
-              />
-            </svg>
-          </button>
-          <button class="filter-dropdown">
-            <span>حسب التاريخ</span>
-            <svg
-              width="14"
-              height="9"
-              viewBox="0 0 14 9"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M13.6922 1.94219L7.44219 8.19219C7.32496 8.30955 7.16588 8.37549 7 8.37549C6.83412 8.37549 6.67504 8.30955 6.55781 8.19219L0.307812 1.94219C0.0635991 1.69797 0.0635991 1.30203 0.307812 1.05781C0.552026 0.813599 0.947974 0.813599 1.19219 1.05781L7 6.86641L12.8078 1.05781C13.052 0.813599 13.448 0.813599 13.6922 1.05781C13.9364 1.30203 13.9364 1.69797 13.6922 1.94219Z"
-                fill="#121217"
-              />
-            </svg>
-          </button>
-        </div>
+    <div class="filter-section">
+        <button class="filter-dropdown">حسب الحالة</button>
+        <button class="filter-dropdown">حسب التاريخ</button>
+        {{-- يمكن إضافة فلاتر هنا للمؤلف والقسم إذا أردت --}}
+    </div>
 
-        <!-- Table Section -->
-        <div class="table-section">
-          <div class="table-container">
+    <div class="table-section">
+        <div class="table-container">
             <table class="table">
-              <thead class="table-header">
-                <tr>
-                  <th style="width: 75px">✅ تحديد</th>
-                  <th style="width: 154px">📝 عنوان المقال</th>
-                  <th style="width: 142px">🗒️ التصنيف</th>
-                  <th style="width: 149px">✍️ الكاتب</th>
-                  <th style="width: 137px">📅 تاريخ النشر</th>
-                  <th style="width: 149px">📈 عدد القراءات</th>
-                  <th style="width: 120px" class="actions">⚙️ الإجراءات</th>
-                </tr>
-              </thead>
-              <tbody class="table-body">
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>الصحة النفسية وأهميتها في العمل</td>
-                  <td>
-                    <div class="category-tag">الصحة</div>
-                  </td>
-                  <td class="author">Fatima</td>
-                  <td class="date">2024-01-15</td>
-                  <td class="reads">1200</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>تطوير التطبيقات في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Ahmed</td>
-                  <td class="date">2024-02-20</td>
-                  <td class="reads">850</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>تقنيات تركيز على العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Layla</td>
-                  <td class="date">2024-03-10</td>
-                  <td class="reads">1500</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>التعامل مع الضغوط في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Omar</td>
-                  <td class="date">2024-04-05</td>
-                  <td class="reads">950</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>التواصل في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Sara</td>
-                  <td class="date">2024-05-12</td>
-                  <td class="reads">1100</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>التعاون في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Youssef</td>
-                  <td class="date">2024-06-20</td>
-                  <td class="reads">1300</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>التفكير الإبداعي في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Nour</td>
-                  <td class="date">2024-07-15</td>
-                  <td class="reads">1000</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>التعلم من الأخطاء في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Ali</td>
-                  <td class="date">2024-08-01</td>
-                  <td class="reads">1400</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>التقدم في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Salma</td>
-                  <td class="date">2024-09-10</td>
-                  <td class="reads">1600</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-                <tr>
-                  <td>
-                    <input type="checkbox" class="checkbox" />
-                  </td>
-                  <td>التعامل مع التوتر في العمل</td>
-                  <td>
-                    <div class="category-tag">الإنتاجية</div>
-                  </td>
-                  <td class="author">Karim</td>
-                  <td class="date">2024-10-05</td>
-                  <td class="reads">1250</td>
-                  <td class="actions">✏️ تعديل | 🗑️ حذف | 👁️ عرض</td>
-                </tr>
-              </tbody>
+                <thead class="table-header">
+                    <tr>
+                        <th>✅</th>
+                        <th class="sortable"><span class="sort-icon">▲</span> 📝 العنوان</th>
+                        <th>🔗 الرابط (Slug)</th>
+                        <th>🏞️ الصورة المصغرة</th>
+                        <th>✍️ المؤلف</th> {{-- حقل جديد --}}
+                        <th class="sortable"><span class="sort-icon">▲</span>🏷️ القسم</th> {{-- حقل جديد --}}
+                        <th>📊 الحالة</th>
+                        <th class="sortable"><span class="sort-icon">▲</span>📅 التاريخ</th>
+                        <th>⚙️ الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body" id="postsTable">
+                    @foreach($posts as $post)
+                    <tr data-id="{{ $post->id }}">
+                        <td><input type="checkbox" class="checkbox"></td>
+                        <td class="post-title-cell">{{ $post->title }}</td>
+                        <td>{{ $post->slug }}</td>
+                        <td>
+                            @if($post->thumbnail)
+                                <img src="{{ url('avatars/'.$post->thumbnail) }}" alt="Thumbnail" class="table-thumbnail">
+                            @else
+                                لا يوجد
+                            @endif
+                        </td>
+                        {{-- عرض اسم المؤلف والقسم من نفس عمود المقال --}}
+                        <td>{{ $post->author ?? 'غير معروف' }}</td>
+                        <td>{{ $post->category ?? 'غير مصنف' }}</td>
+                        <td><span class="status-tag status-{{ $post->status }}">{{ $post->status }}</span></td>
+                        <td>{{ $post->created_at ? $post->created_at->format('Y-m-d H:i') : 'N/A' }}</td>
+                        <td class="actions">
+                            <span class="edit-btn" onclick="openPostModal({{ $post->id }})">✏️ تعديل</span> |
+                            <span class="delete-btn" onclick="deletePost({{ $post->id }})">🗑️ حذف</span> |
+                            <a href="{{ route('blog.show', $post->slug) }}" target="_blank" class="view-btn">👁️ عرض</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
             </table>
-          </div>
         </div>
-      </main>
-      <script>
-      // Filter dropdown functionality
-      document.querySelectorAll(".filter-dropdown").forEach((dropdown) => {
-        dropdown.addEventListener("click", function () {
-          console.log("Filter clicked:", this.textContent);
-          // Add dropdown menu functionality here
+    </div>
+    <div class="pagination-container" id="pagination"></div>
+</main>
+
+<div id="postModalOverlay" class="modal-overlay hidden">
+    <div class="modal">
+        <button class="close-btn" onclick="closePostModal()">&times;</button>
+        <h3 class="modal-title" id="postModalTitle">إدارة المقال</h3>
+        <form id="postForm" class="post-form" enctype="multipart/form-data">
+            @csrf
+            <input type="hidden" id="postId" name="id">
+
+            <div class="form-group">
+                <label for="postTitle">العنوان:</label>
+                <input type="text" id="postTitle" name="title" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postSlug">الرابط (Slug):</label>
+                <input type="text" id="postSlug" name="slug" required>
+                <small>سيتم استخدامه في رابط المقال (مثال: my-awesome-post)</small>
+            </div>
+
+            <div class="form-group">
+                <label for="postContent">المحتوى:</label>
+                <textarea id="postContent" name="content" rows="15" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="postThumbnail">صورة المقال المصغرة:</label>
+                <input type="file" id="postThumbnail" name="thumbnail">
+                <img id="currentPostThumbnail" src="" alt="الصورة المصغرة الحالية" class="current-image-preview hidden">
+            </div>
+
+            {{-- حقول المؤلف والقسم كـ input text --}}
+            <div class="form-group">
+                <label for="postAuthor">المؤلف:</label>
+                <input type="text" id="postAuthor" name="author" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postCategory">القسم:</label>
+                <input type="text" id="postCategory" name="category" required>
+            </div>
+
+            <div class="form-group">
+                <label for="postStatus">الحالة:</label>
+                <select id="postStatus" name="status" required>
+                    <option value="draft">مسودة (Draft)</option>
+                    <option value="published">منشور (Published)</option>
+                </select>
+            </div>
+
+            <button type="submit" class="save-btn" id="savePostButton">💾 حفظ المقال</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    const postModalOverlay = document.getElementById('postModalOverlay');
+    const postModalTitle = document.getElementById('postModalTitle');
+    const postIdInput = document.getElementById('postId');
+    const postTitleInput = document.getElementById('postTitle');
+    const postSlugInput = document.getElementById('postSlug');
+    const postContentInput = document.getElementById('postContent');
+    const postThumbnailInput = document.getElementById('postThumbnail');
+    const currentPostThumbnail = document.getElementById('currentPostThumbnail');
+    const postStatusSelect = document.getElementById('postStatus');
+    const postAuthorInput = document.getElementById('postAuthor'); // تعريف الحقل الجديد
+    const postCategoryInput = document.getElementById('postCategory'); // تعريف الحقل الجديد
+    const postForm = document.getElementById('postForm');
+
+    postTitleInput.addEventListener('input', function () {
+        if (!postIdInput.value) {
+            const slug = this.value.toLowerCase().trim()
+                .replace(/[^\w\s-]/g, '')
+                .replace(/[\s_-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            postSlugInput.value = slug;
+        }
+    });
+
+    function openPostModal(postId = null) {
+        postForm.reset();
+        currentPostThumbnail.classList.add('hidden');
+        currentPostThumbnail.src = '';
+        postIdInput.value = '';
+
+        if (postId) {
+            postModalTitle.innerText = 'تعديل مقال';
+            postIdInput.value = postId;
+            fetch(`/admin/posts/${postId}/edit`)
+                .then(response => {
+                    if (!response.ok) throw new Error('خطأ في الاستجابة');
+                    return response.json();
+                })
+                .then(data => {
+                    postTitleInput.value = data.title;
+                    postSlugInput.value = data.slug;
+                    postContentInput.value = data.content;
+                    if (data.thumbnail_url) {
+                        currentPostThumbnail.src = data.thumbnail_url;
+                        currentPostThumbnail.classList.remove('hidden');
+                    }
+                    postStatusSelect.value = data.status;
+                    // تعبئة حقول المؤلف والقسم من بيانات المقال مباشرةً
+                    postAuthorInput.value = data.author || '';
+                    postCategoryInput.value = data.category || '';
+                })
+                .catch(error => {
+                    console.error('خطأ في جلب البيانات:', error);
+                    alert('تعذر تحميل بيانات المقال.');
+                });
+        } else {
+            postModalTitle.innerText = 'إضافة مقال جديد';
+            postStatusSelect.value = 'draft';
+            // إفراغ حقول المؤلف والقسم للمقالات الجديدة
+            postAuthorInput.value = '';
+            postCategoryInput.value = '';
+        }
+
+        postModalOverlay.classList.remove('hidden');
+    }
+
+    function closePostModal() {
+        postModalOverlay.classList.add('hidden');
+    }
+
+    postForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const postId = postIdInput.value;
+        let url = '/admin/posts';
+
+        if (postId) {
+            url = `/admin/posts/${postId}`;
+            formData.append('_method', 'PUT');
+        }
+
+        fetch(url, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(async response => {
+            if (!response.ok) {
+                let errorMsg = 'الرد غير صالح';
+                try {
+                    const errorData = await response.json();
+                    if (errorData.errors) {
+                        errorMsg = Object.values(errorData.errors).flat().join('\n');
+                    } else if (errorData.message) {
+                        errorMsg = errorData.message;
+                    }
+                } catch (e) {
+                    // إذا لم يكن الرد JSON، فاستخدم حالة النص الافتراضية
+                }
+                throw new Error(errorMsg);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                closePostModal();
+                location.reload();
+            } else {
+                alert('خطأ: ' + (data.message || 'لم يتم الحفظ.'));
+            }
+        })
+        .catch(error => {
+            console.error('Error saving post:', error);
+            alert('حدث خطأ أثناء حفظ المقال:\n' + error.message);
         });
+    });
+
+    function deletePost(id) {
+        if (!confirm('هل أنت متأكد من حذف هذا المقال؟')) return;
+
+        fetch(`/admin/posts/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json'
+            }
+        })
+        .then(async response => {
+            if (!response.ok) {
+                let errorMsg = 'الرد غير صالح';
+                try {
+                    const errorData = await response.json();
+                    if (errorData.message) {
+                        errorMsg = errorData.message;
+                    }
+                } catch (e) {
+                    // إذا لم يكن الرد JSON، فاستخدم حالة النص الافتراضية
+                }
+                throw new Error(errorMsg);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                document.querySelector(`tr[data-id="${id}"]`).remove();
+                alert(data.message || 'تم حذف المقال بنجاح!');
+            } else {
+                alert('خطأ: ' + (data.message || 'لم يتم الحذف.'));
+            }
+        })
+        .catch(error => {
+            console.error('Error deleting post:', error);
+            alert('حدث خطأ أثناء حذف المقال.\n' + error.message);
+        });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', function () {
+        const q = this.value.toLowerCase();
+        document.querySelectorAll('#postsTable tr').forEach(row => {
+            row.style.display = row.innerText.toLowerCase().includes(q) ? '' : 'none';
+        });
+    });
+
+    // هذا الجزء يضمن إخفاء المودال عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', (event) => {
+        postModalOverlay.classList.add('hidden');
+    });
+
+        /*-------------------------pagination--------------------------*/
+    document.addEventListener('DOMContentLoaded', () => {
+  const rowsPerPage = 8; // عدد الصفوف لكل صفحة
+  const tableBody = document.querySelector('tbody'); // يتعامل مع أول tbody في الصفحة
+  const allRows = [...tableBody.querySelectorAll('tr')];
+  const pagination = document.getElementById('pagination');
+
+  let currentPage = 1;
+  const totalPages = Math.ceil(allRows.length / rowsPerPage);
+
+  function showPage(page) {
+    currentPage = page;
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    allRows.forEach((row, i) => {
+      row.style.display = (i >= start && i < end) ? '' : 'none';
+    });
+
+    renderPagination();
+  }
+
+  function renderPagination() {
+    pagination.innerHTML = '';
+    for (let i = 1; i <= totalPages; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'pagination-btn' + (i === currentPage ? ' active' : '');
+      btn.textContent = i;
+      btn.addEventListener('click', () => showPage(i));
+      pagination.appendChild(btn);
+    }
+  }
+
+  if (totalPages > 1) {
+    showPage(1);
+  }
+});
+
+/*------------------SORTING MESSAGE----------------*/
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll("th.sortable").forEach((th) => {
+    th.addEventListener("click", function () {
+      const table = th.closest("table");
+      const tbody = table.querySelector("tbody");
+      const index = Array.from(th.parentNode.children).indexOf(th);
+      const ascending = !th.classList.contains("asc");
+
+      // إزالة السورتينج من كل الأعمدة
+      table.querySelectorAll("th").forEach((t) => {
+        t.classList.remove("asc", "desc");
       });
 
-      // Checkbox functionality
-      document.querySelectorAll(".checkbox").forEach((checkbox) => {
-        checkbox.addEventListener("change", function () {
-          console.log("Checkbox changed:", this.checked);
-        });
-      });
+      // أضف الكلاس للحالة الجديدة
+      th.classList.add(ascending ? "asc" : "desc");
 
-      // Add new article button
-      document.querySelector(".add-btn").addEventListener("click", function () {
-        console.log("Add new article clicked");
-        // Add navigation to article creation page
-      });
+      // رتب الصفوف
+      Array.from(tbody.querySelectorAll("tr"))
+        .sort((a, b) => {
+          const A = a.children[index].textContent.trim();
+          const B = b.children[index].textContent.trim();
+          return ascending ? A.localeCompare(B) : B.localeCompare(A);
+        })
+        .forEach((tr) => tbody.appendChild(tr));
+    });
+  });
+});
+// ---------------- FILTER BY STATUS -----------------
+document.querySelector('.filter-section .filter-dropdown:nth-child(1)')
+.addEventListener('click', function() {
+    const tbody = document.querySelector('#postsTable');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    let ascending = this.classList.toggle('asc'); // toggle حالة الفرز
 
-      // Action buttons functionality
-      document.querySelectorAll(".actions").forEach((action) => {
-        action.addEventListener("click", function (e) {
-          if (e.target.textContent.includes("تعديل")) {
-            console.log("Edit clicked");
-          } else if (e.target.textContent.includes("حذف")) {
-            console.log("Delete clicked");
-          } else if (e.target.textContent.includes("عرض")) {
-            console.log("View clicked");
-          }
-        });
-      });
+    rows.sort((a, b) => {
+        const statusA = a.querySelector('.status-tag').textContent.trim();
+        const statusB = b.querySelector('.status-tag').textContent.trim();
 
-      // Search functionality
-      document
-        .querySelector(".search-input")
-        .addEventListener("input", function (e) {
-          console.log("Search:", e.target.value);
-          // Add search filtering logic here
-        });
-      </script>
-  @endsection
+        // ترتيب: published قبل draft إذا تصاعدي، والعكس إذا تنازلي
+        if (ascending) {
+            return statusA.localeCompare(statusB);
+        } else {
+            return statusB.localeCompare(statusA);
+        }
+    });
+
+    // إعادة ترتيب الصفوف
+    rows.forEach(row => tbody.appendChild(row));
+});
+
+// ---------------- FILTER BY DATE -----------------
+document.querySelector('.filter-section .filter-dropdown:nth-child(2)')
+.addEventListener('click', function() {
+    const tbody = document.querySelector('#postsTable');
+    const rows = Array.from(tbody.querySelectorAll('tr'));
+    let ascending = this.classList.toggle('asc'); // toggle حالة الفرز
+
+    rows.sort((a, b) => {
+        const dateA = new Date(a.children[7].textContent.trim());
+        const dateB = new Date(b.children[7].textContent.trim());
+
+        return ascending ? dateA - dateB : dateB - dateA;
+    });
+
+    // إعادة ترتيب الصفوف
+    rows.forEach(row => tbody.appendChild(row));
+});
+</script>
+@endsection

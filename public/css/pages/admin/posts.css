@@ -1,309 +1,462 @@
+/* General Body & Main Content (Keep previous styles) */
 
-      /* Main Content */
-      .main-content {
-        flex: 1;
-        max-width: 960px;
-        display: flex;
+
+.main-content {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Header Section */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.page-title {
+    font-size: 2em;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.add-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+.add-btn:hover {
+    background-color: #218838;
+}
+
+/* Search Section */
+.search-section {
+    margin-bottom: 25px;
+}
+
+.search-container {
+    display: flex;
+
+}
+
+.search-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.search-input {
+    width: calc(100% - 20px);
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    padding-left: 40px; /* Space for potential search icon in RTL */
+    text-align: right; /* RTL */
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.filter-dropdown {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+}
+
+.filter-dropdown:hover {
+    background-color: #0056b3;
+}
+
+/* Table Section */
+.table-section {
+    overflow-x: auto;
+}
+
+.table-container {
+    width: 100%;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners apply to content */
+}
+
+.table-header th {
+    background-color: #f2f2f2;
+    padding: 12px 15px;
+    text-align: right; /* RTL */
+    font-weight: bold;
+    color: #555;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-body td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    text-align: right; /* RTL */
+}
+
+.table-body tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.table-body tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-thumbnail {
+    width: 60px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.status-tag {
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.85em;
+    display: inline-block;
+    color: white;
+}
+
+.status-draft {
+    background-color: #ffc107; /* Yellow for draft */
+}
+
+.status-published {
+    background-color: #28a745; /* Green for published */
+}
+
+/* Add more status styles if needed */
+/* .status-pending { background-color: #17a2b8; } */
+/* .status-archived { background-color: #6c757d; } */
+
+
+.actions span, .actions a {
+    cursor: pointer;
+    color: #007bff;
+    margin-left: 8px; /* For RTL */
+    margin-right: 0; /* Override default if needed */
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.actions span:hover, .actions a:hover {
+    color: black;
+
+}
+
+.actions .delete-btn {
+    color: #dc3545;
+}
+
+.actions .delete-btn:hover {
+    color: #c82333;
+}
+
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0; /* For RTL */
+    left: unset; /* Reset left */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+.modal {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: fadeInScale 0.3s ease-out;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px; /* For RTL */
+    left: unset; /* Reset left */
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+    color: #aaa;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: #333;
+}
+
+.modal-title {
+    font-size: 1.8em;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.post-form .form-group {
+    margin-bottom: 20px;
+}
+
+.post-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.post-form input[type="text"],
+.post-form textarea,
+.post-form select {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box; /* Include padding in width */
+    text-align: right; /* RTL */
+}
+
+.post-form textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.post-form input[type="file"] {
+    padding: 8px 0;
+    width: 100%; /* Ensure file input takes full width */
+}
+
+.current-image-preview {
+    max-width: 200px;
+    height: auto;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    display: block;
+}
+
+.current-image-preview.hidden {
+    display: none;
+}
+
+.save-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.save-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Animations (Keep previous styles) */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .content-header {
         flex-direction: column;
-      }
-
-      .content-header {
-        padding: 16px;
-        display: flex;
-        justify-content: space-between;
         align-items: flex-start;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-
-      .page-title {
-        font-family:
-          "Noto Serif",
-          -apple-system,
-          Roboto,
-          Helvetica,
-          sans-serif;
-        font-size: 32px;
-        font-weight: 700;
-        color: #121217;
-        line-height: 1.25;
-        text-align: center;
-        min-width: 288px;
-        flex: 1;
-      }
-
-      .add-btn {
-        height: 32px;
-        min-width: 84px;
-        max-width: 480px;
-        padding: 0 16px;
-        background: #f0f2f5;
+    }
+    .add-btn {
+        margin-top: 15px;
+        width: 100%;
+    }
+    .filter-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .filter-dropdown {
+        width: 100%;
+    }
+    .table thead {
+        display: none; /* Hide table headers on small screens */
+    }
+    .table, .table-body, .table-body tr, .table-body td {
+        display: block;
+        width: 100%;
+    }
+    .table-body tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    .table-body td {
+        text-align: right; /* RTL */
+        padding-right: 50%; /* Adjusted for RTL */
+        padding-left: 15px; /* Maintain some left padding */
+        position: relative;
         border: none;
-        border-radius: 12px;
-        color: #121217;
-        font-family:
-          "Noto Serif",
-          -apple-system,
-          Roboto,
-          Helvetica,
-          sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.5;
-        cursor: pointer;
-        transition: background-color 0.15s ease;
-      }
+    }
+    .table-body td::before {
+        content: attr(data-label);
+        position: absolute;
+        right: 15px; /* Adjusted for RTL */
+        left: unset; /* Reset left */
+        width: 45%;
+        padding-left: 10px; /* Adjusted for RTL */
+        white-space: nowrap;
+        font-weight: bold;
+        text-align: left; /* RTL */
+    }
+    .table-body tr td:nth-of-type(1)::before { content: "✅"; }
+    .table-body tr td:nth-of-type(2)::before { content: "العنوان:"; }
+    .table-body tr td:nth-of-type(3)::before { content: "الرابط:"; }
+    .table-body tr td:nth-of-type(4)::before { content: "الصورة:"; }
+    .table-body tr td:nth-of-type(5)::before { content: "الحالة:"; }
+    .table-body tr td:nth-of-type(6)::before { content: "التاريخ:"; }
+    .table-body tr td:nth-of-type(7)::before { content: "الإجراءات:"; }
 
-      .add-btn:hover {
-        background: #e1e5e9;
-      }
+    .modal {
+        width: 95%;
+        padding: 20px;
+    }
+}
 
-      /* Search Section */
-      .search-section {
-        padding: 12px 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      }
+/* Modal Styling */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    right: 0; /* For RTL */
+    left: unset; /* Reset left */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+    /* هذا هو الجزء المهم الذي يضمن إخفاءه عند التحميل */
+    opacity: 0; /* ابدأ بشفافية 0 */
+    visibility: hidden; /* اجعله غير مرئي */
+}
 
-      .search-container {
-        height: 48px;
-        min-width: 160px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-      }
+.modal-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
 
-      .search-wrapper {
-        display: flex;
-        align-items: flex-start;
-        flex: 1;
-        width: 100%;
-        border-radius: 12px;
-      }
+/* عند إظهار المودال، نغير هذه الخصائص */
+.modal-overlay:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
 
-      .search-icon {
-        display: flex;
-        padding-left: 16px;
-        justify-content: center;
-        align-items: center;
-        align-self: stretch;
-        border-radius: 12px 0 0 12px;
-        background: #f0f2f5;
-      }
 
-      .search-icon svg {
-        width: 24px;
-        height: 24px;
-        fill: #61668a;
-      }
+.modal {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 800px;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: fadeInScale 0.3s ease-out;
+}
 
-      .search-input {
-        display: flex;
-        padding: 8px 16px 8px 8px;
-        align-items: center;
-        flex: 1;
-        align-self: stretch;
-        border-radius: 0 12px 12px 0;
-        background: #f0f2f5;
-        border: none;
-        color: #61668a;
-        font-family:
-          "Noto Serif",
-          -apple-system,
-          Roboto,
-          Helvetica,
-          sans-serif;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 1.5;
-      }
+/* ... باقي أنماط CSS للمودال ... */
 
-      .search-input:focus {
-        outline: none;
-        background: #e8edf2;
-      }
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/*Sorting*/
 
-      /* Filter Section */
-      .filter-section {
-        padding: 12px 16px 12px 12px;
-        display: flex;
-        align-items: flex-start;
-        align-content: flex-start;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
+.sort-icon {
+  font-size: 12px;
+  color: #64748b;
+  margin-right: 5px;
+  transition: transform 0.3s ease;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.sort-asc::before {
+  content: "▲";
+}
+.sort-desc::before {
+  content: "▼";
+}
 
-      .filter-dropdown {
-        height: 32px;
-        padding: 0 8px 0 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 8px;
-        border-radius: 12px;
-        background: #f0f2f5;
-        border: none;
-        color: #121217;
-        font-family:
-          "Noto Serif",
-          -apple-system,
-          Roboto,
-          Helvetica,
-          sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.5;
-        cursor: pointer;
-        transition: background-color 0.15s ease;
-      }
 
-      .filter-dropdown:hover {
-        background: #e1e5e9;
-      }
+/*two buttons*/
 
-      .filter-dropdown svg {
-        width: 20px;
-        height: 20px;
-        fill: #121217;
-      }
-
-      /* Table Section */
-      .table-section {
-        padding: 12px 16px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .table-container {
-        width: 100%;
-        border-radius: 12px;
-        border: 1px solid #dbdee5;
-        background: #fff;
-        overflow: hidden;
-      }
-
-      .table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-
-      .table-header {
-        background: #fff;
-      }
-
-      .table-header th {
-        padding: 12px 16px;
-        text-align: center;
-        color: #121217;
-        font-family:
-          "Noto Serif",
-          -apple-system,
-          Roboto,
-          Helvetica,
-          sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.5;
-      }
-
-      .table-header th.actions {
-        color: #61668a;
-      }
-
-      .table-body tr {
-        border-top: 1px solid #e5e8eb;
-        height: 80px;
-      }
-
-      .table-body td {
-        padding: 8px 16px;
-        text-align: center;
-        vertical-align: middle;
-        color: #121217;
-        font-family:
-          "Noto Serif",
-          -apple-system,
-          Roboto,
-          Helvetica,
-          sans-serif;
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 1.5;
-      }
-
-      .table-body .author,
-      .table-body .date,
-      .table-body .reads {
-        color: #61668a;
-      }
-
-      .table-body .actions {
-        color: #61668a;
-        font-weight: 700;
-      }
-
-      .checkbox {
-        width: 20px;
-        height: 20px;
-        border: 2px solid #dbdee5;
-        border-radius: 4px;
-        background: transparent;
-        cursor: pointer;
-      }
-
-      .checkbox:checked {
-        background: #3d99f5;
-        border-color: #3d99f5;
-      }
-
-      .category-tag {
-        height: 32px;
-        min-width: 84px;
-        max-width: 480px;
-        padding: 0 16px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 12px;
-        background: #f0f2f5;
-        color: #121217;
-        font-family:
-          "Noto Serif",
-          -apple-system,
-          Roboto,
-          Helvetica,
-          sans-serif;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 1.5;
-      }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-
-        .page-title {
-          font-size: 24px;
-          text-align: right;
-        }
-
-        .content-header {
-          flex-direction: column;
-          align-items: stretch;
-        }
-
-        .filter-section {
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .table-container {
-          overflow-x: auto;
-        }
-
-        .table {
-          min-width: 800px;
-        }
-      }
+.filter-dropdown.asc {
+  background-color: #007bff;
+  color: white;
+}

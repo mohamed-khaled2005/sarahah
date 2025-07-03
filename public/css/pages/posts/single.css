@@ -13,10 +13,7 @@
 
       .hero-image {
         height: 320px;
-        background:
-          linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%),
-          url("https://cdn.builder.io/api/v1/image/assets/TEMP/115937bfa8e726950eef3e629beae9a0780e6697")
-            center/cover;
+      
         border-radius: 8px;
         position: relative;
         display: flex;

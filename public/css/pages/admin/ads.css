@@ -130,9 +130,7 @@
         transition: transform 0.15s ease;
       }
 
-      .toggle-switch.active .toggle-knob {
-        transform: translateX(20px);
-      }
+      
 
       .toggle-label {
         font-family:

@@ -226,7 +226,7 @@
               <div class="step-content">
                 <h3 class="step-title">سجّل حسابك</h3>
                 <p class="step-description">
-                  انشئ حسابًا خاصًّا بك لتلقي الرسائل.
+                  انشئ حسابًا خاصًا بك لتلقي الرسائل.
                 </p>
               </div>
             </div>
