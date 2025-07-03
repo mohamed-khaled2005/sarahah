@@ -10,9 +10,16 @@
       <div class="container">
         <!-- Hero Section -->
         <section class="hero">
-          <div class="hero-image" style="background:
-          linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%),
-          url('{{ asset('avatars/'.$post->thumbnail) }}') center/cover;">
+ @php
+    $imagePath = $post->thumbnail && file_exists(public_path('avatars/'.$post->thumbnail))
+        ? asset('avatars/'.$post->thumbnail)
+        : asset('images/hero-sec.jpg'); // صورة افتراضية أو الخلفية الأساسية
+@endphp
+
+<div class="hero-image" style="background:
+    linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 25%),
+    url('{{ $imagePath }}') center/cover;">
+
             <div class="hero-content">
               <h2 class="hero-title">{{$post->title}}</h2>
             </div>

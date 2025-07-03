@@ -53,10 +53,15 @@
 
             {{-- صورة البروفايل --}}
             <div class="pw-right">
-                <img id="preview"
-                     src="{{ $user->avatar ? asset('avatars/'.$user->avatar) : asset('images/profile.png') }}"
-                     alt="Avatar" class="pw-avatar">
-
+                              @php
+    $avatarPath = public_path('avatars/'.$user->avatar);
+@endphp
+                   @if($user->avatar && file_exists($avatarPath))
+    <img src="{{ asset('avatars/'.$user->avatar) }}" 
+                  alt="Avatar" class="pw-avatar" >
+@else
+    <img src="{{ asset('images/profile.png') }}"  alt="Avatar" class="pw-avatar" >
+@endif
                 <input type="file" name="avatar" accept="image/*"
                        class="pw-input-file @error('avatar') pw-invalid @enderror"
                        onchange="previewImg(this)">

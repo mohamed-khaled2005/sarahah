@@ -40,10 +40,17 @@ $messagesPayload = $unreadMessages->map(function ($m) {
         <div class="header-left">
           <div class="header-actions">
             <div class="user-dropdown">
-              <img id="userAvatar"
-                   src="{{ $user->avatar ? asset('avatars/'.$user->avatar) : asset('images/profile.png') }}"
-                   alt="Profile"
-                   class="profile-img" />
+              @php
+    $avatarPath = public_path('avatars/'.$user->avatar);
+@endphp
+                   @if($user->avatar && file_exists($avatarPath))
+    <img src="{{ asset('avatars/'.$user->avatar) }}" 
+                  alt="Profile"
+                   class="profile-img" >
+@else
+    <img src="{{ asset('images/profile.png') }}" alt="Profile"
+                   class="profile-img" >
+@endif
               <div id="dropdownMenu" class="dropdown-menu">
                 <p class="username">{{ $user->name }}</p>
                 <form action="{{ route('logout') }}" method="post">

@@ -114,15 +114,16 @@ public function update_profile(Request $request)
 
     $data = $v->validated();
 
-    // حفظ الصورة في مجلد public/avatars مباشرة
     if ($request->hasFile('avatar')) {
-        // حذف الصورة القديمة إن وجدت
+        // حذف الصورة القديمة فقط لو موجودة فعلًا واسمها مختلف عن الافتراضي
         if ($user->avatar && file_exists(public_path('avatars/' . $user->avatar))) {
-            unlink(public_path('avatars/' . $user->avatar));
+            @unlink(public_path('avatars/' . $user->avatar));
         }
 
-        $fileName = uniqid() . '.' . $request->file('avatar')->extension();
-        $request->file('avatar')->move(public_path('avatars'), $fileName);
+        // حفظ الصورة الجديدة باسم فريد
+        $file = $request->file('avatar');
+        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('avatars'), $fileName);
         $data['avatar'] = $fileName;
     }
 

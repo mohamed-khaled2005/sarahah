@@ -154,14 +154,12 @@ class AdminController extends Controller
         return view('admin.messages',['messages'=>$messages]);
 
     }
-    public function admin_posts() {
-        $posts = Post::all(); // ستجلب كل المقالات
-        return view('admin.posts', [ // تأكد أن المسار هنا صحيح لملف Blade
-            "posts" => $posts
-        ]);
-    }
-
-
+public function admin_posts() {
+    $posts = Post::all();
+    return view('admin.posts', [
+        "posts" => $posts
+    ]);
+}
 
 public function edit_post($id)
 {
@@ -172,39 +170,34 @@ public function edit_post($id)
         'slug'          => $post->slug,
         'content'       => $post->content,
         'status'        => $post->status,
-        'author'        => $post->author,       // ✅ مضاف
-        'category'      => $post->category,     // ✅ مضاف
+        'author'        => $post->author,
+        'category'      => $post->category,
         'thumbnail_url' => $post->thumbnail ? asset('avatars/' . $post->thumbnail) : null,
     ]);
 }
-
-
 
 public function update_post(Request $request, $id)
 {
     $post = Post::findOrFail($id);
 
     $request->validate([
-    'title'     => 'required|string|max:255',
-    'slug'      => 'required|string|max:255|unique:posts,slug,' . $id,
-    'content'   => 'required|string',
-    'status'    => 'required|in:draft,published',
-    'author'    => 'required|string|max:255',     // ✅ مضاف
-    'category'  => 'required|string|max:255',     // ✅ مضاف
-    'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-]);
+        'title'     => 'required|string|max:255',
+        'slug'      => 'required|string|max:255|unique:posts,slug,' . $id,
+        'content'   => 'required|string',
+        'status'    => 'required|in:draft,published',
+        'author'    => 'required|string|max:255',
+        'category'  => 'required|string|max:255',
+        'thumbnail' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
-$data = $request->only(['title', 'slug', 'content', 'status', 'author', 'category']);
+    $data = $request->only(['title', 'slug', 'content', 'status', 'author', 'category']);
 
-
-    // رفع صورة جديدة
     if ($request->hasFile('thumbnail')) {
-        // حذف القديمة إن وجدت
+        // حذف الصورة القديمة إن وجدت فعلاً
         if ($post->thumbnail && file_exists(public_path('avatars/' . $post->thumbnail))) {
-            unlink(public_path('avatars/' . $post->thumbnail));
+            @unlink(public_path('avatars/' . $post->thumbnail));
         }
 
-        // رفع الصورة الجديدة يدويًا
         $file = $request->file('thumbnail');
         $fileName = uniqid() . '_' . $file->getClientOriginalName();
         $file->move(public_path('avatars'), $fileName);
@@ -220,16 +213,13 @@ $data = $request->only(['title', 'slug', 'content', 'status', 'author', 'categor
     ]);
 }
 
-
-
-// ✅ حذف المقال
 public function destroy_post($id)
 {
     $post = Post::findOrFail($id);
 
-    // حذف الصورة من مجلد avatars
+    // حذف الصورة إن وجدت فعلاً
     if ($post->thumbnail && file_exists(public_path('avatars/' . $post->thumbnail))) {
-        unlink(public_path('avatars/' . $post->thumbnail));
+        @unlink(public_path('avatars/' . $post->thumbnail));
     }
 
     $post->delete();
@@ -240,19 +230,17 @@ public function destroy_post($id)
     ]);
 }
 
-
-// ✅ إنشاء مقال جديد
 public function store_post(Request $request)
-{$validated = $request->validate([
-    'title'     => 'required|string|max:255',
-    'slug'      => 'required|string|max:255|unique:posts,slug',
-    'content'   => 'required|string',
-    'status'    => 'required|in:draft,published',
-    'author'    => 'required|string|max:255',     // ✅ مضاف
-    'category'  => 'required|string|max:255',     // ✅ مضاف
-    'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
-]);
-
+{
+    $validated = $request->validate([
+        'title'     => 'required|string|max:255',
+        'slug'      => 'required|string|max:255|unique:posts,slug',
+        'content'   => 'required|string',
+        'status'    => 'required|in:draft,published',
+        'author'    => 'required|string|max:255',
+        'category'  => 'required|string|max:255',
+        'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png,gif,svg|max:2048',
+    ]);
 
     if ($request->hasFile('thumbnail')) {
         $file = $request->file('thumbnail');

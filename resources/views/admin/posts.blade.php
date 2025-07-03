@@ -48,11 +48,12 @@
                         <td class="post-title-cell">{{ $post->title }}</td>
                         <td>{{ $post->slug }}</td>
                         <td>
-                            @if($post->thumbnail)
-                                <img src="{{ url('avatars/'.$post->thumbnail) }}" alt="Thumbnail" class="table-thumbnail">
+                            @if($post->thumbnail && file_exists(public_path('avatars/' . $post->thumbnail)))
+                          <img src="{{ asset('avatars/' . $post->thumbnail) }}" alt="Thumbnail" class="table-thumbnail">
                             @else
-                                لا يوجد
+                              لا يوجد
                             @endif
+
                         </td>
                         {{-- عرض اسم المؤلف والقسم من نفس عمود المقال --}}
                         <td>{{ $post->author ?? 'غير معروف' }}</td>
