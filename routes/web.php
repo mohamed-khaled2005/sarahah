@@ -85,7 +85,6 @@ Route::post('/admin/ads/update', [AdminController::class, 'update_ads'])->name('
     Route::post('/admin/users/{user}/toggle', [UserController::class, 'toggle'])->name('admin.users.toggle');
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])->name('admin.users.destroy');
     Route::delete('/admin/messages/{id}', [MessageController::class, 'destroy']);
-    Route::get('/admin/settings',[AdminController::class,'admin_settings'])->name('admin.settings');
     Route::post('/admin/reports/delete-bulk', [ReportController::class,'destroyBulk']);
 // CRUD عبر AJAX
     Route::get('/admin/posts/{id}/edit', [AdminController::class, 'edit_post'])->name('admin.posts.edit');
@@ -99,6 +98,17 @@ Route::post('/admin/ads/update', [AdminController::class, 'update_ads'])->name('
     Route::get('/admin/pages/{page}/edit-data', [AdminController::class, 'pages_getpagedata'])->name('admin.pages.edit_data');
     Route::put('/admin/pages/{page}', [AdminController::class, 'update_pages'])->name('admin.pages.update');
     Route::delete('/admin/pages/{page}', [AdminController::class, 'destroy_pages'])->name('admin.pages.destroy');
+  Route::get('/admin/settings', [AdminController::class, 'admin_settings'])->name('admin.settings');
+Route::post('/admin/settings/update', [AdminController::class, 'update_settings'])->name('admin.settings.update');
+
+Route::delete('/admin/nav-item/delete/{id}', [AdminController::class, 'delete_nav_item'])->name('admin.nav_item.delete');
+Route::delete('/admin/footer-nav-item/delete/{id}', [AdminController::class, 'delete_footer_nav_item'])->name('admin.footer_nav_item.delete');
+// web.php
+Route::post('/admin/events/markRead', function(){
+    \App\Models\Event::whereNull('read_at')->update(['read_at'=>now()]);
+    return response()->json(['unreadCount'=>0]);
+})->name('admin.events.markRead');
+
 
     }
 );

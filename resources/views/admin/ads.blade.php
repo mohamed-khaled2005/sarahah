@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('title', 'صراحة - إدارة الإعلانات')
+
 @section('page-css')
 <link rel="stylesheet" href="{{ url('css/pages/admin/ads.css') }}" />
 <style>
@@ -23,7 +24,7 @@
         transition: background-color 0.3s;
     }
     .toggle-switch.active {
-        background-color: #4CAF50; /* لون أخضر عند التفعيل */
+        background-color: #4CAF50;
     }
     .toggle-knob {
         width: 24px;
@@ -36,11 +37,9 @@
         transition: left 0.3s;
     }
     .toggle-switch.active .toggle-knob {
-        left: 24px; /* تحريك الزر لليمين عند التفعيل */
+        left: 24px;
     }
-    .form-group {
-        margin-bottom: 20px;
-    }
+    .form-group { margin-bottom: 20px; }
     .form-label {
         display: block;
         margin-bottom: 8px;
@@ -53,12 +52,12 @@
         border: 1px solid #ddd;
         border-radius: 5px;
         font-size: 1rem;
-        min-height: 200px; /* ارتفاع افتراضي أكبر */
-        box-sizing: border-box; /* لضمان أن البادينج لا يزيد العرض الكلي */
+        min-height: 200px;
+        box-sizing: border-box;
     }
     .tab-item.active {
-       /* لون التاب النشط */
         color: black;
+        font-weight: bold;
     }
 </style>
 @endsection
@@ -72,7 +71,6 @@
 
     <div class="tab-navigation">
         <div class="tab-list" id="adTabs">
-            {{-- نستخدم $adTypes لإنشاء التابات بالاسم العربي للعرض والاسم الإنجليزي للداتا --}}
             @foreach($adTypes as $dbName => $displayName)
                 <a href="#" class="tab-item" data-ad-name="{{ $dbName }}">
                     {{ $displayName }}
@@ -84,17 +82,12 @@
     <div class="form-section">
         <div class="form-group">
             <label class="form-label" for="adCodeTextarea">كود الإعلان</label>
-            <textarea
-                class="form-textarea"
-                id="adCodeTextarea"
-                placeholder="أدخل كود الإعلان هنا..."
-            ></textarea>
+            <textarea class="form-textarea" id="adCodeTextarea" placeholder="أدخل كود الإعلان هنا..."></textarea>
         </div>
     </div>
 
     <div class="toggle-section">
-              <div class="toggle-label">تفعيل الإعلان</div>
-
+        <div class="toggle-label">تفعيل الإعلان</div>
         <div class="toggle-container">
             <div class="toggle-switch" id="adToggleSwitch">
                 <div class="toggle-knob"></div>
@@ -117,9 +110,15 @@
     const adToggleSwitch = document.getElementById('adToggleSwitch');
     const saveAdButton = document.getElementById('saveAdButton');
 
-    let currentAdName = ''; // لتخزين الاسم الإنجليزي للإعلان النشط حاليًا
+    let currentAdName = ''; // الإعلان النشط حاليًا
+    const adsEnabled = @json($adsEnabled); // القيمة من السيرفر (true/false)
 
+    // تبديل حالة السويتش مع مراعاة adsEnabled
     function toggleSwitch(element) {
+        if (!adsEnabled) {
+            alert('تم تعطيل الإعلانات من إعدادات الموقع، لا يمكن تفعيل إعلان.');
+            return;
+        }
         element.classList.toggle("active");
     }
 
@@ -133,12 +132,8 @@
             const data = await response.json();
 
             adCodeTextarea.value = data.code || '';
-            if (data.active) {
-                adToggleSwitch.classList.add('active');
-            } else {
-                adToggleSwitch.classList.remove('active');
-            }
-            currentAdName = adName; // تحديث الاسم الإنجليزي للإعلان النشط
+            adToggleSwitch.classList.toggle('active', data.active);
+            currentAdName = adName;
         } catch (error) {
             console.error('Error loading ad data:', error);
             alert('حدث خطأ أثناء تحميل بيانات الإعلان: ' + error.message);
@@ -151,12 +146,9 @@
     adTabs.querySelectorAll(".tab-item").forEach((tab) => {
         tab.addEventListener("click", function (e) {
             e.preventDefault();
-
             adTabs.querySelectorAll(".tab-item").forEach((t) => t.classList.remove("active"));
             this.classList.add("active");
-
-            const selectedAdName = this.dataset.adName; // نحصل على الاسم الإنجليزي من data-ad-name
-            loadAdData(selectedAdName);
+            loadAdData(this.dataset.adName);
         });
     });
 
@@ -181,7 +173,7 @@
                     'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 },
                 body: JSON.stringify({
-                    name: currentAdName, // نرسل الاسم الإنجليزي
+                    name: currentAdName,
                     code: adCode,
                     active: isActive
                 })
@@ -207,12 +199,11 @@
         }
     });
 
-    // تحميل بيانات أول إعلان عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', () => {
         const firstTab = adTabs.querySelector('.tab-item');
         if (firstTab) {
             firstTab.classList.add('active');
-            loadAdData(firstTab.dataset.adName); // نستخدم الاسم الإنجليزي
+            loadAdData(firstTab.dataset.adName);
         }
     });
 </script>

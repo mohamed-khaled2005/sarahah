@@ -1,75 +1,155 @@
-<?php use Illuminate\Support\Facades\Auth;
+<?php
+use Illuminate\Support\Facades\Auth;
+use App\Models\Event;
+
 $user = Auth::user();
+
+// آخر 5 أحداث غير مقروءة
+$unreadEvents = Event::whereNull('read_at')->latest()->take(5)->get();
+$unreadCount = Event::whereNull('read_at')->count();
+
+$eventsPayload = $unreadEvents->map(function ($e) {
+    return [
+        'id'   => $e->id,
+        'text' => $e->type,
+        'time' => $e->created_at->diffForHumans(),
+    ];
+});
 ?>
 <!doctype html>
 <html lang="ar" dir="rtl">
-  <head>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>@yield('title')</title>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield('title')</title>
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="{{url('css/pages/admin/global.css')}}"/>
-    @yield('page-css')
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="header-container">
-        <!-- Logo -->
-        <a href="/">
-        <div class="logo-section">
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0?width=82"
-            alt="صراحة"
-            class="logo-img"
-          />
-          <h1 class="logo-text">صراحة</h1>
-        </div>
-        </a>
-        
-
-      <!-- Notification & User -->
-<div class="header-actions">
-  <div class="notification-bell">
-    <svg
-      class="nav-icon"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
-    </svg>
-  </div>
-
-  <div class="user-dropdown">
-  <img
-    id="userAvatar"
-    src="{{url('images/profile.png')}}"
-    alt="المستخدم"
-    class="user-avatar"
-  />
-  <div id="dropdownMenu" class="dropdown-menu">
-    <p class="username">{{$user->name}}</p>
-    <form action="{{route('logout')}}" method="post">
-      @csrf
-      <input type="submit" value="Logout" class="logout-btn">
-    </form>
-  </div>
-</div>
-
-</div>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{url('css/pages/admin/global.css')}}"/>
+<style>
+/* إشعارات */
+.notification-bell {
+    position: relative;
+    margin-left: 15px;
+    cursor: pointer;
+}
+.notif-badge {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    background: red;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-weight: bold;
+}
+.hidden { display: none !important; }
+.notif-menu {
+    position: absolute;
+    top: 120%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 220px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+}
+.notif-item {
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.notif-item:last-child { border-bottom: none; }
+.notif-text { margin: 0; font-size: 14px; color: #333; }
+.notif-time { font-size: 12px; color: #888; }
+.no-notif {
+    padding: 10px;
+    text-align: center;
+    color: #999;
+    font-size: 13px;
+}
+/* القائمة المنسدلة للمستخدم */
+.user-dropdown { position: relative; }
+.dropdown-menu {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    min-width: 150px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 1000;
+}
+.username { margin: 10px; font-weight: bold; }
+.logout-btn {
+    width: 100%;
+    border: none;
+    background: #e74c3c;
+    color: #fff;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 0 0 8px 8px;
+}
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+</style>
+@yield('page-css')
+</head>
+<body>
+<header class="header">
+  <div class="header-container">
+    <a href="/">
+      <div class="logo-section">
+        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0?width=82" alt="صراحة" class="logo-img"/>
+        <h1 class="logo-text">صراحة</h1>
       </div>
-    </header>
+    </a>
+
+    <div class="header-actions">
+      
+    
+      <!-- 👤 المستخدم -->
+      <div class="user-dropdown">
+        <img id="userAvatar" src="{{url('images/profile.png')}}" alt="المستخدم" class="user-avatar"/>
+        <div id="dropdownMenu" class="dropdown-menu">
+          <p class="username">{{$user->name}}</p>
+          <form action="{{route('logout')}}" method="post">@csrf
+            <input type="submit" value="Logout" class="logout-btn">
+          </form>
+        </div>
+      </div>
+    <!-- 🔔 الجرس -->
+      <div class="notification-bell" id="notifToggle" data-url="{{ route('admin.events.markRead') }}">
+        <span id="notifCount" class="notif-badge {{ $unreadCount ? '' : 'hidden' }}">{{ $unreadCount }}</span>
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path>
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path>
+        </svg>
+        <div id="notifMenu" class="notif-menu">
+          @forelse($unreadEvents as $event)
+            <div class="notif-item">
+              <p class="notif-text">{{ $event->type }}</p>
+              <span class="notif-time">{{ $event->created_at->diffForHumans() }}</span>
+            </div>
+          @empty
+            <p class="no-notif">لا توجد إشعارات جديدة</p>
+          @endforelse
+        </div>
+      </div>
 
 
+      
+    </div>
+  </div>
+</header>
     <div class="main-container">
     <!-- Sidebar -->
       <div class="sidebar">
@@ -212,54 +292,71 @@ $user = Auth::user();
       </div>
     @yield('main')
         </div>
-        <script>document.addEventListener('DOMContentLoaded', function() {
-  const avatar = document.getElementById('userAvatar');
-  const menu = document.getElementById('dropdownMenu');
-  let isMenuOpen = false;
+       
+        
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const notifBtn = document.getElementById('notifToggle');
+  const notifMenu = document.getElementById('notifMenu');
+  const badge = document.getElementById('notifCount');
+  const markUrl = notifBtn.dataset.url;
+  let open = false, hoverTimer;
 
-  // عند النقر على الصورة
-  avatar.addEventListener('click', function(event) {
-    event.stopPropagation();
-    isMenuOpen = !isMenuOpen;
-    menu.style.display = isMenuOpen ? 'block' : 'none';
+  notifBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    open = !open;
+    notifMenu.style.display = open ? 'block' : 'none';
+    if(open) markAsRead();
   });
 
-  // عند تمرير الماوس (hover) على الصورة
-  avatar.addEventListener('mouseenter', function() {
-    menu.style.display = 'block';
-    isMenuOpen = true;
+  notifBtn.addEventListener('mouseenter', () => {
+    clearTimeout(hoverTimer);
+    notifMenu.style.display = 'block';
+    open = true;
+    markAsRead();
   });
 
-  // عند تحريك الماوس خارج الصورة والقائمة
-  avatar.addEventListener('mouseleave', function() {
-    // نتحقق إن الماوس لم يدخل القائمة نفسها
-    setTimeout(() => {
-      if (!menu.matches(':hover')) {
-        menu.style.display = 'none';
-        isMenuOpen = false;
+  notifBtn.addEventListener('mouseleave', () => {
+    hoverTimer = setTimeout(() => {
+      if(!notifMenu.matches(':hover')) {
+        notifMenu.style.display = 'none';
+        open=false;
       }
-    }, 100);
+    },200);
   });
+  notifMenu.addEventListener('mouseenter', ()=>clearTimeout(hoverTimer));
+  notifMenu.addEventListener('mouseleave', ()=>{notifMenu.style.display='none';open=false;});
+  notifMenu.addEventListener('click', e=>e.stopPropagation());
+  document.addEventListener('click', ()=>{if(open){notifMenu.style.display='none';open=false;}});
 
-  // عند تحريك الماوس خارج القائمة
-  menu.addEventListener('mouseleave', function() {
-    menu.style.display = 'none';
-    isMenuOpen = false;
-  });
-
-  // عند النقر داخل القائمة نفسها لا تُغلق
-  menu.addEventListener('click', function(event) {
-    event.stopPropagation();
-  });
-
-  // عند النقر خارج القائمة والصورة تغلق
-  document.addEventListener('click', function() {
-    if (isMenuOpen) {
-      menu.style.display = 'none';
-      isMenuOpen = false;
-    }
-  });
+  function markAsRead(){
+    if(badge.classList.contains('hidden')) return;
+    fetch(markUrl, {
+      method:'POST',
+      headers:{'X-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]').content}
+    })
+    .then(res=>res.ok?res.json():Promise.reject())
+    .then(data=>{
+      badge.textContent = data.unreadCount;
+      badge.classList.add('hidden');
+    })
+    .catch(()=>console.error('فشل تحديث read_at'));
+  }
 });
 </script>
-    </body>
-    </html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const avatar = document.getElementById('userAvatar');
+  const menu = document.getElementById('dropdownMenu');
+  let isOpen = false;
+  avatar.addEventListener('click', e => { e.stopPropagation(); isOpen=!isOpen; menu.style.display=isOpen?'block':'none'; });
+  avatar.addEventListener('mouseenter', ()=>{ menu.style.display='block'; isOpen=true; });
+  avatar.addEventListener('mouseleave', ()=>{ setTimeout(()=>{ if(!menu.matches(':hover')){menu.style.display='none'; isOpen=false;}},100); });
+  menu.addEventListener('mouseleave', ()=>{ menu.style.display='none'; isOpen=false; });
+  menu.addEventListener('click', e=>e.stopPropagation());
+  document.addEventListener('click', ()=>{ if(isOpen){menu.style.display='none'; isOpen=false;} });
+});
+</script>
+</body>
+</html>

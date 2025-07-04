@@ -1,5 +1,7 @@
   /* Tab Navigation */
-      .tab-navigation {
+      
+  
+  .tab-navigation {
         padding-bottom: 12px;
         border-bottom: 1px solid #dedee3;
         padding: 0 16px;
@@ -97,6 +99,7 @@
         justify-content: space-between;
         align-items: center;
         background: #fff;
+        border-radius: 10px;
       }
 
       .toggle-container {

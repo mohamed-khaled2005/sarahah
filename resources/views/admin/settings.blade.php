@@ -1,154 +1,188 @@
+@extends('layouts.admin')
+@section('title','صراحة - إعدادات الموقع')
 
-  @extends('layouts.admin')
-  @section('title','صراحة - إعدادات الموقع')
-  @section('page-css')
-  <link rel="stylesheet" href="{{url('css/pages/admin/settings.css')}}"/>
-  @endsection
-        @section('main')
-      <!-- Main Content -->
-      <main class="main-content">
-        <!-- Content Header -->
-        <div class="content-header">
-          <h2 class="page-title">إعدادات الموقع</h2>
-        </div>
+@section('page-css')
+<link rel="stylesheet" href="{{ url('css/pages/admin/settings.css') }}"/>
+@endsection
+
+@section('main')
+<main class="main-content">
+    <div class="content-header">
+        <h2 class="page-title">إعدادات الموقع</h2>
+    </div>
+
+    <form action="{{ route('admin.settings.update') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
         <!-- Logo Section -->
         <div class="section">
-          <div class="section-header">
-            <h3 class="section-title">شعار الموقع</h3>
-          </div>
-          <div class="section-content">
-            <div class="logo-upload" onclick="handleLogoUpload()">
-              <div class="logo-upload-content">
-                <div class="logo-upload-title">اضف شعار الموقع</div>
-                <div class="logo-upload-subtitle">
-                  استخدم صورة بجودة واضحة لشعار الموقع الخاص بك
+            <div class="section-header">
+                <h3 class="section-title">شعار الموقع</h3>
+            </div>
+            <div class="section-content">
+                <div class="logo-upload" onclick="handleLogoUpload()">
+                    <div class="logo-upload-content">
+                        <div class="logo-upload-title">اضف شعار الموقع</div>
+                        <div class="logo-upload-subtitle">استخدم صورة بجودة واضحة لشعار الموقع الخاص بك</div>
+                        <div class="logo-preview">
+                            <img 
+                                id="logoPreviewImage"
+                                src="{{ !empty($settings['site_logo']->value) ? asset('uploads/' . $settings['site_logo']->value) : '#' }}" 
+                                height="60"
+                                style="{{ empty($settings['site_logo']->value) ? 'display:none;' : '' }}"
+                            >
+                        </div>
+                    </div>
                 </div>
-              </div>
+                <input type="file" id="logoInput" name="site_logo" style="display: none;">
             </div>
-          </div>
         </div>
 
-      
-        <!-- <div class="section">
-          <div class="section-header">
-            <h3 class="section-title">القائمة العلوية</h3>
-          </div>
-          <div class="input-container">
-            <div class="input-field">
-              <input
-                type="text"
-                class="input"
-                placeholder="رابط"
-                value=""
-              />
-            </div>
-          </div>
-          <div class="input-container">
-            <div class="input-field">
-              <input
-                type="url"
-                class="input filled"
-                placeholder="رابط تويتر"
-                value="رابط تويتر"
-              />
-            </div>
-          </div>
-          <div class="input-container">
-            <div class="input-field">
-              <input
-                type="url"
-                class="input privacy"
-                placeholder="رابط سياسة الخصوصية"
-                value="رابط سياسة الخصوصية"
-              />
-            </div>
-          </div>
-        </div>
 
-  
+        <!-- Site Title -->
         <div class="section">
-          <div class="section-header">
-            <h3 class="section-title">الرسائل</h3>
-          </div>
-          <div class="input-container">
-            <div class="input-field">
-              <input
-                type="number"
-                class="input privacy"
-                placeholder="الحد الأقصى للرسائل يومياً"
-                value="الحد الأقصى للرسائل يومياً"
-              />
+            <div class="section-header">
+                <h3 class="section-title">عنوان الموقع</h3>
             </div>
-          </div>
+            <div class="input-container">
+                <div class="input-field">
+                    <input type="text" name="site_title" class="input filled" placeholder="عنوان الموقع" value="{{ $settings['site_title']->value ?? '' }}" />
+                </div>
+            </div>
         </div>
 
-        
+        <!-- Navbar العلوية -->
+        <div class="section">
+            <div class="section-header">
+                <h3 class="section-title">القائمة العلوية (Navbar)</h3>
+            </div>
+            @foreach($navItems as $item)
+                <div class="input-container">
+                    <div class="input-field">
+                        <input type="text" name="nav_items[{{ $item->id }}][title]" class="input filled" placeholder="عنوان الرابط" value="{{ $item->title }}">
+                    </div>
+                    <div class="input-field">
+                        <input type="url" name="nav_items[{{ $item->id }}][url]" class="input filled" placeholder="الرابط" value="{{ $item->url }}">
+                    </div>
+                    <div class="input-field">
+                        <input type="text" name="nav_items[{{ $item->id }}][icon]" class="input filled" placeholder="أيقونة أو كود SVG" value="{{ $item->icon }}">
+                    </div>
+                    <div class="delete-btn" onclick="deleteNavItem({{ $item->id }})">🗑️</div>
+                </div>
+            @endforeach
+
+            <div id="newNavItems"></div>
+            <div class="add-new-btn" onclick="addNewNavItem()">+ إضافة رابط جديد</div>
+        </div>
+
+        <!-- Footer Navbar السفلية -->
+        <div class="section">
+            <div class="section-header">
+                <h3 class="section-title">القائمة السفلية (Footer Navbar)</h3>
+            </div>
+            @foreach($footerNavItems as $item)
+                <div class="input-container">
+                    <div class="input-field">
+                        <input type="text" name="footer_nav_items[{{ $item->id }}][title]" class="input filled" placeholder="عنوان الرابط" value="{{ $item->title }}">
+                    </div>
+                    <div class="input-field">
+                        <input type="url" name="footer_nav_items[{{ $item->id }}][url]" class="input filled" placeholder="الرابط" value="{{ $item->url }}">
+                    </div>
+                    <div class="input-field">
+                        <input type="text" name="footer_nav_items[{{ $item->id }}][icon]" class="input filled" placeholder="أيقونة أو كود SVG" value="{{ $item->icon }}">
+                    </div>
+                    <div class="delete-btn" onclick="deleteFooterNavItem({{ $item->id }})">🗑️</div>
+                </div>
+            @endforeach
+
+            <div id="newFooterNavItems"></div>
+            <div class="add-new-btn" onclick="addNewFooterNavItem()">+ إضافة رابط جديد</div>
+        </div>
+
+        <!-- Toggle Section -->
         <div class="toggle-section">
-          <div class="toggle-container">
-            <div class="toggle-switch" onclick="toggleSwitch(this)">
-              <div class="toggle-knob"></div>
+            <div class="toggle-container">
+                <div class="toggle-switch {{ ($settings['ads_enabled']->value ?? false) ? 'active' : '' }}" onclick="toggleSwitch(this)">
+                    <div class="toggle-knob"></div>
+                </div>
+                <input type="hidden" name="ads_enabled" id="adsEnabledInput" value="{{ ($settings['ads_enabled']->value ?? false) ? 1 : 0 }}">
             </div>
-          </div>
-          <div class="toggle-label">تفعيل / تعطيل الإعلانات</div>
-        </div> -->
-
-        <!-- Save Button -->
-        <div class="save-section">
-          <button class="save-btn" onclick="saveSettings()">
-            حفظ الإعدادات
-          </button>
+            <div class="toggle-label">تفعيل / تعطيل الإعلانات</div>
         </div>
-      </main>
-      <script>
-      function toggleSwitch(element) {
-        element.classList.toggle("active");
-      }
 
-      function handleLogoUpload() {
-        const input = document.createElement("input");
-        input.type = "file";
-        input.accept = "image/*";
-        input.onchange = function (e) {
-          const file = e.target.files[0];
-          if (file) {
-            console.log("Logo uploaded:", file.name);
-            // Add logo preview functionality here
-          }
+                <!-- Save Button -->
+        <div class="save-section">
+            <button class="save-btn" type="submit">حفظ الإعدادات</button>
+        </div>
+    </form>
+</main>
+
+<script>
+function toggleSwitch(element) {
+    element.classList.toggle("active");
+    document.getElementById('adsEnabledInput').value = element.classList.contains("active") ? 1 : 0;
+}
+
+function handleLogoUpload() {
+    document.getElementById('logoInput').click();
+}
+
+// ✅ الكود الجديد لعرض الشعار مباشرة عند الاختيار
+document.getElementById('logoInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const img = document.getElementById('logoPreviewImage');
+            img.src = event.target.result;
+            img.style.display = 'block';
         };
-        input.click();
-      }
+        reader.readAsDataURL(file);
+    }
+});
 
-      function saveSettings() {
-        console.log("Settings saved");
-        // Add save settings functionality here
+let newNavItemIndex = 0;
+function addNewNavItem() {
+    let container = document.getElementById('newNavItems');
+    container.insertAdjacentHTML('beforeend', `
+        <div class="input-container">
+            <div class="input-field"><input type="text" name="new_nav_items[${newNavItemIndex}][title]" class="input" placeholder="عنوان الرابط الجديد"></div>
+            <div class="input-field"><input type="url" name="new_nav_items[${newNavItemIndex}][url]" class="input" placeholder="الرابط الجديد"></div>
+            <div class="input-field"><input type="text" name="new_nav_items[${newNavItemIndex}][icon]" class="input" placeholder="أيقونة أو كود SVG"></div>
+        </div>
+    `);
+    newNavItemIndex++;
+}
 
-        // Show success message
-        alert("تم حفظ الإعدادات بنجاح!");
-      }
+let newFooterNavItemIndex = 0;
+function addNewFooterNavItem() {
+    let container = document.getElementById('newFooterNavItems');
+    container.insertAdjacentHTML('beforeend', `
+        <div class="input-container">
+            <div class="input-field"><input type="text" name="new_footer_nav_items[${newFooterNavItemIndex}][title]" class="input" placeholder="عنوان الرابط الجديد"></div>
+            <div class="input-field"><input type="url" name="new_footer_nav_items[${newFooterNavItemIndex}][url]" class="input" placeholder="الرابط الجديد"></div>
+            <div class="input-field"><input type="text" name="new_footer_nav_items[${newFooterNavItemIndex}][icon]" class="input" placeholder="أيقونة أو كود SVG"></div>
+        </div>
+    `);
+    newFooterNavItemIndex++;
+}
 
-      // Form validation and interaction
-      document.querySelectorAll(".input").forEach((input) => {
-        input.addEventListener("focus", function () {
-          this.style.borderColor = "#3d99f5";
-          this.style.background = "#fff";
-        });
+function deleteNavItem(id) {
+    if(confirm('هل أنت متأكد من حذف هذا الرابط؟')) {
+        fetch('/admin/nav-item/delete/' + id, {
+            method: 'DELETE',
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json'}
+        }).then(res => res.ok ? location.reload() : alert('خطأ بالحذف!'));
+    }
+}
 
-        input.addEventListener("blur", function () {
-          this.style.borderColor = "#d6d9e3";
-          this.style.background = "#fafafa";
-        });
-
-        input.addEventListener("input", function () {
-          if (this.value.trim() !== "") {
-            this.classList.add("filled");
-          } else {
-            this.classList.remove("filled");
-          }
-        });
-      });
-      </script>
-      @endsection
-
-
-
+function deleteFooterNavItem(id) {
+    if(confirm('هل أنت متأكد من حذف هذا الرابط؟')) {
+        fetch('/admin/footer-nav-item/delete/' + id, {
+            method: 'DELETE',
+            headers: {'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Accept': 'application/json'}
+        }).then(res => res.ok ? location.reload() : alert('خطأ بالحذف!'));
+    }
+}
+</script>
+@endsection

@@ -14,6 +14,9 @@ use App\Models\Ad;
 use App\Models\Page;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
+use App\Models\Setting;
+use App\Models\NavItem;
+use App\Models\FooterNavItem;
 
 class AdminController extends Controller
 {
@@ -283,72 +286,84 @@ public function store_post(Request $request)
         'footer_ad'         => 'إعلان تذييل الصفحة',
     ];
 
-    public function admin_ads() {
-          
-        // التأكد من وجود جميع الإعلانات الأساسية في قاعدة البيانات
-        foreach ($this->adTypes as $dbName => $displayName) {
-            Ad::firstOrCreate(
-                ['name' => $dbName], // الشرط للبحث عن الإعلان بالاسم الإنجليزي
-                ['code' => null, 'active' => false] // البيانات التي سيتم استخدامها إذا تم إنشاء الإعلان
-            );
-        }
-
-        // جلب جميع الإعلانات الآن بعد التأكد من وجودها
-        // لا نحتاج هنا لجلبها بأسماء العرض العربية، الأسماء الإنجليزية ستكفي
-        $ads = Ad::all();
-
-        // تمرير الإعلانات وقائمة الأنواع (بالأسماء العربية) إلى الـ View
-        return view('admin.ads', [
-            'ads' => $ads,
-            'adTypes' => $this->adTypes // نمرر هذه القائمة لإنشاء التابات بشكل صحيح
-        ]);
-    }
- public function show_ads(Request $request)
-    {
-        $adName = $request->query('name'); // الاسم الإنجليزي للإعلان المطلوب
-
-        // التحقق مما إذا كان الاسم المطلوب موجودًا في قائمة الأنواع المسموح بها
-        if (!array_key_exists($adName, $this->adTypes)) {
-            return response()->json(['message' => 'نوع الإعلان غير صالح.'], 400);
-        }
-
-        $ad = Ad::where('name', $adName)->first();
-
-        if (!$ad) {
-            // هذا السيناريو يجب ألا يحدث إذا تم تهيئة الإعلانات في index()
-            return response()->json(['message' => 'الإعلان غير موجود.'], 404);
-        }
-
-        return response()->json($ad);
+public function admin_ads() {
+    // التأكد من وجود جميع الإعلانات الأساسية في قاعدة البيانات
+    foreach ($this->adTypes as $dbName => $displayName) {
+        Ad::firstOrCreate(
+            ['name' => $dbName],
+            ['code' => null, 'active' => false]
+        );
     }
 
-    public function update_ads(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'code' => 'nullable|string',
-            'active' => 'required|boolean',
-        ]);
+    // جلب جميع الإعلانات
+    $ads = Ad::all();
 
-        $adName = $request->input('name');
+    // جلب حالة تفعيل الإعلانات من الإعدادات
+    $adsEnabled = Setting::where('key', 'ads_enabled')->value('value');
 
-        // التحقق مما إذا كان الاسم المطلوب موجودًا في قائمة الأنواع المسموح بها
-        if (!array_key_exists($adName, $this->adTypes)) {
-            return response()->json(['message' => 'نوع الإعلان غير صالح.'], 400);
-        }
+    return view('admin.ads', [
+        'ads'        => $ads,
+        'adTypes'    => $this->adTypes,
+        'adsEnabled' => $adsEnabled == 1  // نحولها لقيمة true/false للسهولة في الجافاسكربت
+    ]);
+}
 
-        $ad = Ad::where('name', $adName)->first();
+public function show_ads(Request $request)
+{
+    $adName = $request->query('name');
 
-        if (!$ad) {
-            return response()->json(['message' => 'الإعلان غير موجود أو لا يمكنك تحديث إعلان غير موجود بهذه الطريقة.'], 404);
-        }
+    // التحقق أن النوع موجود ضمن الأنواع المسموح بها
+    if (!array_key_exists($adName, $this->adTypes)) {
+        return response()->json(['message' => 'نوع الإعلان غير صالح.'], 400);
+    }
 
-        $ad->code = $request->code;
+    $ad = Ad::where('name', $adName)->first();
+
+    if (!$ad) {
+        return response()->json(['message' => 'الإعلان غير موجود.'], 404);
+    }
+
+    return response()->json($ad);
+}
+
+public function update_ads(Request $request)
+{
+    $request->validate([
+        'name'   => 'required|string|max:255',
+        'code'   => 'nullable|string',
+        'active' => 'required|boolean',
+    ]);
+
+    $adName = $request->input('name');
+
+    // التحقق أن النوع موجود ضمن الأنواع المسموح بها
+    if (!array_key_exists($adName, $this->adTypes)) {
+        return response()->json(['message' => 'نوع الإعلان غير صالح.'], 400);
+    }
+
+    $ad = Ad::where('name', $adName)->first();
+
+    if (!$ad) {
+        return response()->json(['message' => 'الإعلان غير موجود.'], 404);
+    }
+
+    // ✅ جلب حالة تفعيل الإعلانات من الإعدادات
+    $adsEnabled = Setting::where('key', 'ads_enabled')->value('value');
+
+    if ($adsEnabled == 0) {
+        // لو الإعلانات معطّلة: لا يمكن تفعيل الإعلان، نجبره أن يكون غير نشط
+        $ad->active = 0;
+    } else {
+        // لو الإعلانات مفعلة: نستخدم القيمة القادمة من الفورم
         $ad->active = $request->active;
-        $ad->save();
-
-        return response()->json(['success' => true, 'message' => 'تم حفظ الإعلان بنجاح!']);
     }
+
+    // تحديث كود الإعلان
+    $ad->code = $request->code;
+    $ad->save();
+
+    return response()->json(['success' => true, 'message' => 'تم حفظ الإعلان بنجاح!']);
+}
 
     
     // عرض كل الصفحات
@@ -435,9 +450,132 @@ public function store_post(Request $request)
         return response()->json(['success' => true, 'message' => 'تم حذف الصفحة بنجاح!']);
     }
 
-     public function admin_settings() {
-        return view('admin.settings');
+public function admin_settings()
+{
+    // جلب الإعدادات
+    $settings = Setting::all()->keyBy('key');
+
+    // جلب nav العلوية
+    $navItems = NavItem::whereNull('parent_id')
+        ->orderBy('order')
+        ->get();
+
+    // جلب nav السفلية
+    $footerNavItems = FooterNavItem::whereNull('parent_id')
+        ->orderBy('order')
+        ->get();
+
+    return view('admin.settings', compact('settings', 'navItems', 'footerNavItems'));
+}
+
+public function update_settings(Request $request)
+{
+    // ✅ تحديث عنوان الموقع
+    if ($request->filled('site_title')) {
+        Setting::updateOrCreate(
+            ['key' => 'site_title'],
+            ['value' => $request->site_title]
+        );
     }
-    
+
+    // ✅ تحديث الشعار
+    if ($request->hasFile('site_logo')) {
+        $file = $request->file('site_logo');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('uploads'), $filename);
+
+        Setting::updateOrCreate(
+            ['key' => 'site_logo'],
+            ['value' => $filename]
+        );
+    }
+
+    // ✅ تحديث ads_enabled
+    $adsEnabled = $request->input('ads_enabled', 0);
+    Setting::updateOrCreate(
+        ['key' => 'ads_enabled'],
+        ['value' => $adsEnabled]
+    );
+
+    // ✅ عند تعطيل ads_enabled يتم إيقاف جميع الإعلانات
+    if ($adsEnabled == 0) {
+        Ad::query()->update(['active' => 0]);
+    }
+    // عند التفعيل adsEnabled == 1 لا نفعل الإعلانات تلقائيًا؛ تظل حسب حالتها الحالية
+
+    // ✅ تحديث nav_items (العليا)
+    if ($request->has('nav_items')) {
+        foreach ($request->nav_items as $id => $item) {
+            NavItem::where('id', $id)->update([
+                'title' => $item['title'],
+                'url'   => $item['url'],
+                'icon'  => $item['icon'] ?? null,
+            ]);
+        }
+    }
+
+    // ✅ إضافة nav_items جديدة
+    if ($request->has('new_nav_items')) {
+        foreach ($request->new_nav_items as $item) {
+            if (!empty($item['title']) && !empty($item['url'])) {
+                NavItem::create([
+                    'title'     => $item['title'],
+                    'url'       => $item['url'],
+                    'icon'      => $item['icon'] ?? null,
+                    'order'     => 0,
+                    'active'    => 1,
+                    'parent_id' => null
+                ]);
+            }
+        }
+    }
+
+    // ✅ تحديث footer_nav_items (السفلية)
+    if ($request->has('footer_nav_items')) {
+        foreach ($request->footer_nav_items as $id => $item) {
+            FooterNavItem::where('id', $id)->update([
+                'title' => $item['title'],
+                'url'   => $item['url'],
+                'icon'  => $item['icon'] ?? null,
+            ]);
+        }
+    }
+
+    // ✅ إضافة footer_nav_items جديدة
+    if ($request->has('new_footer_nav_items')) {
+        foreach ($request->new_footer_nav_items as $item) {
+            if (!empty($item['title']) && !empty($item['url'])) {
+                FooterNavItem::create([
+                    'title'     => $item['title'],
+                    'url'       => $item['url'],
+                    'icon'      => $item['icon'] ?? null,
+                    'order'     => 0,
+                    'active'    => 1,
+                    'parent_id' => null
+                ]);
+            }
+        }
+    }
+
+    return redirect()->back()->with('success', 'تم تحديث الإعدادات بنجاح');
+}
+
+
+// حذف عنصر من nav العلوية
+public function delete_nav_item($id)
+{
+    NavItem::destroy($id);
+    return response()->json(['success' => true]);
+}
+
+// حذف عنصر من footer nav السفلية
+public function delete_footer_nav_item($id)
+{
+    FooterNavItem::destroy($id);
+    return response()->json(['success' => true]);
+}
+
+
+
    
 }
