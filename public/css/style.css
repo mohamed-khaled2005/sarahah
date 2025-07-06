@@ -61,47 +61,65 @@
   background: #1e4db8;
 }
 
-/* Main Content */
+
+/* Main Content - تحسينات المحتوى الرئيسي */
 .main {
-  padding: 2.5rem 0;
+  padding: 4rem 0;
+  background-color: #f9f9f9;
 }
 
-/* Login Section */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Login Section - تحسينات قسم تسجيل الدخول */
 .login-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
 }
 
 .content-layout {
   display: flex;
-  gap: 2.5rem;
-  align-items: flex-start;
-  
-  margin: 0 auto;
+  gap: 3rem;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .content-right {
   flex: 1;
+  padding: 1rem;
 }
 
 .content-title {
   font-family: "Cairo", sans-serif;
-  font-size: 36px;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 900;
-  line-height: 45px;
-  letter-spacing: -1px;
-  color: black;
-  margin-bottom: 1rem;
+  line-height: 1.3;
+  color: var(--saraha-dark-primary);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.content-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  right: 0;
+  width: 80px;
+  height: 4px;
+  background: var(--saraha-primary);
+  border-radius: 2px;
 }
 
 .content-description {
-  font-size: 18px;
+  font-size: 1.1rem;
   font-weight: 300;
-  line-height: 60px;
-  letter-spacing: -1px;
-  color: black;
+  line-height: 1.8;
+  color: var(--black-700);
   margin-bottom: 2rem;
- max-width:490px;
- text-align: justify;
+  max-width: 500px;
+  text-align: right;
 }
 
 .content-btn {
@@ -111,33 +129,40 @@
   border-radius: 10px;
   border: none;
   font-family: "Noto Serif", serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 700;
-  line-height: 24px;
+  line-height: 1.5;
   cursor: pointer;
-  transition: background 0.2s;
-  width: 316px;
-  height: 55px;
-  box-shadow: 0px 0px  5px #000000;
+  transition: all 0.3s ease;
+  width: auto;
+  height: auto;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-.login-btn{
-   background: var(--saraha-primary) !important;
-   box-shadow: 0px 0px  5px #000000;
-}
+
 .content-btn:hover {
   background: #1e4db8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .login-form-container {
-  width: 455px;
+  width: 100%;
+  max-width: 450px;
   flex-shrink: 0;
 }
 
 .login-form {
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   border: 1px solid var(--black-100);
-  padding: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.login-form:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -147,10 +172,11 @@
 .form-label {
   display: block;
   font-family: "Cairo", sans-serif;
-  font-size: 15px;
+  font-size: 0.95rem;
   color: var(--black-800);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   text-align: right;
+  font-weight: 500;
 }
 
 .input-container {
@@ -159,48 +185,54 @@
 
 .form-input {
   width: 100%;
-  height: 48px;
-  padding: 0 3rem 0 1rem;
+  height: 50px;
+  padding: 0 1rem 0 3rem;
   background: var(--black-50);
-  border: 0.5px solid var(--black-100);
-  border-radius: 6px;
+  border: 1px solid var(--black-100);
+  border-radius: 8px;
   font-family: "Roboto", sans-serif;
-  font-size: 15px;
-  color: var(--black-500);
-  direction: ltr;
+  font-size: 0.95rem;
+  color: var(--black-700);
+  direction: rtl;
   text-align: right;
+  transition: all 0.3s ease;
 }
 
 .form-input:focus {
   outline: none;
   border-color: var(--saraha-primary);
+  box-shadow: 0 0 0 3px rgba(30, 77, 184, 0.1);
 }
 
 .input-icon {
   position: absolute;
-  left: 8px;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  width: 16px;
-  height: 16px;
-  background: var(--black-700);
-  border-radius: 8px;
+  width: 20px;
+  height: 20px;
+  color: var(--black-500);
 }
 
 .password-toggle {
   position: absolute;
-  left: 8px;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 0.25rem;
+  color: var(--black-500);
+}
+
+.password-toggle:hover {
+  color: var(--saraha-primary);
 }
 
 .password-toggle svg {
-  width: 16px;
-  height: 12px;
+  width: 18px;
+  height: 18px;
 }
 
 .form-options {
@@ -208,91 +240,134 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .remember-me {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .toggle-switch {
-  width: 40px;
-  height: 20px;
-  background: var(--black-50);
-  border: 0.5px solid var(--black-100);
+  width: 42px;
+  height: 22px;
+  background: var(--black-100);
   border-radius: 36.5px;
   position: relative;
   cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.toggle-switch.active {
+  background: var(--saraha-primary);
 }
 
 .toggle-knob {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   background: white;
-  border-radius: 12px;
+  border-radius: 50%;
   position: absolute;
   top: 2px;
   right: 2px;
-  box-shadow: 1px 1px 2px -1px rgba(51, 51, 51, 0.3);
-  transition: transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.toggle-switch.active .toggle-knob {
+  transform: translateX(-20px);
 }
 
 .remember-me span {
-  font-family: "SF Pro Display", sans-serif;
-  font-size: 12px;
-  color: var(--black-900);
-  line-height: 20px;
-  letter-spacing: 0.3px;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.9rem;
+  color: var(--black-800);
+  line-height: 1.5;
 }
 
 .forgot-password {
-  font-family: "SF Pro Display", sans-serif;
-  font-size: 12px;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.9rem;
   color: var(--system-blue);
   text-decoration: none;
-  line-height: 20px;
-  letter-spacing: 0.3px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
 }
 
 .forgot-password:hover {
+  color: #1a5bb9;
   text-decoration: underline;
 }
 
-.login-btn-img {
+.login-btn {
   width: 100%;
-  margin-bottom: 1.5rem;
+  background: var(--saraha-primary) !important;
+  color: white;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  font-family: "Cairo", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
   cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-btn:hover {
+  background: #1e4db8 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
 .divider {
-  height: 0.5px;
+  height: 1px;
   background: var(--black-100);
-  margin-bottom: 1.5rem;
+  margin: 1.5rem 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.divider::before {
+  content: 'أو';
+  position: absolute;
+  background: white;
+  padding: 0 1rem;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.9rem;
+  color: var(--black-500);
 }
 
 .google-btn {
   width: 100%;
-  background: var(--black-800);
-  color: white;
-  padding: 10px 16px;
-  border-radius: 6px;
-  border: none;
+  background: white;
+  color: var(--black-800);
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--black-100);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  font-family: "SF Pro Display", sans-serif;
-  font-size: 12px;
-  line-height: 20px;
-  letter-spacing: 0.3px;
+  gap: 0.75rem;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.5;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   margin-bottom: 1.5rem;
 }
 
 .google-btn:hover {
-  background: #1a1a1a;
+  background: var(--black-50);
+  border-color: var(--black-200);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
 .google-btn svg {
@@ -305,205 +380,268 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.95rem;
 }
 
 .signup-link span {
-  font-family: "Cairo", sans-serif;
-  font-size: 12px;
-  color: var(--black-900);
-  line-height: 20px;
-  letter-spacing: 0.3px;
+  color: var(--black-700);
 }
 
 .signup-link a {
-  font-family: "Cairo", sans-serif;
-  font-size: 12px;
   color: var(--system-blue);
   text-decoration: none;
-  line-height: 20px;
-  letter-spacing: 0.3px;
+  font-weight: 600;
+  transition: color 0.3s ease;
 }
 
 .signup-link a:hover {
+  color: #1a5bb9;
   text-decoration: underline;
 }
 
-/* Features Section */
+/* Features Section - تحسينات قسم المميزات */
 .features-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
 }
 
 .section-title {
   font-family: "Cairo", sans-serif;
-  font-size: 36px;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 900;
-  line-height: 45px;
-  letter-spacing: -1px;
+  line-height: 1.3;
   color: var(--saraha-dark-primary);
-  text-align: right;
-  margin-bottom: 0.75rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
 
-  margin-left: auto;
-  margin-right: auto;
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--saraha-primary);
+  border-radius: 2px;
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 0.75rem;
-  margin: 0 auto;
+  gap: 1.5rem;
 }
 
 .feature-card {
-  background: var(--saraha-bg);
+  background: white;
   border: 1px solid var(--saraha-border-light);
-  border-radius: 8px;
-  padding: 1rem;
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
   text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-color: var(--saraha-primary);
 }
 
 .feature-icon {
-  width: 24px;
-  height: 24px;
-  margin: 0 auto 0.75rem;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(30, 77, 184, 0.1);
+  border-radius: 50%;
+  color: var(--saraha-primary);
 }
 
 .feature-icon svg {
-  width: 100%;
-  height: 100%;
+  width: 28px;
+  height: 28px;
 }
 
 .feature-title {
-  font-family: "Noto Serif", serif;
-  font-size: 16px;
+  font-family: "Cairo", sans-serif;
+  font-size: 1.25rem;
   font-weight: 700;
-  line-height: 20px;
+  line-height: 1.4;
   color: var(--saraha-dark-primary);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .feature-description {
-  font-family: "Noto Serif", serif;
-  font-size: 14px;
-  line-height: 21px;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
   color: var(--saraha-dark-secondary);
 }
 
-/* How It Works Section */
+/* How It Works Section - تحسينات قسم كيفية العمل */
 .how-it-works {
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
 }
 
 .section-title-small {
-  font-family: "Noto Serif", serif;
-  font-size: 22px;
+  font-family: "Cairo", sans-serif;
+  font-size: clamp(1.5rem, 2.5vw, 1.75rem);
   font-weight: 700;
-  line-height: 28px;
+  line-height: 1.4;
   color: var(--saraha-dark-primary);
-  text-align: right;
-  margin-bottom: 0.5rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 1rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.section-title-small::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: var(--saraha-primary);
+  border-radius: 2px;
 }
 
 .steps {
-
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0 1rem;
+  position: relative;
+}
+
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: linear-gradient(to bottom, var(--saraha-primary), var(--saraha-border-light));
 }
 
 .step {
   display: flex;
-  align-items: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.step:nth-child(odd) {
+  flex-direction: row-reverse;
+  text-align: left;
+}
+
+.step:nth-child(even) {
+  text-align: right;
 }
 
 .step-icon {
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  background: white;
+  border: 2px solid var(--saraha-primary);
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  width: 40px;
-  padding-top: 0.75rem;
+  justify-content: center;
+  margin: 0 1.5rem;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 5px 15px rgba(30, 77, 184, 0.1);
 }
 
 .step-icon svg {
   width: 24px;
   height: 24px;
-}
-
-.step-line,
-.step-line-top {
-  width: 2px;
-  height: 32px;
-  background: var(--saraha-border-light);
-}
-
-.step-line-top {
-  height: 8px;
+  color: var(--saraha-primary);
 }
 
 .step-content {
   flex: 1;
-  padding: 0.75rem 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .step-title {
-  font-family: "Noto Serif", serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px;
+  font-family: "Cairo", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
   color: var(--saraha-dark-primary);
-  text-align: right;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
 .step-description {
-  font-family: "Noto Serif", serif;
-  font-size: 16px;
-  line-height: 24px;
+  font-family: "Cairo", sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
   color: var(--saraha-dark-secondary);
-  text-align: right;
 }
 
-/* FAQ Section */
+/* FAQ Section - تحسينات قسم الأسئلة الشائعة */
 .faq-section {
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
 }
 
 .section-title-large {
   font-family: "Cairo", sans-serif;
-  font-size: 32px;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
   font-weight: 700;
-  line-height: 40px;
-  color: var(--faq-text);
-  text-align: right;
-  margin-bottom: 1rem;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 1rem;
+  line-height: 1.3;
+  color: var(--saraha-dark-primary);
+  text-align: center;
+  margin-bottom: 2rem;
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.section-title-large::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--saraha-primary);
+  border-radius: 2px;
 }
 
 .faq-container {
+  max-width: 800px;
   margin: 0 auto;
-  padding: 0 1rem;
 }
 
-
 details {
-  border: 1px solid var(--faq-border);
-  border-radius: var(--faq-radius);
-  background-color: var(--faq-bg);
-  box-shadow: var(--faq-shadow);
+  border: 1px solid var(--saraha-border-light);
+  border-radius: 12px;
+  background-color: white;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
   margin: 1rem 0;
   overflow: hidden;
-  transition: box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 details:hover {
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-  background-color: var(--faq-bg-hover);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  border-color: var(--saraha-primary);
+}
+
+details[open] {
+  border-color: var(--saraha-primary);
 }
 
 summary {
@@ -511,17 +649,17 @@ summary {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 1.5rem;
+  padding: 1.5rem;
   cursor: pointer;
-  font-size: 17px;
+  font-family: "Cairo", sans-serif;
+  font-size: 1.1rem;
   font-weight: 600;
-  color: var(--faq-text);
+  color: var(--saraha-dark-primary);
   text-align: right;
   list-style: none;
   position: relative;
   background: none;
   border: none;
-  padding-inline-end: 2.5rem;
 }
 
 summary::-webkit-details-marker {
@@ -532,9 +670,9 @@ summary::after {
   content: '';
   position: absolute;
   top: 50%;
-  inset-inline-end: 1.5rem;
+  left: 1.5rem;
   transform: translateY(-50%);
-  background-image: url("data:image/svg+xml,%3Csvg width='14' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z' fill='%23121417'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='14' height='9' viewBox='0 0 14 9' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M13.6922 1.77556L7.44219 8.02556C7.32496 8.14292 7.16588 8.20887 7 8.20887C6.83412 8.20887 6.67504 8.14292 6.55781 8.02556L0.307812 1.77556C0.0635991 1.53135 0.0635991 1.1354 0.307812 0.891187C0.552026 0.646973 0.947974 0.646973 1.19219 0.891187L7 6.69978L12.8078 0.891187C13.052 0.646973 13.448 0.646973 13.6922 0.891187C13.9364 1.1354 13.9364 1.53135 13.6922 1.77556Z' fill='%231E4DB8'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-size: 14px 9px;
   width: 14px;
@@ -547,142 +685,201 @@ details[open] summary::after {
 }
 
 details p {
-  padding: 0 1.5rem 1rem;
-  font-family: "Public Sans", sans-serif;
-  font-size: 15px;
+  padding: 0 1.5rem 1.5rem;
+  font-family: "Cairo", sans-serif;
+  font-size: 1rem;
   line-height: 1.8;
-  color: var(--faq-text-secondary);
+  color: var(--saraha-dark-secondary);
   text-align: right;
   animation: fadeIn 0.3s ease-in-out;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Articles Section - تحسينات قسم المقالات */
+.articles-section {
+  padding: 4rem 0;
+  background: white;
 }
 
-.articles-section {
-    padding: 72px 0;
-  }
-  .section-title {
-    text-align: center;
-    font-family: var(--font-main);
-    font-weight: 700;
-    font-size: 32px;
-    color: var(--color-text-primary);
-    margin: 0 0 40px 0;
-  }
-  .articles-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-  .article-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-  }
-  .article-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  }
-  .article-card a {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .card-image {
-    width: 100%;
-    height: 125px;
-    object-fit: cover;
-  }
-  .card-content {
-    padding: 12px;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .card-title {
-    font-family: var(--font-main);
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 24px;
-    color: var(--color-text-primary);
-    margin: 0 0 4px 0;
-  }
-  .card-description {
-    font-family: var(--font-main);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 21px;
-    color: var(--color-text-muted);
-    margin: 0;
-  }
-  @media (max-width: 992px) {
-    .articles-grid {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-  }
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
 
-/* Responsive Design */
+.article-card {
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+  border: 1px solid var(--saraha-border-light);
+}
+
+.article-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-color: var(--saraha-primary);
+}
+
+.article-card a {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+}
+
+.card-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.article-card:hover .card-image {
+  transform: scale(1.05);
+}
+
+.card-content {
+  padding: 1.5rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: var(--saraha-dark-primary);
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.article-card:hover .card-title {
+  color: var(--saraha-primary);
+}
+
+.card-description {
+  font-family: "Cairo", sans-serif;
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--saraha-dark-secondary);
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design - التجاوب مع أحجام الشاشات */
 @media (max-width: 1024px) {
   .content-layout {
     flex-direction: column;
-    gap: 2rem;
-  }
-
-  .login-form-container {
-    width: 100%;
-    max-width: 455px;
-    margin: 0 auto;
+    gap: 3rem;
   }
 
   .content-right {
     text-align: center;
   }
 
+  .content-title::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
   .content-description {
-    max-width: none;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .steps::before {
+    display: none;
+  }
+
+  .step,
+  .step:nth-child(odd) {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .step-icon {
+    margin: 0 auto 1rem;
   }
 }
 
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 36px;
-    line-height: 45px;
+  .hero {
+    min-height: 80vh;
   }
 
-  .content-title {
-    font-size: 28px;
-    line-height: 35px;
-  }
-
-  .content-description {
-    font-size: 16px;
-    line-height: 24px;
-  }
-
-
-
-  .section-title {
-    font-size: 28px;
-    line-height: 35px;
-  }
-
-  .section-title-large {
-    font-size: 24px;
-    line-height: 30px;
+  .hero-content {
+    padding: 1.5rem;
   }
 
   .features-grid {
     grid-template-columns: 1fr;
   }
 
-  .articles-grid {
-    grid-template-columns: 1fr;
+  .article-card {
+    max-width: 350px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 70vh;
   }
 
+  .hero-title {
+    font-size: 1.75rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .content-btn,
+  .login-btn,
+  .google-btn {
+    width: 100%;
+  }
+
+  .login-form {
+    padding: 1.5rem 1rem;
+  }
+
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .forgot-password {
+    margin-top: 0.5rem;
+  }
+}
+
+/* Animations - التحريك */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 36px;
+    line-height: 45px;
+  }
   
 }
 
@@ -697,22 +894,6 @@ details p {
     line-height: 20px;
   }
 
-  .content-title {
-    font-size: 24px;
-    line-height: 30px;
-  }
 
-  .content-description {
-    font-size: 14px;
-    line-height: 20px;
-  }
-
-  .content-btn {
-    width: 100%;
-  }
-
-  .auth-buttons {
-    gap: 1rem;
-  }
 
 }

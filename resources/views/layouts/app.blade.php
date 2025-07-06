@@ -1,125 +1,191 @@
+<?php
+use App\Models\NavItem;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
+use App\Models\FooterNavItem;
+
+$settings = Setting::all()->keyBy('key');
+$menus = NavItem::where('active', 1)->orderBy('order')->get();
+$menus2=FooterNavItem::where('active', 1)->orderBy('order')->get();
+
+// إذا كان المستخدم مسجل دخول، نحضر بياناته
+if(Auth::check()){
+    $user = Auth::user();
+    $logoUrl = route('user'); // هنا ضع اسم الراوت الصحيح للوحة تحكم المستخدم
+    $dashboardUrl = route('user'); // نفس الشيء
+    $unreadCount = $user->messages()->whereNull('read_at')->count();
+    $unreadItems = $user->messages()->whereNull('read_at')->latest()->take(5)->get();
+} else {
+    $logoUrl = url('/');
+    $dashboardUrl = url('/');
+}
+?>
 <!doctype html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@yield("title")</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    @yield('page-css')
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="container">
-        <div class="header-content">
-          <a href="/" class="logo"><div class="logo">
-            <img
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0"
-              alt="Logo"
-              class="logo-img"
-            />
-            <h1 class="logo-text">صراحة</h1>
-          </div></a>
-         
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@yield("title")</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  @yield('page-css')
 
-          <!-- Navigation -->
-          <nav class="nav">
-            <div class="nav-item">
-              <svg width="19" height="18" viewBox="0 0 27 26" fill="none">
-                <path
-                  d="M14.5878 0.378142C13.9774 -0.126047 13.0226 -0.126047 12.4122 0.378142L4.74334 6.71297C4.26885 7.10492 4 7.65027 4 8.22077V15.925C4 17.0709 5.06332 18 6.375 18H8.75C10.0617 18 11.125 17.0709 11.125 15.925V12.4666C11.125 12.0846 11.4794 11.775 11.9167 11.775H15.0833C15.5206 11.775 15.875 12.0846 15.875 12.4666V15.925C15.875 17.0709 16.9384 18 18.25 18H20.625C21.9366 18 23 17.0709 23 15.925V8.22077C23 7.65027 22.7312 7.10492 22.2566 6.71297L14.5878 0.378142Z"
-                  fill="black"
-                />
-              </svg>
-              <span>الرئيسية</span>
-            </div>
-            <div class="nav-item">
-              <svg width="25" height="24" viewBox="0 0 25 24" fill="none">
-                <path
-                  d="M8.5 5C8.5 4.44772 8.94772 4 9.5 4H11.0858C11.351 4 11.6054 4.10536 11.7929 4.29289L12.2071 4.70711C12.3946 4.89464 12.649 5 12.9142 5H15.5C16.0523 5 16.5 5.44772 16.5 6V10C16.5 10.5523 16.0523 11 15.5 11H9.5C8.94772 11 8.5 10.5523 8.5 10V5Z"
-                  fill="#222222"
-                />
-                <path
-                  d="M14.5 14C14.5 13.4477 14.9477 13 15.5 13H17.0858C17.351 13 17.6054 13.1054 17.7929 13.2929L18.2071 13.7071C18.3946 13.8946 18.649 14 18.9142 14H21.5C22.0523 14 22.5 14.4477 22.5 15V19C22.5 19.5523 22.0523 20 21.5 20H15.5C14.9477 20 14.5 19.5523 14.5 19V14Z"
-                  fill="#222222"
-                />
-                <path
-                  d="M2.5 14C2.5 13.4477 2.94772 13 3.5 13H5.08579C5.351 13 5.60536 13.1054 5.79289 13.2929L6.20711 13.7071C6.39464 13.8946 6.649 14 6.91421 14H9.5C10.0523 14 10.5 14.4477 10.5 15V19C10.5 19.5523 10.0523 20 9.5 20H3.5C2.94772 20 2.5 19.5523 2.5 19V14Z"
-                  fill="#222222"
-                />
-              </svg>
-              <span>كيف يعمل</span>
-            </div>
-            <div class="nav-item">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/88db2715c998c53f7941016b314afefdedf1b4da"
-                alt=""
-              />
-              <span>مميزات</span>
-            </div>
-          </nav>
+</head>
+<body>
+<header class="header">
+  <div class="container">
+    <div class="header-content">
 
-          <!-- Auth Buttons -->
-          <div class="auth-buttons">
-            <a href="{{route('register')}}">
-              <div class="auth-item">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M11.9997 15C12.4463 15 12.8902 15.0264 13.3278 15.0771C11.9947 15.3824 10.9997 16.5743 10.9997 18C10.9997 19.6568 12.3429 20.9999 13.9997 21H14.9997V21.0723C11.4434 21.3576 7.85662 21.1364 4.3483 20.4053C3.79567 20.2901 3.46657 19.712 3.74088 19.2188C4.34646 18.1311 5.30072 17.1747 6.52116 16.4463C8.09286 15.5083 10.0186 15 11.9997 15Z"
-                  fill="#222222"
-                />
-                <path
-                  d="M18 14L18 22"
-                  stroke="#222222"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M22 18L14 18"
-                  stroke="#222222"
-                  stroke-width="2.5"
-                  stroke-linecap="round"
-                />
-                <circle cx="12" cy="8" r="5" fill="#222222" />
-              </svg>
-              
-              <span>تسجيل</span>
-            </div>
+      <!-- Logo -->
+      <a href="{{ $logoUrl }}" class="logo">
+        <div class="logo">
+          <img src="{{ !empty($settings['site_logo']->value) ? asset('uploads/' . $settings['site_logo']->value) : '#' }}" alt="Logo" class="logo-img"/>
+          <h1 class="logo-text">{{ !empty($settings['site_title']->value) ? $settings['site_title']->value: '#' }}</h1>
+        </div>
+      </a>
+
+      <!-- Navigation -->
+      <nav class="nav">
+        @foreach($menus as $menu)
+          <div class="nav-item">
+            {!! $menu->icon !!}
+            <a href="{{ $menu->url }}">{{ $menu->title }}</a>
+          </div>
+        @endforeach
+      </nav>
+
+      <!-- Auth / User Area -->
+      @if(Auth::check())
+        @php
+          $avatarPath = public_path('avatars/'.$user->avatar);
+        @endphp
+        <div class="header-actions">
+  
+
+          <!-- User Dropdown -->
+          <div class="user-dropdown">
+            <a href="{{ $dashboardUrl }}">
+              @if($user->avatar && file_exists($avatarPath))
+                <img src="{{ asset('avatars/'.$user->avatar) }}" alt="Profile" class="profile-img">
+              @else
+                <img src="{{ asset('images/profile.png') }}" alt="Profile" class="profile-img">
+              @endif
             </a>
-            <a href="{{route('login')}}">
-        <div class="auth-item">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/a6ae1ad276a92fa031b9cca3906be42279304e59"
-                alt=""
-              />
+            <div class="dropdown-menu">
+              <p class="username">{{ $user->name }}</p>
+              <form action="{{ route('logout') }}" method="post">@csrf
+                <input type="submit" value="تسجيل الخروج" class="logout-btn">
+              </form>
+            </div>
+          </div>
+
+                  <!-- Notifications -->
+          <div class="notification-wrapper">
+            <button class="notification-btn" aria-label="Notifications">
+              @if($unreadCount)
+                <span class="notif-badge">{{ $unreadCount }}</span>
+              @endif
+              <svg width="16" height="18" viewBox="0 0 16 18" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M15.3281 12.7453C14.8945 11.9984 14.25 9.88516 14.25 7.125C14.25 3.67322 11.4518 0.875 8 0.875C4.54822 0.875 1.75 3.67322 1.75 7.125C1.75 9.88594 1.10469 11.9984 0.671094 12.7453C0.445722 13.1318 0.444082 13.6092 0.666796 13.9973C0.889509 14.3853 1.30261 14.6247 1.75 14.625H4.93828C5.23556 16.0796 6.51529 17.1243 8 17.1243C9.48471 17.1243 10.7644 16.0796 11.0617 14.625H14.25C14.6972 14.6244 15.1101 14.3849 15.3326 13.9969C15.5551 13.609 15.5534 13.1317 15.3281 12.7453ZM8 15.875C7.20562 15.8748 6.49761 15.3739 6.23281 14.625H9.76719C9.50239 15.3739 8.79438 15.8748 8 15.875ZM1.75 13.375C2.35156 12.3406 3 9.94375 3 7.125C3 4.36358 5.23858 2.125 8 2.125C10.7614 2.125 13 4.36358 13 7.125C13 9.94141 13.6469 12.3383 14.25 13.375H1.75Z"
+                  fill="#0D141C"/>
+              </svg>
+            </button>
+            <div class="notification-menu">
+              @forelse($unreadItems as $item)
+                <div class="notif-item">
+                  <div class="notif-avatar"><img src="{{ asset('images/profile.png') }}" alt=""></div>
+                  <div class="notif-content">
+                    <p class="notif-text">رسالة جديدة من مجهول</p>
+                    <span class="notif-time">{{ $item->created_at->diffForHumans() }}</span>
+                  </div>
+                </div>
+              @empty
+                <p class="no-notif">لا توجد إشعارات جديدة</p>
+              @endforelse
+            </div>
+          </div>
+        </div>
+      @else
+        <div class="auth-buttons">
+        
+          <a href="{{ route('login') }}">
+            <div class="auth-item">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="8" r="5" fill="#222222"/>
+                <path d="M12 15c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" fill="#222222"/>
+              </svg>
               <span>دخول</span>
             </div>
-            </a>
-           
-          </div>
+          </a>
+
+            <a href="{{ route('register') }}">
+            <div class="auth-item">
+           <svg viewBox="0 0 24 24" id="SVGRoot" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs id="defs2"></defs> <g id="layer1"> <path d="M 11.919922 2 C 10.64638 2.0147005 9.4821928 2.3671115 8.578125 2.9941406 C 7.6792226 3.6175872 7.0132653 4.5812058 7.0058594 5.7089844 L 7.0097656 5.6386719 C 7.0097656 5.6386719 7.0024551 5.7130504 7.0019531 5.7167969 C 7.0019412 5.7202735 6.9999993 5.7230828 7 5.7265625 C 6.9999452 5.7331489 7.0000091 5.7395087 7 5.7460938 C 6.9999982 5.7474108 7 5.748683 7 5.75 C 6.9882771 5.8383315 6.9202267 6.3282218 6.8808594 7.0566406 C 6.8381389 7.8471027 6.8115029 8.7859447 7.03125 9.6367188 C 7.2431803 10.457232 7.7459198 11.567077 8.2128906 12.580078 C 8.4407534 13.074381 8.4849158 13.152828 8.6484375 13.490234 L 2.6054688 16.080078 A 1 1 0 0 0 2.5292969 16.117188 A 1 1 0 0 0 2.515625 16.125 A 1 1 0 0 0 2.3242188 16.261719 A 1 1 0 0 0 2.3125 16.273438 A 1 1 0 0 0 2.2109375 16.384766 A 1 1 0 0 0 2.2011719 16.398438 A 1 1 0 0 0 2.1621094 16.453125 A 1 1 0 0 0 2.1542969 16.466797 A 1 1 0 0 0 2.1132812 16.539062 A 1 1 0 0 0 2.1113281 16.541016 A 1 1 0 0 0 2.1074219 16.548828 A 1 1 0 0 0 2.0820312 16.601562 A 1 1 0 0 0 2.0761719 16.617188 A 1 1 0 0 0 2 17.037109 L 2 21 A 1.0001 1.0001 0 0 0 3 22 L 17 22 A 1 1 0 0 0 18 21 A 1 1 0 0 0 17 20 L 4 20 L 4 17.660156 L 10.394531 14.919922 A 1 1 0 0 0 10.919922 13.605469 A 1 1 0 0 0 10.894531 13.554688 C 10.894531 13.554688 10.882972 13.529617 10.882812 13.529297 A 1 1 0 0 0 10.880859 13.525391 C 10.867866 13.499275 10.474364 12.709626 10.029297 11.744141 C 9.5769416 10.762845 9.0795577 9.5657237 8.96875 9.1367188 C 8.8657581 8.7379745 8.8389173 7.8697972 8.8769531 7.1660156 C 8.9149889 6.4622341 8.9902344 5.9082031 8.9902344 5.9082031 A 1.0001 1.0001 0 0 0 9 5.7617188 C 8.9999559 5.7581872 9 5.7535288 9 5.75 C 9 5.7464651 8.999956 5.7437554 9 5.7402344 A 1.0001 1.0001 0 0 0 9 5.7265625 C 8.9999259 5.3743439 9.2003296 4.9949216 9.7167969 4.6367188 C 10.233264 4.2785159 11.034287 4.0104935 11.943359 4 C 11.960144 3.9999231 11.977355 3.9999031 11.994141 4 A 1.0001 1.0001 0 0 0 12 4 C 12.920307 4.0000001 13.737388 4.2648355 14.265625 4.625 C 14.793862 4.9851645 15 5.3697738 15 5.7265625 A 1.0001 1.0001 0 0 0 15.009766 5.8613281 C 15.009766 5.8613281 15.085002 6.4180551 15.123047 7.1269531 C 15.161092 7.8358511 15.134867 8.711834 15.03125 9.1152344 C 14.919899 9.5487438 14.423072 10.750181 13.970703 11.736328 C 13.518919 12.721201 13.106539 13.550587 13.105469 13.552734 C 13.105467 13.552737 13.103516 13.554688 13.103516 13.554688 A 1 1 0 0 0 13.070312 13.628906 A 1 1 0 0 0 13.068359 13.630859 A 1 1 0 0 0 13.050781 13.683594 A 1 1 0 0 0 13.033203 13.744141 A 1 1 0 0 0 13.023438 13.785156 A 1 1 0 0 0 13.021484 13.792969 A 1 1 0 0 0 13.011719 13.847656 A 1 1 0 0 0 13.001953 13.927734 A 1 1 0 0 0 13.001953 13.931641 A 1 1 0 0 0 13 14.013672 A 1 1 0 0 0 13.003906 14.097656 A 1 1 0 0 0 13.013672 14.167969 A 1 1 0 0 0 13.019531 14.195312 A 1 1 0 0 0 13.021484 14.208984 A 1 1 0 0 0 13.035156 14.263672 A 1 1 0 0 0 13.060547 14.34375 A 1 1 0 0 0 13.083984 14.404297 A 1 1 0 0 0 13.095703 14.429688 A 1 1 0 0 0 13.130859 14.496094 A 1 1 0 0 0 13.175781 14.566406 A 1 1 0 0 0 13.21875 14.625 A 1 1 0 0 0 13.232422 14.640625 A 1 1 0 0 0 13.263672 14.675781 A 1 1 0 0 0 13.291016 14.707031 A 1 1 0 0 0 13.339844 14.751953 A 1 1 0 0 0 13.34375 14.755859 A 1 1 0 0 0 13.345703 14.755859 A 1 1 0 0 0 13.408203 14.806641 A 1 1 0 0 0 13.478516 14.853516 A 1 1 0 0 0 13.552734 14.894531 A 1 1 0 0 0 13.554688 14.896484 A 1 1 0 0 0 13.628906 14.929688 A 1 1 0 0 0 13.630859 14.931641 A 1 1 0 0 0 13.683594 14.949219 A 1 1 0 0 0 13.71875 14.960938 L 16.683594 15.949219 A 1 1 0 0 0 17.949219 15.316406 A 1 1 0 0 0 17.316406 14.050781 L 15.388672 13.408203 C 15.546128 13.079656 15.578418 13.025252 15.787109 12.570312 C 16.254016 11.552475 16.757248 10.436699 16.96875 9.6132812 C 17.187986 8.7597543 17.161809 7.8165187 17.119141 7.0214844 C 17.076473 6.22645 16.990234 5.59375 16.990234 5.59375 C 16.9389 4.5028113 16.275849 3.5748919 15.392578 2.9726562 C 14.474567 2.3467347 13.292301 2.0010822 12.005859 2 C 11.979441 1.9998475 11.9522 1.9998475 11.925781 2 A 1.0001 1.0001 0 0 0 11.919922 2 z M 20 15 A 1 1 0 0 0 19 16 L 19 17 L 18 17 A 1 1 0 0 0 17 18 A 1 1 0 0 0 18 19 L 19 19 L 19 20 A 1 1 0 0 0 20 21 A 1 1 0 0 0 21 20 L 21 19 L 22 19 A 1 1 0 0 0 23 18 A 1 1 0 0 0 22 17 L 21 17 L 21 16 A 1 1 0 0 0 20 15 z " id="path3110" style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-variant-east-asian:normal;font-feature-settings:normal;font-variation-settings:normal;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:start;white-space:normal;shape-padding:0;shape-margin:0;inline-size:0;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate;stop-color:#000000;stop-opacity:1;opacity:1"></path> </g> </g></svg>
+              <span>تسجيل</span>
+            </div>
+          </a>
         </div>
+      @endif
+           <button class="menu-toggle" aria-label="Toggle menu">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <path d="M3 6h18M3 12h18M3 18h18" stroke="#0D121C" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</button>
+    </div>
+    
+  </div>
+</header>
+
+@yield('main')
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-links">
+            @foreach($menus2 as $menu2)
+            <a href="{{ $menu2->url }}"><span>{{ $menu2->title }}</span></a>
+            @endforeach
       </div>
-    </header>
+      <p class="footer-copyright">جميع الحقوق محفوظة - صراحة © 2025</p>
+    </div>
+  </div>
+</footer>
+
+<!-- JavaScript لتأخير اختفاء القائمة المنسدلة -->
+<script>
+const userDropdown = document.querySelector('.user-dropdown');
+if(userDropdown) {
+  let timeout;
+  userDropdown.addEventListener('mouseenter', () => {
+    clearTimeout(timeout);
+    userDropdown.querySelector('.dropdown-menu').style.display = 'block';
+  });
+  userDropdown.addEventListener('mouseleave', () => {
+    timeout = setTimeout(() => {
+      userDropdown.querySelector('.dropdown-menu').style.display = 'none';
+    }, 200);
+  });
+}
+
+const notifWrapper = document.querySelector('.notification-wrapper');
+if(notifWrapper) {
+  notifWrapper.addEventListener('click', () => {
+    const badge = notifWrapper.querySelector('.notif-badge');
+    if(badge) {
+      badge.style.display = 'none';
+    }
+  });
+}
 
 
-    @yield('main')
+    // hamburger menu
+  const menuToggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav');
 
-    <!-- Footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-content">
-          <div class="footer-links">
-            <span>من نحن</span>
-            <span>سياسة الخصوصية</span>
-            <span>شروط الأستخدام</span>
-            <span>تواصل معنا</span>
-          </div>
-          <p class="footer-copyright">جميع الحقوق محفوظة - صراحة © 2025</p>
-        </div>
-      </div>
-    </footer>
-
-    <script src="script.js"></script>
-  </body>
+  menuToggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
+</script>
+</body>
 </html>
