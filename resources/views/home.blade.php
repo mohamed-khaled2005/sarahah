@@ -1,3 +1,7 @@
+<?php 
+use App\Models\Post;
+$posts = Post::all();
+?>
 @extends('layouts.app')
 @section('title','صراحة - تلقي رسائل صادقة من أصدقائك')
 @section('page-css')
@@ -12,7 +16,7 @@
           أنشئ رابطك الشخصي وابدأ في تلقي رسائل صادقة من أصدقائك وزملائك بسرية
           تامة.
         </p>
-        <button class="hero-btn">أنشيء رابطك الأن</button>
+        <button class="hero-btn"><a href="{{ route('register') }}">أنشيء رابطك الأن</a></button>
       </div>
     </section>
 
@@ -34,95 +38,91 @@
               <button class="content-btn">سجل وتلقي الآن الرسائل</button>
             </div>
 
-            <!-- Login Form -->
-            <div class="login-form-container">
-              <form class="login-form">
-                <!-- Email Field -->
-                <div class="form-group">
-                  <label class="form-label">تسجيل الدخول</label>
-                  <div class="input-container">
-                    <input
-                      type="email"
-                      placeholder="الأيميل أو اسم المستخدم"
-                      class="form-input"
-                    />
-                 
-                </div>
+           <div class="login-form-container">
+  <form action="{{ route('login_user') }}" method="post" class="login-form">
+    @csrf
+@if(session('success'))
+  <div class="alert alert-success">{{ session('success') }}</div>
+@endif
 
-                <!-- Password Field -->
-                <div class="form-group">
-                  <label class="form-label">الباسورد</label>
-                  <div class="input-container">
-                    <input
-                      type="password"
-                      placeholder="أدخل كلمة المرور"
-                      class="form-input"
-                    />
-                    <button type="button" class="password-toggle">
-                      <svg
-                        width="16"
-                        height="12"
-                        viewBox="0 0 16 12"
-                        fill="none"
-                      >
-                        <path
-                          d="M8 0.666656C4.36364 0.666656 1.25818 2.92847 0 6.1212C1.25818 9.31393 4.36364 11.5757 8 11.5757C11.6364 11.5757 14.7418 9.31393 16 6.1212C14.7418 2.92847 11.6364 0.666656 8 0.666656ZM8 9.75757C5.99273 9.75757 4.36364 8.12847 4.36364 6.1212C4.36364 4.11393 5.99273 2.48484 8 2.48484C10.0073 2.48484 11.6364 4.11393 11.6364 6.1212C11.6364 8.12847 10.0073 9.75757 8 9.75757ZM8 3.93938C6.79273 3.93938 5.81818 4.91393 5.81818 6.1212C5.81818 7.32847 6.79273 8.30302 8 8.30302C9.20727 8.30302 10.1818 7.32847 10.1818 6.1212C10.1818 4.91393 9.20727 3.93938 8 3.93938Z"
-                          fill="#4D4D4D"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+@if($errors->any())
+  <div class="alert alert-error">
+    @foreach($errors->all() as $error)
+      <p>{{ $error }}</p>
+    @endforeach
+  </div>
+@endif
 
-                <!-- Remember & Forgot -->
-                <div class="form-options">
-                  <div class="remember-me">
-                    <div class="toggle-switch">
-                      <div class="toggle-knob"></div>
-                    </div>
-                    <span>تذكرني</span>
-                  </div>
-                  <a href="#" class="forgot-password">نسيت كلمة المرور؟</a>
-                </div>
+    <!-- Email Field -->
+    <div class="form-group">
+      <label class="form-label">تسجيل الدخول</label>
+      <div class="input-container">
+        <input
+          type="text"
+          name="emailorusername"
+          placeholder="الأيميل أو اسم المستخدم"
+          class="form-input"
+          value="{{ old('emailorusername') }}"
+          required
+        />
+      </div>
+      @error('emailorusername')
+        <p class="error-text">{{ $message }}</p>
+      @enderror
+    </div>
 
-                <!-- Login Button -->
-                  <button type="button" class="google-btn login-btn">
-                  تسجيل الدخول
-                </button>
+    <!-- Password Field -->
+    <div class="form-group">
+      <label class="form-label">الباسورد</label>
+      <div class="input-container">
+        <input
+          type="password"
+          name="password"
+          placeholder="أدخل كلمة المرور"
+          class="form-input"
+          required
+        />
+        <button type="button" class="password-toggle">
+          <!-- أيقونة هنا -->
+        </button>
+      </div>
+      @error('password')
+        <p class="error-text">{{ $message }}</p>
+      @enderror
+    </div>
 
-                <!-- Divider -->
-                <div class="divider"></div>
+    <!-- Remember & Forgot -->
+    <div class="form-options">
+      <div class="remember-me">
+        <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+        <label for="remember">تذكرني</label>
+      </div>
+      <a href="{{ route('reset_password') }}" class="forgot-password">نسيت كلمة المرور؟</a>
+    </div>
 
-                <!-- Google Login -->
-                <button type="button" class="google-btn">
-                  <svg width="21" height="21" viewBox="0 0 21 21" fill="none">
-                    <path
-                      d="M20.369 10.7281C20.3698 10.0466 20.3118 9.3664 20.1956 8.69482H10.6998V12.546H16.1385C16.0272 13.1611 15.7917 13.7475 15.4461 14.2697C15.1004 14.792 14.6519 15.2393 14.1275 15.5848V18.0846H17.3734C19.274 16.3444 20.369 13.771 20.369 10.7281Z"
-                      fill="#4285F4"
-                    />
-                    <path
-                      d="M10.6998 20.5C13.4171 20.5 15.705 19.6139 17.3734 18.0862L14.1275 15.5864C13.2241 16.1947 12.0605 16.5419 10.6998 16.5419C8.07339 16.5419 5.84419 14.7836 5.04704 12.4143H1.70324V14.9906C2.54131 16.6467 3.8264 18.0389 5.41505 19.0118C7.00369 19.9847 8.83335 20.4999 10.6998 20.5Z"
-                      fill="#34A853"
-                    />
-                    <path
-                      d="M5.047 12.414C4.62558 11.1724 4.62558 9.82793 5.047 8.58639V6.01013H1.70319C0.998177 7.40333 0.631004 8.94096 0.631004 10.5002C0.631004 12.0594 0.998177 13.597 1.70319 14.9902L5.047 12.414Z"
-                      fill="#FBBC04"
-                    />
-                    <path
-                      d="M10.6998 4.45879C12.1357 4.43549 13.5233 4.97429 14.5624 5.95872L17.4363 3.10469C15.614 1.40488 13.1998 0.471659 10.6998 0.500656C8.83335 0.500741 7.00369 1.01598 5.41505 1.98886C3.8264 2.96174 2.54131 4.35397 1.70324 6.0101L5.04704 8.58636C5.84419 6.21704 8.07339 4.45879 10.6998 4.45879Z"
-                      fill="#EA4335"
-                    />
-                  </svg>
-                  تسجيل الدخول باستخدام حساب Google
-                </button>
+    <!-- Login Button -->
+    <button type="submit" class="google-btn login-btn">تسجيل الدخول</button>
 
-                <!-- Sign Up Link -->
-                <div class="signup-link">
-                  <span>ليس لديك حساب؟</span>
-                  <a href="#">أنشاء حساب جديد</a>
-                </div>
-              </form>
-            </div>
+    <!-- Divider -->
+    <div class="divider"></div>
+
+    <!-- Google Login (اختياري) -->
+    <button type="button" class="google-btn">
+      <!-- أيقونة -->
+      تسجيل الدخول باستخدام حساب Google
+    </button>
+
+    <!-- Sign Up Link -->
+    <div class="signup-link">
+      <span>ليس لديك حساب؟</span>
+      <a href="{{ route('register') }}">أنشاء حساب جديد</a>
+    </div>
+  </form>
+</div>
+
+
+
+
           </div>
         </section>
 
@@ -315,45 +315,31 @@
         <section class="articles-section">
           <h2 class="section-title-large">أحدث المقالات</h2>
           <div class="articles-grid">
-         <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
-          </div>
-        </a>
-      </article>
+      @foreach($posts as $post)
       <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
+        <a href="{{url('/blog/'.$post->slug)}}">
+          <img class="card-image" src="{{url('avatars/'.$post->thumbnail)}}">
           <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
+            <h3 class="card-title">{{$post->title}}</h3>
+            <p class="card-description">{{ Str::words($post->content, 18, '...') }}</p>
           </div>
         </a>
       </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
-          </div>
-        </a>
-      </article>
-    
+    @endforeach
           </div>
         </section>
       </div>
     </main>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.querySelector('.password-toggle');
+  const passwordInput = document.querySelector('input[name="password"]');
+  if(toggle && passwordInput) {
+    toggle.addEventListener('click', function() {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+    });
+  }
+});
+    </script>
 @endsection

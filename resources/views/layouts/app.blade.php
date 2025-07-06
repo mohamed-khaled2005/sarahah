@@ -37,10 +37,10 @@ if(Auth::check()){
     <div class="header-content">
 
       <!-- Logo -->
-      <a href="{{ $logoUrl }}" class="logo">
+      <a href="/" class="logo">
         <div class="logo">
-          <img src="{{ !empty($settings['site_logo']->value) ? asset('uploads/' . $settings['site_logo']->value) : '#' }}" alt="Logo" class="logo-img"/>
-          <h1 class="logo-text">{{ !empty($settings['site_title']->value) ? $settings['site_title']->value: '#' }}</h1>
+          <img src="{{ !empty($settings['site_logo']->value) ? asset('uploads/' . $settings['site_logo']->value) : url('images/'.'profile.png') }}" alt="Logo" class="logo-img"/>
+          <h1 class="logo-text">{{ !empty($settings['site_title']->value) ? $settings['site_title']->value: 'صراحة' }}</h1>
         </div>
       </a>
 
