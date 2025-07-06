@@ -1,5 +1,7 @@
 @extends('layouts.app')
-@section('title','single page')
+@section('title')
+{{$page->title}}
+@endsection
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/single_page.css') }}">
 @endsection

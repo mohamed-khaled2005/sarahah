@@ -1,5 +1,12 @@
+
+<?php 
+use App\Models\Post;
+$posts = Post::all();
+?>
 @extends('layouts.app')
-@section('title','عنوان المقال')
+@section('title')
+{{$post->title}}
+@endsection
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/posts/single.css') }}">
 @endsection
@@ -54,56 +61,25 @@
           </div>
         </section>
 
-        <!-- Related Articles -->
-        <section class="related-articles">
-          <h3 class="section-header">مقالات ذات صلة</h3>
-
+        <!-- Articles Section -->
+        <section class="articles-section">
+          <h2 class="section-title-large">مقالات ذات صلة</h2>
           <div class="articles-grid">
-            <div class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/1804807228d045db203d1e609cb4e5374fda63ed"
-                alt="Article 1"
-                class="article-image"
-              />
-              <div class="card-content">
-                <h4 class="card-title">عنوان المقال الأول</h4>
-              </div>
-            </div>
-
-            <div class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/755b41ff53807eb61909972d8a68fda16f642925"
-                alt="Article 2"
-                class="article-image"
-              />
-              <div class="card-content">
-                <h4 class="card-title">عنوان المقال الثاني</h4>
-              </div>
-            </div>
-
-            <div class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/f5fbef9631136f46ba38301f34a1328988682cab"
-                alt="Article 3"
-                class="article-image"
-              />
-              <div class="card-content">
-                <h4 class="card-title">عنوان المقال الثالث</h4>
-              </div>
-            </div>
-
-            <div class="article-card">
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/TEMP/f5fbef9631136f46ba38301f34a1328988682cab"
-                alt="Article 4"
-                class="article-image"
-              />
-              <div class="card-content">
-                <h4 class="card-title">عنوان المقال الثالث</h4>
-              </div>
-            </div>
+      @foreach($posts as $rel_post)
+      <article class="article-card">
+        <a href="{{url('/blog/'.$rel_post->slug)}}">
+          <img class="card-image" src="{{url('avatars/'.$rel_post->thumbnail)}}">
+          <div class="card-content">
+            <h3 class="card-title">{{$rel_post->title}}</h3>
+            <p class="card-description">{{ Str::words($rel_post->content, 18, '...') }}</p>
+          </div>
+        </a>
+      </article>
+    @endforeach
           </div>
         </section>
+
+
       </div>
     </main>
     @endsection

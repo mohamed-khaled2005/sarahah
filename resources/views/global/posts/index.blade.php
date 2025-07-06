@@ -1,3 +1,7 @@
+<?php 
+use App\Models\Post;
+$posts = Post::all();
+?>
 @extends('layouts.app')
 @section('title','blog')
 @section('page-css')
@@ -10,116 +14,22 @@
 <section id="articles" class="articles-section">
   <div class="container">
     <h2 class="section-title">آخر المقالات</h2>
-    <div class="articles-grid">
+      <!-- Articles Section -->
+        <section class="articles-section">
+          <div class="articles-grid">
+      @foreach($posts as $rel_post)
       <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
+        <a href="{{url('/blog/'.$rel_post->slug)}}">
+          <img class="card-image" src="{{url('avatars/'.$rel_post->thumbnail)}}">
           <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
+            <h3 class="card-title">{{$rel_post->title}}</h3>
+            <p class="card-description">{{ Str::words($rel_post->content, 18, '...') }}</p>
           </div>
         </a>
       </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
+    @endforeach
           </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن التعافي مع الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">التعافي مع الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التعافي مع الانفصال والتعامل مع التحدياتات.</p>
-          </div>
-        </a>
-      </article>
-      <article class="article-card">
-        <a href="#">
-          <img class="card-image" src="https://cdn.builder.io/api/v1/image/assets/TEMP/205f7a07805a512a1db49748340bc3d739795f17" alt="صورة مقال عن الحياة بعد الانفصال">
-          <div class="card-content">
-            <h3 class="card-title">الحياة بعد الانفصال</h3>
-            <p class="card-description">مقالة تتحدث عن التغيرات التي تحدث في الحياة بعد الانفصال.</p>
-          </div>
-        </a>
-      </article>
-    </div>
+        </section>
   </div>
 </section>
 

@@ -38,29 +38,36 @@ class MessageController extends Controller
     /**
      * إرسال رسالة للمستخدم
      */
-    public function send_message(Request $request, $identifier)
-    {
-        $user = $this->findUserByIdOrUsername($identifier);
+public function send_message(Request $request, $identifier)
+{
+    $user = $this->findUserByIdOrUsername($identifier);
 
-        // منع إرسال رسالة لمستخدم معطّل أو غير موجود
-        if (!$user || !$user->is_active) {
-            return redirect()->back()->with('error', 'لا يمكن إرسال رسالة لهذا المستخدم.');
+    if (!$user || !$user->is_active) {
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json(['success' => false, 'message' => 'لا يمكن إرسال رسالة لهذا المستخدم.'], 404);
         }
-
-        // التحقق من صحة البيانات
-        $validated = $request->validate([
-            'message-content' => 'required|string|max:1000',
-        ]);
-
-        // إنشاء الرسالة
-        $message = new Message();
-        $message->user_id = $user->id;
-        $message->content = $validated['message-content'];
-        $message->save();
-
-        return redirect()->back()->with('success', 'تم إرسال الرسالة بنجاح!');
+        return redirect()->back()->with('error', 'لا يمكن إرسال رسالة لهذا المستخدم.');
     }
 
+    $validated = $request->validate([
+        'message-content' => 'required|string|max:1000',
+    ]);
+
+    $message = new \App\Models\Message();
+    $message->user_id = $user->id;
+    $message->content = $validated['message-content'];
+    $message->save();
+
+    if ($request->ajax() || $request->wantsJson()) {
+        return response()->json([
+            'success' => true,
+            'message' => 'تم إرسال الرسالة بنجاح!',
+            'reset_form' => true
+        ]);
+    }
+
+    return redirect()->back()->with('success', 'تم إرسال الرسالة بنجاح!');
+}
     /**
      * حذف رسالة خاصة بالمستخدم المسجّل
      */

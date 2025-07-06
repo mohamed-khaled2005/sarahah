@@ -6,13 +6,13 @@
   }
   
   section#single {
-    margin-top: 100px;
+    margin-top: 50px;
     justify-content: center;
     display: flex;
     flex: 1;
 }
   .content-wrapper {
-    max-width: 960px;
+    max-width: 85%;
     margin: 0 auto;
   }
 

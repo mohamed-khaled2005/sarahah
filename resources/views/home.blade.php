@@ -119,10 +119,6 @@ $posts = Post::all();
     </div>
   </form>
 </div>
-
-
-
-
           </div>
         </section>
 
