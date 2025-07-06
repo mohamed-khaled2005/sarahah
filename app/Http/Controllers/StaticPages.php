@@ -2,26 +2,30 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-
+use App\Models\Post;
 class StaticPages extends Controller
 {
 
     
     public function index(){
-    return view('home');
+        $posts = Post::all();
+    return view('home',
+    ['posts'=>$posts]
+
+);
 
     
 }
 
     public function posts_index() {
-    return view('global.posts.index');
+        $posts = Post::all();
+    return view('global.posts.index',[
+        "posts"=>$posts
+    ]
+);
 }
-    public function posts_single() {
-    return view('global.posts.single');
-}
-    public function posts_category() {
-    return view('global.posts.category');
-}
+
+
     public function pages() {
     return view('global.pages.single');
 }

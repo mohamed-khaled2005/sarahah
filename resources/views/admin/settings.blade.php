@@ -54,7 +54,7 @@
         <!-- Navbar العلوية -->
         <div class="section">
             <div class="section-header">
-                <h3 class="section-title">القائمة العلوية (Navbar)</h3>
+                <h3 class="section-title">القائمة العلوية (Header Navbar)</h3>
             </div>
             @foreach($navItems as $item)
                 <div class="input-container">

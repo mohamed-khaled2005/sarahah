@@ -139,7 +139,7 @@ body {
 .nav-tabs {
   display: flex;
   flex-direction: row-reverse;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-start;
   gap: 32px;
   padding: 0 16px;
@@ -161,53 +161,18 @@ body {
   text-decoration: none;
 }
 
+      @media (max-width: 768px) {
+  .nav-tab{
+    font-size: 12px;
+  }
+      }
+
+
 .nav-tab.active {
   border-bottom-color: white;
   color: white;
 }
 
-/* Stats Cards */
-.stats-grid {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
-.stat-card {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  background: linear-gradient(180deg, #5412eb 0%, #265cff 100%);
-  border-radius: 12px;
-  padding: 24px;
-  min-width: 158px;
-  flex: 1;
-}
-
-.stat-title, .stat-value {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  color: white;
-}
-
-.stat-title {
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-}
-
-.stat-value {
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 30px;
-}
 
 /* Footer */
 .footer {
@@ -230,6 +195,7 @@ body {
 
 /* Dropdown Menu */
 .dropdown-menu {
+  left: 0;
   display: none;
   position: absolute;
 
@@ -301,3 +267,68 @@ body {
 .notif-time  { font-size: 12px; color: #777; }
 
 .no-notif { padding: 16px; text-align: center; color: #777; font-size: 14px; }
+
+  /* Responsive Design */
+      @media (max-width: 1200px) {
+        .header {
+          padding: 0 50px 43px 50px;
+        }
+
+        .header-content {
+          width: 100%;
+          max-width: 934px;
+        }
+
+        .url-field {
+          width: 90%;
+          max-width: 928px;
+        }
+
+        .activities-title,
+        .activities-list {
+          width: 100%;
+          max-width: 1120px;
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: 0 20px 20px 20px;
+        }
+
+        .stats-grid {
+          flex-direction: column;
+        }
+
+        .stat-card {
+          min-width: auto;
+        }
+
+        .nav-tabs {
+          flex-wrap: wrap;
+          gap: 16px;
+        }
+
+        .url-field {
+          width: 95%;
+          font-size: 12px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header-actions {
+          gap: 16px;
+        }
+
+        .logo-text {
+          font-size: 18px;
+          width: auto;
+        }
+
+        .nav-tabs {
+          gap: 8px;
+          font-size: 12px;
+        }
+      }

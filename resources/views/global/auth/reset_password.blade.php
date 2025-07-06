@@ -45,4 +45,7 @@
     </div>
   </div>
 </main>
+
+  <script src="{{url('js/global/auth/reset_password.js')}}">
+    </script>
 @endsection

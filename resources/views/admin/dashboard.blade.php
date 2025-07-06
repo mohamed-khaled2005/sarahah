@@ -9,10 +9,6 @@
        @section('main')
       <!-- Main Content -->
       <div class="main-content">
-        <?php
-      
-        
-        ?>
         <!-- Page Title -->
         <h2 class="page-title">لوحة التحكم</h2>
 

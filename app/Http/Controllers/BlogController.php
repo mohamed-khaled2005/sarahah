@@ -11,9 +11,10 @@ class BlogController extends Controller
 
 
 $post = Post::where('slug', $slug)->where('status', 'published')->firstOrFail();
-
+$posts = Post::all();
 return view('global.posts.single', [
-    'post'=>$post
+    'post'=>$post,
+    "posts"=>$posts
 ]);
 
 }

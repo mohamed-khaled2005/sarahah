@@ -326,6 +326,10 @@ a {
   .nav { gap: 0.8rem; }
   .logo-text { font-size: 18px; }
   .header-actions { gap: 10px; }
+  .auth-item span {
+  font-size: 9px;
+  font-weight: 500;
+}
 }
 
 @media (max-width: 480px) {

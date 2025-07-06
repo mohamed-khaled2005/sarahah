@@ -1,6 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use App\Models\Event;
+use App\Models\Setting;
+$settings = Setting::all()->keyBy('key');
 
 $user = Auth::user();
 
@@ -75,7 +77,7 @@ $eventsPayload = $unreadEvents->map(function ($e) {
 .dropdown-menu {
     position: absolute;
     top: 120%;
-    right: 0;
+    left: 0;
     background: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -108,7 +110,7 @@ $eventsPayload = $unreadEvents->map(function ($e) {
   <div class="header-container">
     <a href="/">
       <div class="logo-section">
-        <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0?width=82" alt="صراحة" class="logo-img"/>
+        <img src="{{ !empty($settings['site_logo']->value) ? asset('uploads/' . $settings['site_logo']->value) : url('images/'.'logo.png') }}" alt="صراحة" class="logo-img"/>
         <h1 class="logo-text">صراحة</h1>
       </div>
     </a>

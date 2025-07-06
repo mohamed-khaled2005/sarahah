@@ -73,6 +73,14 @@
   text-align: left !important;  /* هنا: اجبار المحاذاة لليسار */
 }
 
+@media (max-width: 768px) {
+    .url-text {
+  
+   font-size: 0.7rem !important;
+      /* هنا: اجبار المحاذاة لليسار */
+    }
+      }
+
 
 
       /* Copy Button */
@@ -135,8 +143,6 @@
         flex-direction: column;
         align-items: flex-end;
         gap: 8px;
-        padding: 0 16px;
-        width: 1120px;
 
       }
 
@@ -314,4 +320,112 @@
   opacity: 0.6;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+
+/* Stats Cards */
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 0;
+  width: 100%;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #5412eb 0%, #265cff 100%);
+  border-radius: 12px;
+  padding: 20px;
+  min-width: 150px;
+  flex: 1 1 calc(25% - 16px); /* 4 cards per row by default */
+  box-sizing: border-box;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.stat-title, .stat-value {
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+
+.stat-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .stat-card {
+    flex: 1 1 calc(50% - 16px); /* 2 cards per row */
+    min-width: calc(50% - 16px);
+  }
+}
+
+@media (max-width: 768px) {
+  .stats-grid {
+    gap: 12px;
+  }
+  
+  .stat-card {
+    padding: 18px 12px;
+    flex: 1 1 calc(50% - 12px);
+    min-width: calc(50% - 12px);
+  }
+  
+  .stat-title {
+    font-size: 15px;
+  }
+  
+  .stat-value {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    gap: 10px;
+  }
+  
+  .stat-card {
+    flex: 1 1 100%; /* 1 card per row */
+    min-width: 100%;
+    padding: 16px 10px;
+  }
+  
+  .stat-title {
+    font-size: 14px;
+  }
+  
+  .stat-value {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .stat-title {
+    font-size: 13px;
+  }
+  
+  .stat-value {
+    font-size: 18px;
+  }
 }

@@ -1,4 +1,4 @@
-@import '../globalstyle.css';
+
 
 /* الأساسيات */
 :root {
@@ -320,4 +320,38 @@
   .send-button {
     padding: 12px;
   }
+}
+
+.custom-alert {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.4s ease;
+}
+.custom-alert.show { opacity: 1; transform: translateY(0); }
+.custom-alert.success { background-color: #28a745; }
+.custom-alert.error { background-color: #dc3545; }
+.custom-alert .alert-close {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 18px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+.loading-spinner {
+  display: none;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

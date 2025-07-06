@@ -1,8 +1,3 @@
-
-<?php 
-use App\Models\Post;
-$posts = Post::all();
-?>
 @extends('layouts.app')
 @section('title')
 {{$post->title}}

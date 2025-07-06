@@ -1,7 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use App\Models\message;
-
+use App\Models\Setting;
+$settings = Setting::all()->keyBy('key');
 $user = Auth::user();
 $unreadMessages = $user
     ->messages()
@@ -100,13 +101,15 @@ $messagesPayload = $unreadMessages->map(function ($m) {
             </div>
           </div>
         </div>
-
-        <!-- يمين الهيدر -->
+      <a href="/">
+   <!-- يمين الهيدر -->
         <div class="logo-section">
-          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/5029f4236f65d0d4d941d8086f6901a1afaa86c0"
+          <img src="{{ !empty($settings['site_logo']->value) ? asset('uploads/' . $settings['site_logo']->value) : url('images/'.'logo.png') }}"
                alt="Logo" class="logo-img" />
           <div class="logo-text font-cairo">صراحة</div>
         </div>
+      </a>
+     
       </div>
     </header>
 

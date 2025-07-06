@@ -1,7 +1,3 @@
-<?php 
-use App\Models\Post;
-$posts = Post::all();
-?>
 @extends('layouts.app')
 @section('title','صراحة - تلقي رسائل صادقة من أصدقائك')
 @section('page-css')
@@ -306,7 +302,6 @@ $posts = Post::all();
 </div>
 
         </section>
-
         <!-- Articles Section -->
         <section class="articles-section">
           <h2 class="section-title-large">أحدث المقالات</h2>
@@ -326,16 +321,6 @@ $posts = Post::all();
         </section>
       </div>
     </main>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-  const toggle = document.querySelector('.password-toggle');
-  const passwordInput = document.querySelector('input[name="password"]');
-  if(toggle && passwordInput) {
-    toggle.addEventListener('click', function() {
-      const type = passwordInput.type === 'password' ? 'text' : 'password';
-      passwordInput.type = type;
-    });
-  }
-});
+  <script src="{{url('js/main.js')}}">
     </script>
 @endsection

@@ -101,7 +101,7 @@
         background-color: #fafafa;
         padding: 16px;
         border-radius: 8px;
-        min-height: 700px;
+       
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -184,7 +184,7 @@
   display: none; /* مخفية في البداية */
   position: absolute;
   top: 110%; /* أسفل الصورة */
-  left:0;
+  left:0 !important;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 6px;
