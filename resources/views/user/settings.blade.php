@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('title','صراحة - الإعدادات')
+@section('title','الإعدادات')
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/user/settings.css') }}">
 @endsection
@@ -110,15 +110,8 @@
   </div>
 </div>
 
-<script>
-    function openDeleteModal() {
-    document.getElementById('deleteModal').style.display = 'flex';
-  }
-
-  function closeDeleteModal() {
-    document.getElementById('deleteModal').style.display = 'none';
-  }
-</script>
+<script src="{{url('js/user/settings.js')}}">
+    </script>
 
   </div>
 </div>

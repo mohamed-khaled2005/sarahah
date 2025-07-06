@@ -1,24 +1,9 @@
 @extends('layouts.user')
-@section('title','صراحة - صندوق الوارد')
+@section('title','صندوق الوارد')
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/user/inbox.css') }}">
 @endsection
 @section('main')
-<style>
-  .message-card.featured   {border-right:4px solid gold}
-  .message-card .star-icon {margin-inline-start:4px}
-  #notification            {transition:opacity .25s;opacity:0}
-  #notification.show       {opacity:1}
-  #notification.error      {background:#ff4d4d}
-  /* نوافذ منبثقة مصغّرة */
-  .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;justify-content:center;align-items:center;z-index:3000}
-  .modal-box    {background:#222;color:#eee;padding:20px 30px;border-radius:12px;max-width:420px;width:94%;box-shadow:0 0 18px #6a6aff;text-align:center}
-  .modal-box button{margin:0 6px;padding:7px 20px;border:none;border-radius:8px;color:#fff;cursor:pointer}
-  .modal-box .btn-ok{background:#6a6aff}
-  .modal-box .btn-cancel{background:#ff5c5c}
-  .modal-box textarea{width:100%;min-height:90px;margin-bottom:14px;border-radius:8px;border:none;padding:10px;background:#333;color:#eee;font-family:inherit;resize:vertical}
-</style>
-
 <div class="main-content">
   <h2 class="title-text">صندوق الوارد</h2>
  <div class="search-container">
@@ -73,7 +58,7 @@
 <div id="notification" role="alert" aria-live="assertive"></div>
 
 <script>
-const csrfToken  = '{{ csrf_token() }}';
+  const csrfToken  = '{{ csrf_token() }}';
 const messages   = @json($messages);
 const reportURL  = '{{ route('reports.store') }}';
 const PAGE_SIZE  = 5;
@@ -283,7 +268,7 @@ searchInput.addEventListener('input', () => {
 /* تحميل أولي */
 loadMessages();
 loadMoreBtn.onclick = loadMessages;
-</script>
+    </script>
 
 
 @endsection

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('title', 'صراحة - إدارة الصفحات')
+@section('title', 'إدارة الصفحات')
 @section('page-css')
 <link rel="stylesheet" href="{{ url('css/pages/admin/pages.css') }}" />
 

@@ -1,5 +1,5 @@
 @extends('layouts.user')
-@section('title','صراحة - تعديل الملف الشخصي')
+@section('title','تعديل الملف الشخصي')
 @section('page-css')
     <link rel="stylesheet" href="{{ url('css/pages/user/profile.css') }}">
 @endsection
@@ -72,15 +72,8 @@
 </div>
 
 {{-- معاينة الصورة قبل الرفع --}}
-<script>
-function previewImg(input){
-    if (input.files && input.files[0]){
-        const reader = new FileReader();
-        reader.onload = e => document.getElementById('preview').src = e.target.result;
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-</script>
+<script src="{{url('js/user/profile.js')}}">
+    </script>
 @endsection
 
 

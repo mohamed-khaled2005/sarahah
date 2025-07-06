@@ -1,6 +1,5 @@
-  
   @extends('layouts.admin')
-  @section('title','صراحة - لوحة التحكم')
+  @section('title','لوحة التحكم')
   @section('page-css')
   <link rel="stylesheet" href="{{url('css/pages/admin/index.css')}}"/>
   @endsection

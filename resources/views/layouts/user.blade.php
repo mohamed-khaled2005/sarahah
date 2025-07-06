@@ -25,8 +25,9 @@ $messagesPayload = $unreadMessages->map(function ($m) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="csrf-token" content="{{ csrf_token() }}">
-  <title>@yield('title', 'صراحة')</title>
+  <title> {{ !empty($settings['site_title']->value) ? $settings['site_title']->value: 'صراحة' }} - @yield('title')</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Noto+Serif:wght@400&display=swap" rel="stylesheet"/>
+   <link rel="icon" href="{{url('images/logo.png')}}"/>
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   @yield('page-css')
 </head>
@@ -106,7 +107,7 @@ $messagesPayload = $unreadMessages->map(function ($m) {
         <div class="logo-section">
           <img src="{{ !empty($settings['site_logo']->value) ? asset('uploads/' . $settings['site_logo']->value) : url('images/'.'logo.png') }}"
                alt="Logo" class="logo-img" />
-          <div class="logo-text font-cairo">صراحة</div>
+          <div class="logo-text font-cairo">{{ !empty($settings['site_title']->value) ? $settings['site_title']->value: 'صراحة' }}</div>
         </div>
       </a>
      

@@ -1,65 +1,9 @@
 @extends('layouts.admin')
-@section('title', 'صراحة - إدارة الإعلانات')
+@section('title', 'إدارة الإعلانات')
 
 @section('page-css')
 <link rel="stylesheet" href="{{ url('css/pages/admin/ads.css') }}" />
-<style>
-    .toggle-section {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 20px;
-    }
-    .toggle-container {
-        display: flex;
-        align-items: center;
-    }
-    .toggle-switch {
-        width: 50px;
-        height: 28px;
-        background-color: #ccc;
-        border-radius: 14px;
-        position: relative;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    .toggle-switch.active {
-        background-color: #4CAF50;
-    }
-    .toggle-knob {
-        width: 24px;
-        height: 24px;
-        background-color: #fff;
-        border-radius: 50%;
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        transition: left 0.3s;
-    }
-    .toggle-switch.active .toggle-knob {
-        left: 24px;
-    }
-    .form-group { margin-bottom: 20px; }
-    .form-label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: bold;
-        color: #333;
-    }
-    .form-textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 1rem;
-        min-height: 200px;
-        box-sizing: border-box;
-    }
-    .tab-item.active {
-        color: black;
-        font-weight: bold;
-    }
-</style>
+
 @endsection
 
 @section('main')
