@@ -101,6 +101,7 @@
   color: var(--saraha-dark-primary);
   margin-bottom: 1.5rem;
   position: relative;
+  padding-bottom: 10px;
 }
 
 .content-title::after {

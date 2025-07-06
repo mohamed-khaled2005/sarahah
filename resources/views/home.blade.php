@@ -35,7 +35,7 @@ $posts = Post::all();
                 من حولك رأيهم بسرية تامة. إنطلق الآن في عالم موقع صراحة ولا تضيع
                 الوقت.
               </p>
-              <button class="content-btn">سجل وتلقي الآن الرسائل</button>
+              <button class="content-btn"><a href="{{ route('register') }}">سجل وتلقي الآن الرسائل</a></button>
             </div>
 
            <div class="login-form-container">
